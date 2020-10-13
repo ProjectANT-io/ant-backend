@@ -1,3 +1,10 @@
+# Type ORM
+.idea/
+.vscode/
+build/
+tmp/
+temp/
+
 # Logs
 logs
 *.log

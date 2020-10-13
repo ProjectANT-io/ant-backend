@@ -1,5 +1,10 @@
-import express from "express";
-import bodyParser from "body-parser";
+import "reflect-metadata";
+import { createConnection } from "typeorm";
+import * as express from "express";
+import * as bodyParser from "body-parser";
+import { Request, Response } from "express";
+import { Routes } from "./routes";
+import { User } from "./entity/User";
 import { createLogger } from "./utils/logger";
 
 const logger = createLogger("Root");

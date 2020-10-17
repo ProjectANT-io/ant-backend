@@ -4,21 +4,21 @@ info:
   version: 1.0.0
   title: Project ANT Backend
 servers:
-    - url: projectant.io
+  - url: projectant.io
 paths:
   "/user":
     get:
       summary: Details about a user
       operationId: listUser
       tags:
-      - user
+        - user
       parameters:
-      - name: id
-        in: query
-        description: ID of the user
-        required: true
-        schema:
-          type: string
+        - name: id
+          in: query
+          description: ID of the user
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Details about a user
@@ -55,8 +55,8 @@ components:
     Error:
       type: object
       required:
-      - code
-      - message
+        - code
+        - message
       properties:
         code:
           type: integer

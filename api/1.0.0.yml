@@ -8,6 +8,7 @@ servers:
 paths:
     "/users":
         post:
+            summary: Create a new user
             description: Create a new user.
             operationId: newUser
             requestBody:
@@ -49,8 +50,6 @@ paths:
             summary: Get details about a user
             description: Returns the record of a user based on their ID.
             operationId: getUser
-            tags:
-                - user
             parameters:
                 -   name: user_id
                     in: path
@@ -84,6 +83,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
         post:
+            summary: Update an existing user
             description: Update an existing user.
             operationId: updateUser
             requestBody:

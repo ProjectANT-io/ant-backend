@@ -4,7 +4,7 @@ info:
     version: 1.0.0
     title: Project ANT Backend
 servers:
-    - url: projectant.io/api/v1
+    - url: https://projectant.io/api/v1
 paths:
     "/users":
         post:

@@ -21,6 +21,7 @@
     "prettier/prettier": ["error", { "endOfLine": "auto" }],
     // "linebreak-style": ["error", "windows"],
     "no-console": "off",
+    "no-unused-vars": "warn",
     "func-names": "off",
     "object-shorthand": "off",
     "class-methods-use-this": "off",

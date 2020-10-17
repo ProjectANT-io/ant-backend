@@ -19,8 +19,12 @@ paths:
                         schema:
                             $ref: "#/components/schemas/NewUser"
             responses:
-                "201":
+                "200":
                     description: User created successfully
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/User"
                 "401":
                     description: Unauthorized
                     content:

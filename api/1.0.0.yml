@@ -26,7 +26,7 @@ paths:
             x-next:
               description: A link to the next page of responses
               schema:
-                type: string
+                $ref: "#/components/schemas/User"
           content:
             application/json:
               schema:

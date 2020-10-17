@@ -15,7 +15,7 @@ paths:
                 - user
             parameters:
                 - name: user_id
-                in: path
+                  in: path
                 description: ID of the user
                 required: true
                 schema:

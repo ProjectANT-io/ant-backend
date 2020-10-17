@@ -17,6 +17,27 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/NewUser"
+            responses:
+                "201":
+                    description: User created successfully
+                "401":
+                    description: Unauthorized
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                "403":
+                    description: Permissions error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                default:
+                    description: unexpected error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
     "/users/{user_id}":
         get:
             summary: Details about a user

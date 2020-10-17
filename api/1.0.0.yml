@@ -3,27 +3,24 @@ openapi: 3.0.0
 info:
   version: 1.0.0
   title: Project ANT Backend
-  license:
-    name: MIT
 servers:
-- url: http://petstore.swagger.io/v1
 paths:
   "/user":
     get:
       summary: Details about a user
       operationId: listUser
       tags:
-      - user
+        - user
       parameters:
-      - name: id
-        in: query
-        description: ID of the user
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - name: id
+          in: query
+          description: ID of the user
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
-        '200':
+        "200":
           description: Details about a user
           headers:
             x-next:
@@ -45,8 +42,8 @@ components:
     User:
       type: object
       required:
-      - id
-      - name
+        - id
+        - name
       properties:
         id:
           type: integer
@@ -58,8 +55,8 @@ components:
     Error:
       type: object
       required:
-      - code
-      - message
+        - code
+        - message
       properties:
         code:
           type: integer

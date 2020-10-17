@@ -20,7 +20,7 @@ paths:
         schema:
           type: string
       responses:
-        "200":
+        '200':
           description: Details about a user
           headers:
             x-next:

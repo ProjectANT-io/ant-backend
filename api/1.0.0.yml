@@ -14,7 +14,7 @@ paths:
             tags:
                 - user
             parameters:
-                - name: user_id
+                -   name: user_id
                     in: path
                     description: ID of the user
                     required: true

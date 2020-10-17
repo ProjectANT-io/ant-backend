@@ -9,6 +9,7 @@ paths:
   "/users/{user_id}":
     get:
       summary: Details about a user
+      description: Returns the record of a user based on their ID.
       operationId: getUser
       tags:
         - user
@@ -38,7 +39,6 @@ components:
       type: object
       required:
         - id
-        - name
       properties:
         id:
           type: integer

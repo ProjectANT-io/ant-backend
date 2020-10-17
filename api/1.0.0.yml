@@ -9,7 +9,7 @@ paths:
   "/users/{user_id}":
     get:
       summary: Details about a user
-      operationId: listUser
+      operationId: getUser
       tags:
         - user
       parameters:

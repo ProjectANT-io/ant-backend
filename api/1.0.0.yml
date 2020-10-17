@@ -14,12 +14,12 @@ paths:
             tags:
                 - user
             parameters:
-                -   name: user_id
+                    - name: user_id
                     in: path
                     description: ID of the user
                     required: true
                     schema:
-                    type: string
+                        type: string
             responses:
                 "200":
                     description: Details about a user

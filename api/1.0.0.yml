@@ -22,11 +22,6 @@ paths:
       responses:
         "200":
           description: Details about a user
-          headers:
-            x-next:
-              description: A link to the next page of responses
-              schema:
-                $ref: "#/components/schemas/User"
           content:
             application/json:
               schema:

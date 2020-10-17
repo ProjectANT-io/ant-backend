@@ -6,6 +6,7 @@ info:
 servers:
     - url: projectant.io
 paths:
+    "/users"
     "/users/{user_id}":
         get:
             summary: Details about a user

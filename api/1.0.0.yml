@@ -325,3 +325,70 @@ components:
                     type: string
         Company:
             type: object
+            required:
+                - id
+                - name
+            properties:
+                id:
+                    $ref: "#/components/schemas/Index"
+                name:
+                    type: string
+                logo:
+                    type: string
+                    format: uri
+                headline:
+                    type: string
+                description:
+                    type: string
+                location:
+                    type: string
+                industry:
+                    type: string
+                company_culture:
+                    type: string
+        ProjectPreference:
+            type: object
+            required:
+                - id
+                - user_id
+            properties:
+                id:
+                    $ref: "#/components/schemas/Index"
+                user_id:
+                    $ref: "#/components/schemas/Index"
+                preference:
+                    type: string
+        AntProjectApplication:
+            type: object
+            required:
+                - id
+                - user_id
+                - project_id
+                - status
+            properties:
+                id:
+                    $ref: "#/components/schemas/Index"
+                user_id:
+                    $ref: "#/components/schemas/Index"
+                project_id:
+                    $ref: "#/components/schemas/Index"
+                status:
+                    type: string
+        AntProjectMilestones:
+            type: object
+            required:
+                - id
+                - project_id
+            properties:
+                id:
+                    $ref: "#/components/schemas/Index"
+                project_id:
+                    $ref: "#/components/schemas/Index"
+                milestones:
+                    type: array
+                    items:
+                        type: string
+                milestones_statuses:
+                    type: array
+                    items:
+                        type: string

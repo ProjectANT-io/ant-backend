@@ -137,6 +137,9 @@ paths:
                                 $ref: "#/components/schemas/Error"
 components:
     schemas:
+        Index:
+            type: string
+            format: uuid
         User:
             allOf:
                 - $ref: "#/components/schemas/NewUser"
@@ -151,9 +154,31 @@ components:
                             type: string
         NewUser:
             type: object
+            required:
+                - first_name
+                - last_name
+                - resume_url
+                - skills
             properties:
-                name:
+                first_name:
                     type: string
+                last_name:
+                    type: string
+                status:
+                    type: string
+                about_me:
+                    type: string
+                profile_picture_url:
+                    type: string
+                    format: uri
+                resume_url:
+                    type: string
+                    format: uri
+                skills:
+                    type: array
+                    items:
+                        type:
+                            $ref: "#/components/schemas/Index"
         
         Error:
             type: object

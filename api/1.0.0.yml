@@ -349,6 +349,8 @@ paths:
                     application/json:
                         schema:
                             type: object
+                            required:
+                                - user_id
                             properties:
                                 user_id:
                                     $ref: "#/components/schemas/Index"

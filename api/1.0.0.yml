@@ -177,8 +177,7 @@ components:
                 skills:
                     type: array
                     items:
-                        type:
-                            $ref: "#/components/schemas/Index"
+                        $ref: "#/components/schemas/Index"
         
         Error:
             type: object

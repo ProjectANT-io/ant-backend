@@ -63,7 +63,7 @@ paths:
                         type: string
             responses:
                 "200":
-                    description: 200 Details about a user
+                    description: Details about a user
                     content:
                         application/json:
                             schema:
@@ -112,7 +112,7 @@ paths:
                             $ref: "#/components/schemas/User"
             responses:
                 "200":
-                    description: 200 User updated successfully.
+                    description: User updated successfully.
                     content:
                         application/json:
                             schema:

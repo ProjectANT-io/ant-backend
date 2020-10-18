@@ -147,6 +147,48 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Error"
+        delete:
+            summary: Delete a user
+            description: Deletes a user and returns their full details.
+            operationId: deleteUser
+            parameters:
+                -   name: user_id
+                    in: path
+                    description: ID of the user
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                "200":
+                    description: 200 User deleted successfully
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/User"
+                "401":
+                    description: 401 Unauthorized
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                "403":
+                    description: 403 Permissions Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                "404":
+                    description: 404 Project Not Found
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                default:
+                    description: 500 Unexpected Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
     "/projects":
         post:
             summary: Create a new project

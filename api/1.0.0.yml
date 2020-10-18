@@ -356,7 +356,7 @@ paths:
                                     $ref: "#/components/schemas/Index"
             responses:
                 "200":
-                    description: Project updated successfully.
+                    description: 200 Project updated successfully.
                     content:
                         application/json:
                             schema:

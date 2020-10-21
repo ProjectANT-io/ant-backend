@@ -1,6 +1,6 @@
 import { UserController } from "./controller/UserController";
 
-export const Routes = [
+const Routes = [
   // {
   //   method: "get",
   //   route: "/users",
@@ -26,3 +26,5 @@ export const Routes = [
     action: "remove",
   },
 ];
+
+export default Routes;

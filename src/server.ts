@@ -1,15 +1,15 @@
 import "reflect-metadata";
-import { createConnection, getConnectionOptions } from "typeorm";
+// import { createConnection, getConnectionOptions } from "typeorm";
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import { Request, Response } from "express";
-import { Routes } from "./routes";
+import Routes from "./routes";
 import { User } from "./entity/User";
 import { createLogger } from "./utils/logger";
 
 (async () => {
-  // read connection options from ormconfig file (or ENV variables)
-  const connectionOptions = await getConnectionOptions();
+  // TODO read connection options from ormconfig file (or ENV variables)
+  // const connectionOptions = await getConnectionOptions();
 
   const logger = createLogger("Root");
 
@@ -17,7 +17,7 @@ import { createLogger } from "./utils/logger";
   // const connection = await createConnection(connectionOptions);
 
   const app = express();
-  const port = process.env.PORT || 8080; // default port to listen
+  const port = process.env.PORT || 3000; // default port to listen
 
   app.use(bodyParser.json());
 

@@ -1,17 +1,17 @@
 {
   "name": "ant-backend",
-  "version": "1.0.0",
-  "description": "ANT project",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Backend for Project ANT.",
   "license": "ISC",
-  "author": "ANT Backend Team: Varun Raj Rayabarapu",
-  "main": "build/server.js",
+  "author": "ANT Backend Team",
+  "main": "server.js",
   "scripts": {
     "build": "npm run clean && tsc",
     "clean": "rm -rf build",
     "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
     "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": "tsc"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "@types/cors": "^2.8.8",
@@ -25,7 +25,6 @@
     "pg": "^8.4.1",
     "reflect-metadata": "^0.1.13",
     "typeorm": "0.2.28",
-    "typescript": "^4.0.3",
     "uuid": "^8.3.1",
     "winston": "^3.3.3"
   },
@@ -43,6 +42,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "prettier": "^2.1.2",
     "ts-node": "9.0.0",
-    "ts-node-dev": "^1.0.0-pre.65"
+    "ts-node-dev": "^1.0.0-pre.65",
+    "typescript": "^4.0.3"
   }
 }

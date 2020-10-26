@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import * as express from "express";
-import {Request, Response} from "express";
+import { Request, Response } from "express";
 import * as bodyParser from "body-parser";
 import Routes from "./routes";
 import { User } from "./entity/User";
@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(async (req: Request, res: Response, next) => {
   await TryDBConnect(() => {
     res.json({
-      error: 'Database connection error, please try again later',
+      error: "Database connection error, please try again later",
     });
   }, next);
 });
@@ -45,7 +45,7 @@ Routes.forEach((route) => {
 });
 
 // TODO: Ideally Root URI should be put under routes.ts (Code refactoring purposes!!)
-// Root URI call  
+// Root URI call
 app.get("/", async (req, res) => {
   logger.info("connected with browser");
   res.status(200).send("Hello ANT");
@@ -58,11 +58,10 @@ app.listen(port, () => {
   logger.info(`press CTRL+C to stop server`);
 });
 
-
 // insert new users for test
 // TODO: Testing for inserting new users should be in UserController.ts (Code refactoring purposes!!)
 // Reference: https://typeorm.io/#/
-  /* await connection.manager.save(
+/* await connection.manager.save(
     connection.manager.create(User, {
       firstName: "Timber",
       lastName: "Saw",

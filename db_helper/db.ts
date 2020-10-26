@@ -1,15 +1,8 @@
 import {Connection, createConnection, getConnection, getConnectionOptions} from "typeorm";
-// import ORMConfig from "../src/ormconfig.json";
 
 export const DBConnect = async () => {
-  let connection: Connection | undefined;
-//   console.log("Connection is " + connection);
-  try {
-    // console.log("Connection Before: " + connection);
-    connection = getConnection();
-    // console.log("Connection After: " + connection);
-  } catch (e) {
-  }
+  const connection: Connection | undefined = getConnection();
+
 
   try {
     if (connection) {

@@ -1,8 +1,14 @@
 import {Connection, createConnection, getConnection, getConnectionOptions} from "typeorm";
 
 export const DBConnect = async () => {
-  const connection: Connection | undefined = getConnection();
-
+  let connection: Connection | undefined;
+  try{
+    connection = getConnection();
+  }catch(e){
+    connection = undefined;
+  }
+  
+  // const connection = true;
 
   try {
     if (connection) {

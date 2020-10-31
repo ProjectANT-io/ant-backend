@@ -8,18 +8,20 @@ import { createLogger } from "./utils/logger";
 import { TryDBConnect } from "../db_helper/index";
 
 // === Initializing variables ===
-export const app: express.Application = express();
+const app: express.Application = express();
 const logger = createLogger("Root");
 
 // === app.use() ===
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(async (req: Request, res: Response, next) => {
-  await TryDBConnect(() => {
-    res.json({
-      error: "Database connection error, please try again later",
-    });
-  }, next);
-});
+// app.use(async (req: Request, res: Response, next) => {
+//   await TryDBConnect((e: Error) => {
+//     res.json({
+//       message: "Database connection error, please try again later",
+//       e,
+//     });
+//   }, next);
+// });
 
 // === Initializing all routes ===
 Routes.forEach((route) => {
@@ -32,12 +34,8 @@ Routes.forEach((route) => {
         next
       );
       if (result instanceof Promise) {
-        result.then((routeResult) =>
-          routeResult !== null && routeResult !== undefined
-            ? res.send(routeResult)
-            : undefined
-        );
-      } else if (result !== null && result !== undefined) {
+        result.then((routeResult) => res.send(routeResult));
+      } else {
         res.json(result);
       }
     }

@@ -20,11 +20,11 @@
   "rules": {
     // "prettier/prettier": ["error", { "endOfLine": "auto" }],
     // "linebreak-style": ["error", "windows"],
-    "no-console": "off",
+    "no-console": "warn",
     "no-unused-vars": "warn",
     // "func-names": "off",
     // "object-shorthand": "off",
-    // "class-methods-use-this": "off",
+    "class-methods-use-this": "off",
     // "import/prefer-default-export": "off",
     "import/extensions": [
       "error",

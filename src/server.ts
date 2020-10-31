@@ -14,14 +14,14 @@ const logger = createLogger("Root");
 // === app.use() ===
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// app.use(async (req: Request, res: Response, next) => {
-//   await TryDBConnect((e: Error) => {
-//     res.json({
-//       message: "Database connection error, please try again later",
-//       e,
-//     });
-//   }, next);
-// });
+app.use(async (req: Request, res: Response, next) => {
+  await TryDBConnect((e: Error) => {
+    res.json({
+      message: "Database connection error, please try again later",
+      e,
+    });
+  }, next);
+});
 
 // === Initializing all routes ===
 Routes.forEach((route) => {

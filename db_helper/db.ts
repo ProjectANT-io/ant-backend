@@ -6,21 +6,20 @@ import {
 } from "typeorm";
 
 export const DBConnect = async () => {
-  const connection: Connection = getConnection(); // ! this line stops
-
+  let connection: Connection | undefined;
   try {
-    if (connection) {
-      if (!connection.isConnected) {
-        await connection.connect();
-      }
-    } else {
-      const connectionOptions = await getConnectionOptions();
-      await createConnection(connectionOptions);
-    }
-    console.log("🌴 Database connection was successful!");
+    connection = getConnection();
   } catch (e) {
-    console.error("ERROR: Database connection failed!!", e);
-    throw e;
+    connection = undefined;
+  }
+
+  if (connection) {
+    if (!connection.isConnected) {
+      await connection.connect();
+    }
+  } else {
+    const connectionOptions = await getConnectionOptions();
+    await createConnection(connectionOptions);
   }
 };
 

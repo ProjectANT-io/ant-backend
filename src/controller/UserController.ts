@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { User } from "../entity/User";
 
 class UserController {
-  // private userRepository = getRepository(User);
+  private userRepository = getRepository(User);
 
   async authCheck(request: Request, response: Response) {
     return true; // TODO

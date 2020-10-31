@@ -13,21 +13,13 @@ export const DBConnect = async () => {
     connection = undefined;
   }
 
-  // const connection = true;
-
-  try {
-    if (connection) {
-      if (!connection.isConnected) {
-        await connection.connect();
-      }
-    } else {
-      const connectionOptions = await getConnectionOptions();
-      await createConnection(connectionOptions);
+  if (connection) {
+    if (!connection.isConnected) {
+      await connection.connect();
     }
-    console.log("🌴 Database connection was successful!");
-  } catch (e) {
-    console.error("ERROR: Database connection failed!!", e);
-    throw e;
+  } else {
+    const connectionOptions = await getConnectionOptions();
+    await createConnection(connectionOptions);
   }
 };
 

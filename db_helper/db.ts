@@ -1,8 +1,12 @@
-import {Connection, createConnection, getConnection, getConnectionOptions} from "typeorm";
+import {
+  Connection,
+  createConnection,
+  getConnection,
+  getConnectionOptions,
+} from "typeorm";
 
 export const DBConnect = async () => {
-  const connection: Connection | undefined = getConnection();
-
+  const connection: Connection = getConnection(); // ! this line stops
 
   try {
     if (connection) {
@@ -10,12 +14,12 @@ export const DBConnect = async () => {
         await connection.connect();
       }
     } else {
-        const connectionOptions = await getConnectionOptions();
-        await createConnection(connectionOptions);
+      const connectionOptions = await getConnectionOptions();
+      await createConnection(connectionOptions);
     }
     console.log("🌴 Database connection was successful!");
   } catch (e) {
-    console.error('ERROR: Database connection failed!!', e);
+    console.error("ERROR: Database connection failed!!", e);
     throw e;
   }
 };
@@ -27,7 +31,6 @@ export const TryDBConnect = async (onError: Function, next?: Function) => {
       next();
     }
   } catch (e) {
-    onError();
+    onError(e);
   }
 };
-

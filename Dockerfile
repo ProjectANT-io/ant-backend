@@ -1,27 +1,24 @@
-FROM node:alpine
+FROM node:14-alpine
 
 WORKDIR /app
 
-# install cURL
+# Install cURL
 RUN apk --no-cache add curl
 
-# AWS
+# Install AWS
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 RUN unzip awscliv2.zip
 RUN ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
 
-COPY package*.json ./
-
 # Install dependencies
+COPY package*.json ./
+COPY .npmrc ./
 RUN npm install --production
-COPY . .
 
-# install TSC binary
-RUN npm install -g typescript
+# Copy app source
+COPY build/ ./
 
-# Build
-RUN npm run build
-
+# Set Environment
 ENV NODE_ENV production
 ENV PORT 3000
 

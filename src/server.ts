@@ -1,64 +1,65 @@
 import "reflect-metadata";
-import { createConnection, getConnectionOptions } from "typeorm";
 import * as express from "express";
-import * as bodyParser from "body-parser";
 import { Request, Response } from "express";
-import { Routes } from "./routes";
+import * as bodyParser from "body-parser";
+import Routes from "./routes";
 import { User } from "./entity/User";
 import { createLogger } from "./utils/logger";
+import { TryDBConnect } from "../db_helper/index";
 
-(async () => {
-  // read connection options from ormconfig file (or ENV variables)
-  const connectionOptions = await getConnectionOptions();
+// === Initializing variables ===
+const app: express.Application = express();
+const logger = createLogger("Root");
 
-  const logger = createLogger("Root");
+// === app.use() ===
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(async (req: Request, res: Response, next) => {
+  await TryDBConnect((e: Error) => {
+    res.json({
+      message: "Database connection error, please try again later",
+      e,
+    });
+  }, next);
+});
 
-  // TODO fix this it doesn't work
-  // const connection = await createConnection(connectionOptions);
-
-  const app = express();
-  const port = process.env.PORT || 8080; // default port to listen
-
-  app.use(bodyParser.json());
-
-  // register express routes from defined application routes
-  Routes.forEach((route) => {
-    (app as any)[route.method](
-      `/api/v1${route.route}`,
-      (req: Request, res: Response, next: Function) => {
-        const result = new (route.controller as any)()[route.action](
-          req,
-          res,
-          next
-        );
-        if (result instanceof Promise) {
-          result.then((routeResult) =>
-            routeResult !== null && routeResult !== undefined
-              ? res.send(routeResult)
-              : undefined
-          );
-        } else if (result !== null && result !== undefined) {
-          res.json(result);
-        }
+// === Initializing all routes ===
+Routes.forEach((route) => {
+  (app as any)[route.method](
+    `/api/v1${route.route}`,
+    (req: Request, res: Response, next: Function) => {
+      const result = new (route.controller as any)()[route.action](
+        req,
+        res,
+        next
+      );
+      if (result instanceof Promise) {
+        result.then((routeResult) => res.send(routeResult));
+      } else {
+        res.json(result);
       }
-    );
-  });
+    }
+  );
+});
 
-  // Root URI call
-  app.get("/", async (req, res) => {
-    logger.info("connected with browser");
-    res.status(200).send("Hello ANT");
-  });
+// TODO: Ideally Root URI should be put under routes.ts (Code refactoring purposes!!)
+// Root URI call
+app.get("/", async (req, res) => {
+  logger.info("connected with browser");
+  res.status(200).send("Hello ANT");
+});
 
-  // Start the Server
-  app.listen(port, () => {
-    logger.info(`server running http://localhost:${port}`);
-    logger.info(`press CTRL+C to stop server`);
-  });
+// === Server Listening ===
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  logger.info(`server running http://localhost:${port}`);
+  logger.info(`press CTRL+C to stop server`);
+});
 
-  // insert new users for test
-  // TODO once createConnection is fixed
-  /* await connection.manager.save(
+// insert new users for test
+// TODO: Testing for inserting new users should be in UserController.ts (Code refactoring purposes!!)
+// Reference: https://typeorm.io/#/
+/* await connection.manager.save(
     connection.manager.create(User, {
       firstName: "Timber",
       lastName: "Saw",
@@ -70,7 +71,4 @@ import { createLogger } from "./utils/logger";
       firstName: "Phantom",
       lastName: "Assassin",
       age: 24,
-    })
-  ); */
-  // .catch((error) => console.log(error));
-})();
+    }) */

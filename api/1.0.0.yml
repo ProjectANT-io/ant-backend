@@ -63,7 +63,7 @@ paths:
                         type: string
             responses:
                 "200":
-                    description: Details about a user
+                    description: 200 Details about a user
                     content:
                         application/json:
                             schema:
@@ -112,7 +112,7 @@ paths:
                             $ref: "#/components/schemas/User"
             responses:
                 "200":
-                    description: User updated successfully.
+                    description: 200 User updated successfully.
                     content:
                         application/json:
                             schema:
@@ -486,10 +486,10 @@ components:
                     type: array
                     items:
                         $ref: "#/components/schemas/Education"
-                previous_projects:
+                previous_outside_projects:
                     type: array
                     items:
-                        $ref: "#/components/schemas/PreviousProject"
+                        $ref: "#/components/schemas/PreviousOutsideProject"
                 work_experiences:
                     type: array
                     items:
@@ -531,7 +531,7 @@ components:
                     type: string
                 minor:
                     type: string
-        PreviousProject:
+        PreviousOutsideProject:
             type: object
             required:
                 - id
@@ -549,7 +549,7 @@ components:
                     type: string
                 description:
                     type: string
-        AntProject:
+        Project:
             type: object
             required:
                 - id

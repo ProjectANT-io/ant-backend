@@ -28,6 +28,8 @@ Routes.forEach((route) => {
   (app as any)[route.method](
     `/api/v1${route.route}`,
     (req: Request, res: Response, next: Function) => {
+      console.log("req: " + req);
+      console.log("res: " + res);
       const result = new (route.controller as any)()[route.action](
         req,
         res,
@@ -42,7 +44,6 @@ Routes.forEach((route) => {
   );
 });
 
-// TODO: Ideally Root URI should be put under routes.ts (Code refactoring purposes!!)
 // Root URI call
 app.get("/", async (req, res) => {
   logger.info("connected with browser");

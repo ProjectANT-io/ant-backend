@@ -34,14 +34,11 @@ class UserController {
 
   // === GET: get user by id ===
   async getUser(req: Request, res: Response) {
-    console.log("Check userRepository: " + this.userRepository);
 
-    console.log("authCheck");
     if (!(await this.authCheck(req, res))) {
       res.status(401);
       return "Unauthorized";
     }
-    console.log("permissionsCheck");
     if (!this.permissionsCheck(req, res)) {
       res.status(403);
       return "Wrong permissions";
@@ -62,25 +59,16 @@ class UserController {
   // === POST: New User to DB ===
   async newUser(req: Request, res: Response) {
 
-    // console.log("Check userRepository: " + this.userRepository);
-
-    // console.log("authCheck");
     if (!(await this.authCheck(req, res))) {
       res.status(401);
       return "Unauthorized";
     }
-    // console.log("permissionsCheck");
     if (!this.permissionsCheck(req, res)) {
       res.status(403);
       return "Wrong permissions";
     }
 
     // check for missing required POST body fields
-    // console.log("send422: " + req.body.first_name);
-    // console.log("send422: " + req.body.last_name);
-    // console.log("send422: " + req.body.resume_url);
-    // console.log("send422: " + req.body.skills);
-
     let send422: string = "";
     if (!req.body.first_name) send422 += "Missing first name as first_name\n";
     if (!req.body.last_name) send422 += "Missing last name as last_name\n";

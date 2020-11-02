@@ -28,8 +28,6 @@ Routes.forEach((route) => {
   (app as any)[route.method](
     `/api/v1${route.route}`,
     (req: Request, res: Response, next: Function) => {
-      console.log("req: " + req);
-      console.log("res: " + res);
       const result = new (route.controller as any)()[route.action](
         req,
         res,

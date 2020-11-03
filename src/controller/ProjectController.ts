@@ -127,10 +127,28 @@ export default class ProjectController {
       return project;
     }
 
-    // Delete the Project in DB
-    await this.projectRepository.delete(project.id);
+    try {
+      // Delete the Project in DB
+      await this.projectRepository.delete(project.id);
 
-    // Return the Deleted Project
+      // Return the Deleted Project
+      return project;
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
+  async acceptUserForProject(req: Request, res: Response) {
+    const project = await this.getProject(req, res);
+    if (res.statusCode !== 200) {
+      // calling this.getProject() returned an error, so return the error
+      return project;
+    }
+
+    // Update & Return Found Project
+    // TODO update status field of project -- but status field has not been created yet
+
     return project;
   }
 }

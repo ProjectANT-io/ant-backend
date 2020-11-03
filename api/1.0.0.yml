@@ -13,7 +13,7 @@ paths:
             operationId: newUser
             requestBody:
                 description: Necessary information to add new user.
-                required: true
+                required: true 
                 content:
                     application/json:
                         schema:

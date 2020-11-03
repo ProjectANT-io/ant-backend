@@ -3,8 +3,7 @@ import * as express from "express";
 import { Request, Response } from "express";
 import * as bodyParser from "body-parser";
 import Routes from "./routes";
-import { User } from "./entity/User";
-import { createLogger } from "./utils/logger";
+import createLogger from "./utils/logger";
 import { TryDBConnect } from "../db_helper/index";
 
 // === Initializing variables ===
@@ -12,15 +11,10 @@ const app: express.Application = express();
 const logger = createLogger("Root");
 
 // === app.use() ===
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(async (req: Request, res: Response, next) => {
-  await TryDBConnect((e: Error) => {
-    res.json({
-      message: "Database connection error, please try again later",
-      e,
-    });
-  }, next);
+  await TryDBConnect((e: Error) => res.json(e), next);
 });
 
 // === Initializing all routes ===
@@ -40,13 +34,6 @@ Routes.forEach((route) => {
       }
     }
   );
-});
-
-// TODO: Ideally Root URI should be put under routes.ts (Code refactoring purposes!!)
-// Root URI call
-app.get("/", async (req, res) => {
-  logger.info("connected with browser");
-  res.status(200).send("Hello ANT");
 });
 
 // === Server Listening ===

@@ -57,4 +57,46 @@ export default class ProjectController {
       return e;
     }
   }
+
+  async getProject(req: Request, res: Response) {
+    if (!(await this.authCheck(req, res))) {
+      res.status(401);
+      return "Unauthorized";
+    }
+    if (!this.permissionsCheck(req, res)) {
+      res.status(403);
+      return "Wrong permissions";
+    }
+
+    // Check for Required Path Parameter
+    if (!req.params.project_id) {
+      res.status(422);
+      return "Missing project_id as path parameter";
+    }
+
+    // Check for Correct Type of Required Path Parameter
+    const projectID = Number(req.params.project_id);
+    if (Number.isNaN(projectID)) {
+      res.status(422);
+      return "project_id should be a number";
+    }
+
+    // Get Project in DB
+    try {
+      // Find Project
+      const project = await this.projectRepository.findOne(projectID);
+
+      // If Project Does Not Exist
+      if (!project) {
+        res.status(404);
+        return `Project with ID ${projectID} not found.`;
+      }
+
+      // Return Found Project
+      return project;
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
 }

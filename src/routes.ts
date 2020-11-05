@@ -1,5 +1,6 @@
 import UserController from "./controller/UserController";
 import ProjectController from "./controller/ProjectController";
+import BusinessController from "./controller/BusinessController";
 
 const Routes = [
   // User Routes
@@ -58,6 +59,32 @@ const Routes = [
     route: "/projects/:project_id",
     controller: ProjectController,
     action: "deleteProject",
+  },
+
+  // Business Routes
+  {
+    method: "post",
+    route: "/businesses",
+    controller: BusinessController,
+    action: "newBusiness",
+  },
+  {
+    method: "get",
+    route: "/businesses/:business_id",
+    controller: BusinessController,
+    action: "getBusiness",
+  },
+  {
+    method: "post",
+    route: "/businesses/:business_id",
+    controller: BusinessController,
+    action: "updateBusiness",
+  },
+  {
+    method: "delete",
+    route: "/businesses/:business_id",
+    controller: BusinessController,
+    action: "deleteBusiness",
   },
 ];
 

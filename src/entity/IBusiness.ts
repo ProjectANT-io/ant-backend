@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-export default interface ICompany {
+export default interface IBusiness {
   id: number;
   name: string;
   logo: string;
@@ -7,5 +7,5 @@ export default interface ICompany {
   description: string;
   location: string;
   industry: string;
-  company_culture: string;
+  culture: string;
 }

@@ -25,7 +25,7 @@ export default class ProjectController {
 
     // Check for Required POST Body Fields, return 422 if required field is missing
     let missingFields: string = "";
-    ["title", "description", "company_id", "employee_id"].forEach(
+    ["title", "description", "business_id", "employee_id"].forEach(
       (expectedField) => {
         if (!(expectedField in req.body)) {
           missingFields += `Missing ${expectedField}\n`;
@@ -38,9 +38,9 @@ export default class ProjectController {
     }
 
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
-    if (Number.isNaN(Number(req.body.company_id))) {
+    if (Number.isNaN(Number(req.body.business_id))) {
       res.status(422);
-      return "company_id should be a number";
+      return "business_id should be a number";
     }
     if (Number.isNaN(Number(req.body.employee_id))) {
       res.status(422);

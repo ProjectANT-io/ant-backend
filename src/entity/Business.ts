@@ -1,10 +1,10 @@
 /* eslint-disable camelcase */
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import ICompany from "./ICompany";
+import IBusiness from "./IBusiness";
 import IProject from "./IProject";
 
 @Entity()
-export default class Company implements ICompany {
+export default class Business implements IBusiness {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -27,8 +27,8 @@ export default class Company implements ICompany {
   industry!: string;
 
   @Column({ nullable: true })
-  company_culture!: string;
+  culture!: string;
 
-  @OneToMany("Project", "company")
+  @OneToMany("Project", "business")
   projects!: IProject[];
 }

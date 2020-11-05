@@ -3,7 +3,7 @@ export default interface IProject {
   id: number;
   title: string;
   description: string;
-  // company_id: ICompany;
+  // business_id: IBusiness;
   // employee_id: IUser;
   // skills: ISkill[];
   duration: string;

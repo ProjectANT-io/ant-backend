@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import ICompany from "./ICompany";
+import IBusiness from "./IBusiness";
 import IProject from "./IProject";
 
 @Entity()
@@ -14,11 +14,11 @@ export default class Project implements IProject {
   @Column()
   description!: string;
 
-  @ManyToOne("Company", "projects")
-  company_id!: ICompany;
+  @ManyToOne("Business", "projects")
+  business_id!: IBusiness;
 
   // TODO to implement later
-  // @ManyToOne("Company", "user")
+  // @ManyToOne("Business", "user")
   // employee_id: IUser;
 
   // @ManyToMany("Skill")

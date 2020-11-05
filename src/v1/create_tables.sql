@@ -6,7 +6,8 @@ CREATE TABLE "PERSON" (
     about_me VARCHAR(400),
     profile_pic TEXT,
     resume_url TEXT,
-    skills INT REFERENCES SKILL(S_ID)
+    skills INT REFERENCES SKILL(S_ID),
+    searching_for_work BOOLEAN
 );
 CREATE TABLE "SKILL" (
     S_ID INT PRIMARY KEY,

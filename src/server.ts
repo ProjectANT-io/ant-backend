@@ -36,32 +36,9 @@ Routes.forEach((route) => {
   );
 });
 
-// Root URI call
-app.get("/", async (req, res) => {
-  logger.info("connected with browser");
-  res.status(200).send("Hello ANT");
-});
-
 // === Server Listening ===
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   logger.info(`server running http://localhost:${port}`);
   logger.info(`press CTRL+C to stop server`);
 });
-
-// insert new users for test
-// TODO: Testing for inserting new users should be in UserController.ts (Code refactoring purposes!!)
-// Reference: https://typeorm.io/#/
-/* await connection.manager.save(
-    connection.manager.create(User, {
-      firstName: "Timber",
-      lastName: "Saw",
-      age: 27,
-    })
-  );
-  await connection.manager.save(
-    connection.manager.create(User, {
-      firstName: "Phantom",
-      lastName: "Assassin",
-      age: 24,
-    }) */

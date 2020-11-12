@@ -555,8 +555,15 @@ components:
                 - id
                 - title
                 - description
-                - company_id
-                - employee_id
+                - business_id
+                - duration
+                - stipend
+                - start_date
+                - stream
+                - hourly_price
+                - location
+                - payment_type
+                - remote
             properties:
                 id:
                     $ref: "#/components/schemas/Index"

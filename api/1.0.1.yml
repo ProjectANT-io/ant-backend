@@ -495,7 +495,7 @@ components:
                     items:
                         $ref: "#/components/schemas/WorkExperience"
                 project_preference:
-                    $ref: "#/components/schemas/Education"
+                    $ref: "#/components/schemas/ProjectPreference"
         Error:
             type: object
             required:

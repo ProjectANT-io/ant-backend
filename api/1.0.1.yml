@@ -568,7 +568,7 @@ components:
                     $ref: "#/components/schemas/Index"
                 employee_id:
                     $ref: "#/components/schemas/Index"
-                skills:
+                required_skills:
                     type: array
                     items:
                         $ref: "#/components/schemas/Index"
@@ -580,6 +580,23 @@ components:
                 start_date:
                     type: string
                     format: date-time
+                stream:
+                    type: string
+                industry:
+                    type: string
+                hourly_price:
+                    type: integer
+                    format: int32
+                location:
+                    type: string
+                payment_type:
+                    type: string
+                remote:
+                    type: boolean
+                milestones:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/ProjectMilestone"
         Skill:
             type: object
             required:
@@ -677,21 +694,25 @@ components:
                     $ref: "#/components/schemas/Index"
                 status:
                     type: string
-        AntProjectMilestones:
+        ProjectMilestone:
             type: object
             required:
                 - id
                 - project_id
+                - task
+                - status
             properties:
                 id:
                     $ref: "#/components/schemas/Index"
                 project_id:
                     $ref: "#/components/schemas/Index"
-                milestones:
-                    type: array
-                    items:
-                        type: string
-                milestones_statuses:
-                    type: array
-                    items:
-                        type: string
+                task:
+                    type: string
+                status:
+                    type: string
+                hours:
+                    type: number
+                    format: int32
+                days:
+                    type: number
+                    format: int32

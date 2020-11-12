@@ -36,6 +36,12 @@ Routes.forEach((route) => {
   );
 });
 
+// Root URI call
+app.get("/", async (req, res) => {
+  logger.info("connected with browser");
+  res.status(200).send("Hello ANT");
+});
+
 // === Server Listening ===
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

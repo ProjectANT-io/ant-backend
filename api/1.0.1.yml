@@ -1,6 +1,6 @@
 ---
 openapi: 3.0.0
-info: gggggggg
+info:
     version: 1.0.1
     title: Project ANT Backend
 servers:
@@ -654,8 +654,13 @@ components:
                     $ref: "#/components/schemas/Index"
                 user_id:
                     $ref: "#/components/schemas/Index"
-                preference:
+                role_type:
                     type: string
+                compensation:
+                    type: string
+                role_length:
+                    type: string
+                
         AntProjectApplication:
             type: object
             required:

@@ -571,7 +571,7 @@ components:
                 required_skills:
                     type: array
                     items:
-                        $ref: "#/components/schemas/Index"
+                        $ref: "#/components/schemas/Skill"
                 duration:
                     type: string
                 stipend:

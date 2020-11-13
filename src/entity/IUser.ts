@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+import IEducation from "./IEducation";
+
 export default interface IUser {
   id: number;
   first_name: string;
@@ -11,6 +13,6 @@ export default interface IUser {
   external_urls: string[];
   // educations: IEducation[];
   // previous_outside_projects: IPreviousOutsideProject[];
-  // work_experiences: IWorkExperience;
+  // work_experiences: IWorkExperience[];
   // project_preference: IEducation;
 }

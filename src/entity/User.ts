@@ -1,6 +1,14 @@
 /* eslint-disable camelcase */
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
 import IUser from "./IUser";
+import IEducation from "./IEducation";
+import Education from "./Education";
 
 @Entity()
 export default class User implements IUser {
@@ -31,7 +39,8 @@ export default class User implements IUser {
   @Column({ type: "simple-array", nullable: true })
   external_urls!: string[];
 
-  // @ManyToMany("Education")
+  // @ManyToMany(() => Education)
+  // @JoinTable()
   // educations!: IEducation[];
 
   // @ManyToMany("PreviousOutsideProject-array")

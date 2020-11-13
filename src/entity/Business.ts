@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import IBusiness from "./IBusiness";
 import IProject from "./IProject";
+import IUser from "./IUser";
 
 @Entity()
 export default class Business implements IBusiness {
@@ -9,50 +10,51 @@ export default class Business implements IBusiness {
   id!: number;
 
   @Column()
-  business_name!: string;
+  name!: string;
 
-  @Column({ type: "text", nullable: true })
-  business_logo!: string;
+  @Column({ nullable: true })
+  logo!: string;
 
-  @Column({ type: "text", nullable: true })
-  business_photo!: string;
+  @Column({ nullable: true })
+  photo!: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ nullable: true })
   tagline!: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ nullable: true })
   year_founded!: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ nullable: true })
   location!: string;
 
-  @Column({ type: "text", nullable: true })
-  business_size!: string;
+  @Column({ nullable: true })
+  size!: string;
 
-  @Column({ type: "text", nullable: true })
-  business_stage!: string;
+  @Column({ nullable: true })
+  stage!: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ nullable: true })
   industry!: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ nullable: true })
   description!: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ nullable: true })
   external_link_urls!: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ nullable: true })
   culture!: string;
 
-  @Column({ type: "text", nullable: true })
-  employees!: string;
+  // TODO
+  // @Column({ nullable: true })
+  // employees!: IUser[];
 
-  @Column({ type: "text", nullable: true })
+  @OneToMany("Project", "previous_projects")
   previous_projects!: IProject[];
 
-  @Column({ type: "text", nullable: true })
+  @OneToMany("Project", "ongoing_projects")
   ongoing_projects!: IProject[];
 
-  @Column({ type: "text", nullable: true })
+  @OneToMany("Project", "available_projects")
   available_projects!: IProject[];
 }

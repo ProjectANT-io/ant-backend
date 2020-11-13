@@ -66,7 +66,7 @@ const Routes = [
     method: "post",
     route: "/businesses",
     controller: BusinessController,
-    action: "newBusiness",
+    action: "createBusiness",
   },
   {
     method: "get",

@@ -645,7 +645,7 @@ components:
                     format: binary
                 description:
                     type: string
-        Company:
+        Business:
             type: object
             required:
                 - id

@@ -22,11 +22,9 @@ export default class BusinessController {
       res.status(403);
       return "Wrong permissions";
     }
-
     // Check for Required POST Body Fields, return 422 if required field is missing
-    // TODO decide required POST body fields in API, implement here afterwards
     let missingFields: string = "";
-    ["name", "logo", "tagline"].forEach((expectedField) => {
+    ["name"].forEach((expectedField) => {
       if (!(expectedField in req.body)) {
         missingFields += `Missing ${expectedField}\n`;
       }
@@ -41,9 +39,9 @@ export default class BusinessController {
 
     // Save New Business to DB
     try {
-      const newBusinessInfo = this.businessRepository.create(req.body);
-      const newBusiness = await this.businessRepository.save(newBusinessInfo);
-      return newBusiness;
+      const newInfo = this.businessRepository.create(req.body);
+      const newBusinessInfo = await this.businessRepository.save(newInfo);
+      return newBusinessInfo;
     } catch (e) {
       res.status(500);
       return e;

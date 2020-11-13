@@ -13,4 +13,6 @@ export default interface IUser {
   // previous_outside_projects: IPreviousOutsideProject[];
   // work_experiences: IWorkExperience;
   // project_preference: IEducation;
+
+  updated: string;
 }

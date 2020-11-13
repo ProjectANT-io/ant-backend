@@ -1,6 +1,7 @@
 import UserController from "./controller/UserController";
 import ProjectController from "./controller/ProjectController";
 import BusinessController from "./controller/BusinessController";
+import ProjectPreferenceController from "./controller/ProjectPreferenceController";
 
 const Routes = [
   // User Routes
@@ -85,6 +86,32 @@ const Routes = [
     route: "/businesses/:business_id",
     controller: BusinessController,
     action: "deleteBusiness",
+  },
+
+  // Project Preference
+  {
+    method: "post",
+    route: "/projectpreference",
+    controller: ProjectPreferenceController,
+    action: "newProjectPreference",
+  },
+  {
+    method: "get",
+    route: "/projectpreference/:project_preference_id",
+    controller: ProjectPreferenceController,
+    action: "getProjectPreference",
+  },
+  {
+    method: "post",
+    route: "/projectpreference/:project_preference_id",
+    controller: ProjectPreferenceController,
+    action: "updateProjectPreference",
+  },
+  {
+    method: "delete",
+    route: "/projectpreference/:project_preference_id",
+    controller: ProjectPreferenceController,
+    action: "deleteProjectPreference",
   },
 ];
 

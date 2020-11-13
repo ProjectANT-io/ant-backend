@@ -3,14 +3,14 @@ import IProject from "./IProject";
 
 export default interface IBusiness {
   id: number;
-  company_name: string;
-  company_logo: string;
-  company_photo: string;
+  business_name: string;
+  business_logo: string;
+  business_photo: string;
   tagline: string;
   year_founded: string;
   location: string;
-  company_size: string;
-  company_stage: string;
+  business_size: string;
+  business_stage: string;
   industry: string;
   description: string;
   external_link_urls: string;

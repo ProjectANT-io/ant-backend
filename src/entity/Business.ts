@@ -9,13 +9,13 @@ export default class Business implements IBusiness {
   id!: number;
 
   @Column()
-  company_name!: string;
+  business_name!: string;
 
   @Column({ type: "text", nullable: true })
-  company_logo!: string;
+  business_logo!: string;
 
   @Column({ type: "text", nullable: true })
-  company_photo!: string;
+  business_photo!: string;
 
   @Column({ type: "text", nullable: true })
   tagline!: string;
@@ -27,10 +27,10 @@ export default class Business implements IBusiness {
   location!: string;
 
   @Column({ type: "text", nullable: true })
-  company_size!: string;
+  business_size!: string;
 
   @Column({ type: "text", nullable: true })
-  company_stage!: string;
+  business_stage!: string;
 
   @Column({ type: "text", nullable: true })
   industry!: string;

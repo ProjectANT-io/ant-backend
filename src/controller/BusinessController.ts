@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import Business from "../entity/Business";
 
 // === GLOBAL VARIABLE ===
-const REQUIRED_ATTRIBUTES = ["company_name"];
+const REQUIRED_ATTRIBUTES = ["business_name"];
 
 class BusinessController {
   private businessRepository = getRepository(Business);
@@ -38,12 +38,12 @@ class BusinessController {
     }
 
     // const firstName, lastName, resumeURL, skills
-    const companyName = req.body.company_name;
+    const businessName = req.body.business_name;
 
     let wrongType = "";
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
-    if (typeof companyName !== "string") {
-      wrongType += `${typeof companyName}: company_name should be a string\n`;
+    if (typeof businessName !== "string") {
+      wrongType += `${typeof businessName}: business_name should be a string\n`;
     }
     if (wrongType) {
       res.status(422);

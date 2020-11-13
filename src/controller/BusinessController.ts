@@ -35,7 +35,7 @@ export default class BusinessController {
     }
 
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
-    // let wrongType = "";
+    // TODO
 
     // Save New Business to DB
     try {

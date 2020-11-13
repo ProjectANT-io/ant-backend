@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 import IBusiness from "./IBusiness";
 import IProject from "./IProject";
 
@@ -9,26 +9,50 @@ export default class Business implements IBusiness {
   id!: number;
 
   @Column()
-  name!: string;
+  company_name!: string;
 
-  @Column({ nullable: true })
-  logo!: string;
+  @Column({ type: "text", nullable: true })
+  company_logo!: string;
 
-  @Column({ nullable: true })
-  headline!: string;
+  @Column({ type: "text", nullable: true })
+  company_photo!: string;
 
-  @Column({ nullable: true })
-  description!: string;
+  @Column({ type: "text", nullable: true })
+  tagline!: string;
 
-  @Column({ nullable: true })
+  @Column({ type: "text", nullable: true })
+  year_founded!: string;
+
+  @Column({ type: "text", nullable: true })
   location!: string;
 
-  @Column({ nullable: true })
+  @Column({ type: "text", nullable: true })
+  company_size!: string;
+
+  @Column({ type: "text", nullable: true })
+  company_stage!: string;
+
+  @Column({ type: "text", nullable: true })
   industry!: string;
 
-  @Column({ nullable: true })
+  @Column({ type: "text", nullable: true })
+  description!: string;
+
+  @Column({ type: "text", nullable: true })
+  external_link_urls!: string;
+
+  @Column({ type: "text", nullable: true })
   culture!: string;
 
-  @OneToMany("Project", "business")
-  projects!: IProject[];
+  @Column({ type: "text", nullable: true })
+  employees!: string;
+
+  @Column({ type: "text", nullable: true })
+  previous_projects!: IProject[];
+
+  @Column({ type: "text", nullable: true })
+  ongoing_projects!: IProject[];
+
+  @Column({ type: "text", nullable: true })
+  available_projects!: IProject[];
 }

@@ -2,18 +2,21 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import Business from "../entity/Business";
 
-export default class BusinessController {
+// === GLOBAL VARIABLE ===
+const REQUIRED_ATTRIBUTES = ["company_name"];
+
+class BusinessController {
   private businessRepository = getRepository(Business);
 
-  async authCheck(req: Request, res: Response) {
+  async authCheck(request: Request, response: Response) {
     return true; // TODO
   }
 
-  async permissionsCheck(req: Request, res: Response) {
+  async permissionsCheck(request: Request, response: Response) {
     return true; // TODO
   }
 
-  async createBusiness(req: Request, res: Response) {
+  async newBusiness(req: Request, res: Response) {
     if (!(await this.authCheck(req, res))) {
       res.status(401);
       return "Unauthorized";
@@ -23,10 +26,8 @@ export default class BusinessController {
       return "Wrong permissions";
     }
 
-    // Check for Required POST Body Fields, return 422 if required field is missing
-    // TODO decide required POST body fields in API, implement here afterwards
     let missingFields: string = "";
-    ["name", "logo", "tagline"].forEach((expectedField) => {
+    REQUIRED_ATTRIBUTES.forEach((expectedField) => {
       if (!(expectedField in req.body)) {
         missingFields += `Missing ${expectedField}\n`;
       }
@@ -36,14 +37,23 @@ export default class BusinessController {
       return missingFields;
     }
 
-    // Check for Correct Type of POST Body Fields, return 422 if type is not correct
-    // TODO
+    // const firstName, lastName, resumeURL, skills
+    const companyName = req.body.company_name;
 
-    // Save New Business to DB
+    let wrongType = "";
+    // Check for Correct Type of POST Body Fields, return 422 if type is not correct
+    if (typeof companyName !== "string") {
+      wrongType += `${typeof companyName}: company_name should be a string\n`;
+    }
+    if (wrongType) {
+      res.status(422);
+      return wrongType;
+    }
+
     try {
-      const newBusinessInfo = this.businessRepository.create(req.body);
-      const newBusiness = await this.businessRepository.save(newBusinessInfo);
-      return newBusiness;
+      const newInfo = this.businessRepository.create(req.body);
+      const newBusinessInfo = await this.businessRepository.save(newInfo);
+      return newBusinessInfo;
     } catch (e) {
       res.status(500);
       return e;
@@ -75,10 +85,8 @@ export default class BusinessController {
 
     // Get Business in DB
     try {
-      // Find Business
       const business = await this.businessRepository.findOne(businessID);
 
-      // If Business Does Not Exist
       if (!business) {
         res.status(404);
         return `Business with ID ${businessID} not found.`;
@@ -131,3 +139,5 @@ export default class BusinessController {
     }
   }
 }
+
+export default BusinessController;

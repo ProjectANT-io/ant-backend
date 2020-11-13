@@ -14,7 +14,14 @@ const logger = createLogger("Root");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(async (req: Request, res: Response, next) => {
-  await TryDBConnect((e: Error) => res.json(e), next);
+  try {
+    await TryDBConnect((e: Error) => {
+      throw e;
+    }, next);
+  } catch (e) {
+    res.status(500);
+    res.json(e.message);
+  }
 });
 
 // === Initializing all routes ===

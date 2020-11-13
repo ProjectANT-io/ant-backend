@@ -33,6 +33,7 @@ export default class ProjectController {
       "duration",
       "stipend",
       "start_date",
+      "due_date",
       "stream",
       "hourly_price",
       "location",
@@ -63,16 +64,33 @@ export default class ProjectController {
 
     // Check start_date for date format
     if (
-      !moment(req.body.start_date, ["MM/DD/YYYY", "MM-DD-YYYY"], true).isValid()
+      !moment(
+        req.body.start_date,
+        ["MM/DD/YYYY", "MM-DD-YYYY"],
+        true
+      ).isValid() ||
+      !moment(req.body.due_date, ["MM/DD/YYYY", "MM-DD-YYYY"], true).isValid()
     ) {
       res.status(422);
-      return "start_date should be a date";
+      return "start_date should be a date (MM-DD-YYYY)";
     }
 
     // Check remote for boolean format
     if (req.body.remote !== "true" && req.body.remote !== "false") {
       res.status(422);
-      return "remote should be a boolean";
+      return "remote should be a boolean (true/false)";
+    }
+
+    // Convert Milestones Field to Postgres Array
+    if (req.body.milestones) {
+      try {
+        req.body.milestones = JSON.parse(req.body.milestones);
+
+        // TODO check for required IProjectMilestone fields
+      } catch (e) {
+        res.status(415);
+        return `milestones improperly formatted\n${e}`;
+      }
     }
 
     // Save New Project to DB
@@ -149,7 +167,7 @@ export default class ProjectController {
         // TODO check for required IProjectMilestone fields
       } catch (e) {
         res.status(415);
-        return "milestones improperly formatted";
+        return `milestones improperly formatted\n${e}`;
       }
     }
 

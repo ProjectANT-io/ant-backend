@@ -5,6 +5,7 @@ import {
   Column,
   ManyToOne,
   ManyToMany,
+  UpdateDateColumn,
 } from "typeorm";
 import IBusiness from "./IBusiness";
 import IProject from "./IProject";
@@ -22,6 +23,12 @@ export default class Project implements IProject {
 
   @Column()
   description!: string;
+
+  @Column({ default: "available" })
+  project_type!: string;
+
+  @Column({ default: "NEW" })
+  status!: string;
 
   @ManyToOne("Business", "projects")
   business!: IBusiness["id"];
@@ -42,11 +49,11 @@ export default class Project implements IProject {
   @Column({ type: "timestamptz" })
   start_date!: string;
 
+  @Column({ type: "timestamptz" })
+  due_date!: string;
+
   @Column()
   stream!: string;
-
-  @Column({ nullable: true })
-  industry!: string;
 
   @Column({ type: "integer" })
   hourly_price!: number;
@@ -62,4 +69,22 @@ export default class Project implements IProject {
 
   @Column("json", { default: [] })
   milestones!: IProjectMilestone[];
+
+  @Column({ type: "integer", default: 0 })
+  applicants!: number;
+
+  @Column({ nullable: true })
+  image!: string;
+
+  @Column({ nullable: true })
+  introduction!: string;
+
+  @Column({ nullable: true })
+  industry!: string;
+
+  @Column({ nullable: true })
+  role!: string;
+
+  @UpdateDateColumn()
+  updated!: string;
 }

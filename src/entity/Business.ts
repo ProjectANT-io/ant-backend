@@ -1,5 +1,11 @@
 /* eslint-disable camelcase */
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  UpdateDateColumn,
+} from "typeorm";
 import IBusiness from "./IBusiness";
 import IProject from "./IProject";
 import IUser from "./IUser";
@@ -49,12 +55,9 @@ export default class Business implements IBusiness {
   // @Column({ nullable: true })
   // employees!: IUser[];
 
-  @OneToMany("Project", "previous_projects")
-  previous_projects!: IProject[];
+  @OneToMany("Project", "business")
+  projects!: IProject[];
 
-  @OneToMany("Project", "ongoing_projects")
-  ongoing_projects!: IProject[];
-
-  @OneToMany("Project", "available_projects")
-  available_projects!: IProject[];
+  @UpdateDateColumn()
+  updated!: string;
 }

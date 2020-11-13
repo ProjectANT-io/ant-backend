@@ -15,9 +15,9 @@ export default interface IBusiness {
   industry: string;
   description: string;
   external_link_urls: string; // TODO
-  culture: string; // TOOD
+  culture: string; // TODO
   // employees: IUser[]; // TODO
-  previous_projects: IProject[];
-  ongoing_projects: IProject[];
-  available_projects: IProject[];
+  projects: IProject[];
+
+  updated: string; // auto-generated
 }

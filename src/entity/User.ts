@@ -28,7 +28,7 @@ export default class User implements IUser {
   // @ManyToMany("Skill")
   // skills!: ISkill[];
 
-  @Column({ type: "simple-array", nullable: true })
+  @Column("string", { array: true, nullable: true })
   external_urls!: string[];
 
   // @ManyToMany("Education")

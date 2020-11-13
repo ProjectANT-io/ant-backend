@@ -704,12 +704,12 @@ components:
         ProjectMilestone:
             type: object
             required:
-                - id
+                - key
                 - project_id
                 - task
                 - status
             properties:
-                id:
+                key:
                     $ref: "#/components/schemas/Index"
                 project_id:
                     $ref: "#/components/schemas/Index"

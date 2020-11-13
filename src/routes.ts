@@ -1,6 +1,7 @@
 import UserController from "./controller/UserController";
 import ProjectController from "./controller/ProjectController";
 import BusinessController from "./controller/BusinessController";
+import PreviousOutsideProjectController from "./controller/PreviousOutsideProjectController";
 
 const Routes = [
   // User Routes
@@ -85,6 +86,32 @@ const Routes = [
     route: "/businesses/:business_id",
     controller: BusinessController,
     action: "deleteBusiness",
+  },
+
+  // Previous Outside Project
+  {
+    method: "post",
+    route: "/previousoutsideproject",
+    controller: PreviousOutsideProjectController,
+    action: "newPreviousOutsideProject",
+  },
+  {
+    method: "get",
+    route: "/previousoutsideproject/:previous_outside_project_id",
+    controller: PreviousOutsideProjectController,
+    action: "getPreviousOutsideProject",
+  },
+  {
+    method: "post",
+    route: "/previousoutsideproject/:previous_outside_project_id",
+    controller: PreviousOutsideProjectController,
+    action: "updatePreviousOutsideProject",
+  },
+  {
+    method: "delete",
+    route: "/previousoutsideproject/:previous_outside_project_id",
+    controller: PreviousOutsideProjectController,
+    action: "deletePreviousOutsideProject",
   },
 ];
 

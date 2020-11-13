@@ -25,62 +25,18 @@ class UserController {
 
     // check for missing required POST body fields
     let missingFields: string = "";
-    ["first_name", "last_name", "resume_url", "skills"].forEach(
-      (expectedField) => {
-        if (!(expectedField in req.body)) {
-          missingFields += `Missing ${expectedField}\n`;
-        }
+    ["first_name", "last_name", "resume_url"].forEach((expectedField) => {
+      if (!(expectedField in req.body)) {
+        missingFields += `Missing ${expectedField}\n`;
       }
-    );
+    });
     if (missingFields) {
       res.status(422);
       return missingFields;
     }
 
-    // const firstName, lastName, resumeURL, skills
-    const firstName = req.body.first_name;
-    const lastName = req.body.last_name;
-    const resumeURL = req.body.resume_url;
-    const { skills } = req.body;
-
-    let wrongType = "";
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
-    if (typeof firstName !== "string") {
-      wrongType += `${typeof firstName}: first_name should be a string\n`;
-    }
-    if (typeof lastName !== "string") {
-      wrongType += `${typeof lastName}: last_name should be a string\n`;
-    }
-    if (typeof resumeURL !== "string") {
-      wrongType += `${typeof resumeURL}: resume_url should be a string\n`;
-    }
-    if (typeof skills !== "string") {
-      wrongType += `${typeof skills}: skills should be a string\n`;
-    }
-    if (wrongType) {
-      res.status(422);
-      return wrongType;
-    }
-
-    // TODO Telvin remove ESLint disable-line once DB code is in place
-    // eslint-disable-next-line no-unused-vars
-    // const user = {
-    //   first_name: req.body.first_name,
-    //   last_name: req.body.last_name,
-    //   status: "unverified", // TODO
-    //   about_me: "",
-    //   profile_picture_url: "",
-    //   resume_url: req.body.resume_url,
-    //   skills:
-    //     typeof req.body.skills === "string"
-    //       ? req.body.skills.split(",")
-    //       : req.body.skills,
-    //   external_urls: [],
-    //   educations: [],
-    //   previous_projects: [],
-    //   work_experiences: [],
-    //   project_preference: [],
-    // };
+    // TODO
 
     try {
       const newUserInfo = this.userRepository.create(req.body);
@@ -90,7 +46,6 @@ class UserController {
       res.status(500);
       return e;
     }
-    // return user
   }
 
   async getUser(req: Request, res: Response) {

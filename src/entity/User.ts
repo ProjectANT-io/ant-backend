@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import IUser from "./IUser";
+import ISkill from "./ISkill";
 
 @Entity()
 export default class User implements IUser {
@@ -18,22 +19,22 @@ export default class User implements IUser {
   @Column()
   last_name!: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ nullable: true })
   status!: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ nullable: true })
   about_me!: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ nullable: true })
   profile_picture_url!: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ nullable: true })
   resume_url!: string;
 
-  // @ManyToMany("Skill")
+  // @Column("json", { nullable: true })
   // skills!: ISkill[];
 
-  @Column("string", { array: true, nullable: true })
+  @Column("text", { array: true, nullable: true })
   external_urls!: string[];
 
   // @ManyToMany("Education")

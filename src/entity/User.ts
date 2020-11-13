@@ -1,5 +1,10 @@
 /* eslint-disable camelcase */
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  UpdateDateColumn,
+} from "typeorm";
 import IUser from "./IUser";
 
 @Entity()
@@ -42,4 +47,7 @@ export default class User implements IUser {
 
   // @ManyToMany("Education")
   // project_preference!: IEducation;
+
+  @UpdateDateColumn()
+  updated!: string;
 }

@@ -1,5 +1,11 @@
 /* eslint-disable camelcase */
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  UpdateDateColumn,
+} from "typeorm";
 import IBusiness from "./IBusiness";
 import IProject from "./IProject";
 
@@ -31,4 +37,7 @@ export default class Business implements IBusiness {
 
   @OneToMany("Project", "business")
   projects!: IProject[];
+
+  @UpdateDateColumn()
+  updated!: string;
 }

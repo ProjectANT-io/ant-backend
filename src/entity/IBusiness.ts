@@ -8,4 +8,6 @@ export default interface IBusiness {
   location: string;
   industry: string;
   culture: string;
+
+  updated: string; // auto-generated
 }

@@ -2,6 +2,7 @@ import "reflect-metadata";
 import * as express from "express";
 import { Request, Response } from "express";
 import * as bodyParser from "body-parser";
+import * as cors from "cors";
 import Routes from "./routes";
 import createLogger from "./utils/logger";
 import { TryDBConnect } from "../db_helper/index";
@@ -11,6 +12,7 @@ const app: express.Application = express();
 const logger = createLogger("Root");
 
 // === app.use() ===
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(async (req: Request, res: Response, next) => {

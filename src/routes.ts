@@ -11,6 +11,15 @@ const Routes = [
     controller: UserController,
     action: "createUser",
   },
+
+  {
+    // Login User
+    method: "post",
+    route: "/users/login",
+    controller: UserController,
+    action: "loginUser",
+  },
+
   {
     method: "get",
     route: "/users/:user_id",
@@ -95,6 +104,15 @@ const Routes = [
     controller: EmployeeController,
     action: "createEmployee",
   },
+
+  {
+    // Login Employee
+    method: "post",
+    route: "/employees/login",
+    controller: EmployeeController,
+    action: "loginEmployee",
+  },
+
   {
     method: "get",
     route: "/employees/:employee_id",

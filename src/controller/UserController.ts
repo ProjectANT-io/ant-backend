@@ -25,7 +25,7 @@ export default class UserController {
 
     // check for missing required POST body fields
     let missingFields: string = "";
-    ["first_name", "last_name", "email", "resume_url"].forEach(
+    ["email", "password", "first_name", "last_name", "resume_url"].forEach(
       (expectedField) => {
         if (!(expectedField in req.body)) {
           missingFields += `Missing ${expectedField}\n`;
@@ -124,6 +124,29 @@ export default class UserController {
       await this.userRepository.delete(user.id);
 
       // Return the Deleted User
+      return user;
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
+  async loginUser(req: Request, res: Response) {
+    try {
+      // Find User
+      const user = await this.userRepository.findOne({ email: req.body.email });
+
+      // If User Does Not Exist
+      if (!user) {
+        res.status(404);
+        return `User with email ${req.body.email} not found.`;
+      }
+
+      // Found User
+      if (user.password !== req.body.password) {
+        res.status(401);
+        return "Incorrect Password";
+      }
       return user;
     } catch (e) {
       res.status(500);

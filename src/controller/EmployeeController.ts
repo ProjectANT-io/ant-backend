@@ -25,7 +25,7 @@ export default class EmployeeController {
 
     // check for missing required POST body fields
     let missingFields: string = "";
-    ["first_name", "last_name", "email", "business"].forEach(
+    ["email", "password", "first_name", "last_name", "business"].forEach(
       (expectedField) => {
         if (!(expectedField in req.body)) {
           missingFields += `Missing ${expectedField}\n`;
@@ -126,6 +126,31 @@ export default class EmployeeController {
       await this.employeeRepository.delete(employee.id);
 
       // Return the Deleted Employee
+      return employee;
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
+  async loginEmployee(req: Request, res: Response) {
+    try {
+      // Find Employee
+      const employee = await this.employeeRepository.findOne({
+        email: req.body.email,
+      });
+
+      // If Employee Does Not Exist
+      if (!employee) {
+        res.status(404);
+        return `Employee with email ${req.body.email} not found.`;
+      }
+
+      // Found Employee
+      if (employee.password !== req.body.password) {
+        res.status(401);
+        return "Incorrect Password";
+      }
       return employee;
     } catch (e) {
       res.status(500);

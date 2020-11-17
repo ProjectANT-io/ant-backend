@@ -14,13 +14,16 @@ export default class User implements IUser {
   id!: number;
 
   @Column()
+  email!: string;
+
+  @Column()
+  password!: string; // TODO plaintext password temporary
+
+  @Column()
   first_name!: string;
 
   @Column()
   last_name!: string;
-
-  @Column()
-  email!: string;
 
   @Column({ nullable: true })
   status!: string;

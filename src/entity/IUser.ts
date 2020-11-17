@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 export default interface IUser {
   id: number; // Required, auto-generated
+  email: string; // Required
   first_name: string; // Required
   last_name: string; // Required
-  email: string; // Required
   status: string;
 
   about_me: string;

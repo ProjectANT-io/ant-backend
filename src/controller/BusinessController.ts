@@ -75,7 +75,7 @@ export default class BusinessController {
     try {
       // Find Business
       const business = await this.businessRepository.findOne(businessID, {
-        relations: ["projects"],
+        relations: ["projects", "employees"],
       });
 
       // If Business Does Not Exist

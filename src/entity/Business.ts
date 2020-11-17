@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import IBusiness from "./IBusiness";
+import IEmployee from "./IEmployee";
 import IProject from "./IProject";
 import IUser from "./IUser";
 
@@ -51,9 +52,8 @@ export default class Business implements IBusiness {
   @Column({ nullable: true })
   culture!: string;
 
-  // TODO
-  // @Column({ nullable: true })
-  // employees!: IUser[];
+  @OneToMany("Employee", "business")
+  employees!: IEmployee[];
 
   @OneToMany("Project", "business")
   projects!: IProject[];

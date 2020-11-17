@@ -1,6 +1,7 @@
 import UserController from "./controller/UserController";
 import ProjectController from "./controller/ProjectController";
 import BusinessController from "./controller/BusinessController";
+import EmployeeController from "./controller/EmployeeController";
 
 const Routes = [
   // User Routes
@@ -8,7 +9,7 @@ const Routes = [
     method: "post",
     route: "/users",
     controller: UserController,
-    action: "newUser",
+    action: "createUser",
   },
   {
     method: "get",
@@ -85,6 +86,32 @@ const Routes = [
     route: "/businesses/:business_id",
     controller: BusinessController,
     action: "deleteBusiness",
+  },
+
+  // Employee Routes
+  {
+    method: "post",
+    route: "/employees",
+    controller: EmployeeController,
+    action: "createEmployee",
+  },
+  {
+    method: "get",
+    route: "/employees/:employee_id",
+    controller: EmployeeController,
+    action: "getEmployee",
+  },
+  {
+    method: "post",
+    route: "/employees/:employee_id",
+    controller: EmployeeController,
+    action: "updateEmployee",
+  },
+  {
+    method: "delete",
+    route: "/employees/:employee_id",
+    controller: EmployeeController,
+    action: "deleteEmployee",
   },
 ];
 

@@ -4,12 +4,13 @@ import {
   PrimaryGeneratedColumn,
   Column,
   UpdateDateColumn,
+  ManyToOne,
 } from "typeorm";
-import IUser from "./IUser";
-import ISkill from "./ISkill";
+import IBusiness from "./IBusiness";
+import IEmployee from "./IEmployee";
 
 @Entity()
-export default class User implements IUser {
+export default class Employee implements IEmployee {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -46,20 +47,8 @@ export default class User implements IUser {
   @Column("text", { array: true, nullable: true })
   external_urls!: string[];
 
-  // @Column("json", { nullable: true })
-  // skills!: ISkill[];
-
-  // @ManyToMany("Education")
-  // educations!: IEducation[];
-
-  // @ManyToMany("PreviousOutsideProject-array")
-  // previous_outside_projects!: IPreviousOutsideProject[];
-
-  // @ManyToMany("WorkExperience")
-  // work_experiences!: IWorkExperience;
-
-  // @ManyToMany("Education")
-  // project_preference!: IEducation;
+  @ManyToOne("Business", "employees")
+  business!: IBusiness["id"];
 
   @UpdateDateColumn()
   updated!: string;

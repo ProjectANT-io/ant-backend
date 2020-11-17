@@ -2,7 +2,7 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import User from "../entity/User";
 
-class UserController {
+export default class UserController {
   private userRepository = getRepository(User);
 
   async authCheck(request: Request, response: Response) {
@@ -13,7 +13,7 @@ class UserController {
     return true; // TODO
   }
 
-  async newUser(req: Request, res: Response) {
+  async createUser(req: Request, res: Response) {
     if (!(await this.authCheck(req, res))) {
       res.status(401);
       return "Unauthorized";
@@ -25,11 +25,13 @@ class UserController {
 
     // check for missing required POST body fields
     let missingFields: string = "";
-    ["first_name", "last_name", "resume_url"].forEach((expectedField) => {
-      if (!(expectedField in req.body)) {
-        missingFields += `Missing ${expectedField}\n`;
+    ["first_name", "last_name", "email", "resume_url"].forEach(
+      (expectedField) => {
+        if (!(expectedField in req.body)) {
+          missingFields += `Missing ${expectedField}\n`;
+        }
       }
-    });
+    );
     if (missingFields) {
       res.status(422);
       return missingFields;
@@ -129,5 +131,3 @@ class UserController {
     }
   }
 }
-
-export default UserController;

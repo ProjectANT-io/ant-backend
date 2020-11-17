@@ -1,14 +1,20 @@
 /* eslint-disable camelcase */
 export default interface IUser {
-  id: number;
-  first_name: string;
-  last_name: string;
+  id: number; // Required, auto-generated
+  first_name: string; // Required
+  last_name: string; // Required
+  email: string; // Required
   status: string;
+
   about_me: string;
   profile_picture_url: string;
-  resume_url: string;
-  // skills: ISkill[];
+  resume_url: string; // Required
+  location: string;
+  gender: string;
+  role: string;
   external_urls: string[];
+
+  // skills: ISkill[];
   // educations: IEducation[];
   // previous_outside_projects: IPreviousOutsideProject[];
   // work_experiences: IWorkExperience;

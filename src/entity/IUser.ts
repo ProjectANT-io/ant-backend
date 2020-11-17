@@ -12,7 +12,7 @@ export default interface IUser {
   location: string;
   gender: string;
   role: string;
-  external_urls: string[];
+  external_urls: string;
 
   // skills: ISkill[];
   // educations: IEducation[];

@@ -46,8 +46,8 @@ export default class User implements IUser {
   @Column({ nullable: true })
   role!: string;
 
-  @Column("text", { array: true, nullable: true })
-  external_urls!: string[];
+  @Column("text", { array: false, nullable: true })
+  external_urls!: string;
 
   // @Column("json", { nullable: true })
   // skills!: ISkill[];

@@ -2,6 +2,7 @@ import UserController from "./controller/UserController";
 import ProjectController from "./controller/ProjectController";
 import BusinessController from "./controller/BusinessController";
 import EmployeeController from "./controller/EmployeeController";
+import PaymentController from "./controller/PaymentController";
 
 const Routes = [
   // User Routes
@@ -130,6 +131,14 @@ const Routes = [
     route: "/employees/:employee_id",
     controller: EmployeeController,
     action: "deleteEmployee",
+  },
+
+  // Payment Routes
+  {
+    method: "post",
+    route: "/create-session",
+    controller: PaymentController,
+    action: "createSession",
   },
 ];
 

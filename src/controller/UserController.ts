@@ -153,4 +153,9 @@ export default class UserController {
       return e;
     }
   }
+
+  static async assignStripeId(userId: number, stripeId: string) {
+    const userRepository = getRepository(User);
+    await userRepository.update(userId, { stripeId });
+  }
 }

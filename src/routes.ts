@@ -140,6 +140,12 @@ const Routes = [
     controller: PaymentController,
     action: "createSession",
   },
+  {
+    method: "post",
+    route: "/payment/create-account",
+    controller: PaymentController,
+    action: "createStripeAccount",
+  },
 ];
 
 export default Routes;

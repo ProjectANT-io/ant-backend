@@ -64,6 +64,9 @@ export default class User implements IUser {
   // @ManyToMany("Education")
   // project_preference!: IEducation;
 
+  @Column({ nullable: true })
+  stripeId!: string;
+
   @UpdateDateColumn()
   updated!: string;
 }

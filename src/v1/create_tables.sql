@@ -8,6 +8,7 @@ CREATE TABLE "PERSON" (
     resume_url TEXT,
     skills INT REFERENCES SKILL(S_ID),
     searching_for_work BOOLEAN
+     -- ppl into graphic design, web development, app development, digital marketing
 );
 CREATE TABLE "SKILL" (
     S_ID INT PRIMARY KEY,
@@ -69,21 +70,35 @@ CREATE TABLE "ANT_PROJECT" (
     -- Ongoing means accepting, not ongoing and completed is past project.
     available BOOLEAN,
     previous BOOLEAN,
+    project_type VARCHAR(20),
     Project_Description VARCHAR(600),
     introduction VARCHAR(300)
 );
 
 CREATE TABLE "PROJECT_ROLES" (
     R_ID INT PRIMARY KEY,
+    -- This has been migrated to person_ant_projects if position is filled
+    -- U_ID INT REFERENCES PERSON(U_ID),
     A_ID INT REFERENCES ANT_PROJECT(A_ID),
     num_people INT,
     role_name VARCHAR(30) NOT NULL,
+    -- role type is a subset of selections within graphic design, web development, app development, digital marketing
     role_type VARCHAR(30),
+    role_length VARCHAR(50),
     compensation VARCHAR(20),
     timezone VARCHAR(10),
     industry VARCHAR(20),
-    role_remote boolean,
     role_description VARCHAR(200)
+);
+
+CREATE TABLE "PROJECT_PREFERENCES" (
+    P_ID INT PRIMARY KEY,
+    U_ID INT REFERENCES PERSON,
+    -- these should match the attributes under project_roles
+    role_type VARCHAR(30),
+    role_length VARCHAR(50),
+    compensation VARCHAR(20),
+    timezone VARCHAR(10),
 );
 
 CREATE TABLE "PROJECT_SKILLS" (
@@ -101,3 +116,12 @@ CREATE TABLE "BUSINESS_ANT_PROJECTS" (
     A_ID INT REFERENCES ANT_PROJECT(A_ID)
 );
 
+CREATE TABLE "BUSINESS_SAVED" (
+    B_ID INT REFERENCES BUSINESS(B_ID),
+    U_ID INT REFERENCES PERSON(U_ID)
+);
+
+CREATE TABLE "BUSINESS_SENT_INTEREST" (
+    B_ID INT REFERENCES BUSINESS(B_ID),
+    U_ID INT REFERENCES PERSON(U_ID)
+);

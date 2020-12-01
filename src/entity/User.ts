@@ -4,7 +4,9 @@ import {
   PrimaryGeneratedColumn,
   Column,
   UpdateDateColumn,
+  BeforeInsert,
 } from "typeorm";
+import * as bcrypt from "bcrypt";
 import IUser from "./IUser";
 import ISkill from "./ISkill";
 
@@ -13,16 +15,20 @@ export default class User implements IUser {
   @PrimaryGeneratedColumn()
   id!: number;
 
+  // "user" or "employee"
+  @Column()
+  type!: string;
+
   @Column()
   email!: string;
 
   @Column()
-  password!: string; // TODO plaintext password temporary
+  password!: string;
 
-  @Column()
+  @Column({ nullable: true })
   first_name!: string;
 
-  @Column()
+  @Column({ nullable: true })
   last_name!: string;
 
   @Column({ nullable: true })

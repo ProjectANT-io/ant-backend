@@ -1,6 +1,8 @@
 import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import Employee from "../entity/Employee";
+import User from "../entity/User";
+import * as bcrypt from "bcrypt";
 
 export default class EmployeeController {
   private employeeRepository = getRepository(Employee);
@@ -14,18 +16,15 @@ export default class EmployeeController {
   }
 
   async createEmployee(req: Request, res: Response) {
-    if (!(await this.authCheck(req, res))) {
-      res.status(401);
-      return "Unauthorized";
-    }
-    if (!this.permissionsCheck(req, res)) {
+    // ensure not logged in
+    if (req.isAuthenticated()) {
       res.status(403);
-      return "Wrong permissions";
+      return "Already logged in";
     }
-
+    
     // check for missing required POST body fields
     let missingFields: string = "";
-    ["email", "password", "first_name", "last_name", "business"].forEach(
+    ["email", "password"].forEach(
       (expectedField) => {
         if (!(expectedField in req.body)) {
           missingFields += `Missing ${expectedField}\n`;
@@ -37,11 +36,28 @@ export default class EmployeeController {
       return missingFields;
     }
 
-    // Check for Correct Type of POST Body Fields, return 422 if type is not correct
-    // TODO
-
     try {
-      const newEmployeeInfo = this.employeeRepository.create(req.body);
+      // check for existing user
+      const employee = await this.employeeRepository.find({
+        where: {
+          email: req.body.email,
+        },
+      });
+      const user = await getRepository(User).find({
+        where: {
+          email: req.body.email,
+        },
+      });
+      if (employee.length > 0 || user.length > 0) {
+        throw("Email is already registered to another user.");
+      }
+
+      // create user with encrypted password
+      const newEmployeeInfo = this.employeeRepository.create({
+        ...req.body,
+        type: "employee",
+        password: await bcrypt.hash(req.body.password, 5),
+      });
       const newEmployee = await this.employeeRepository.save(newEmployeeInfo);
       return newEmployee;
     } catch (e) {
@@ -51,15 +67,6 @@ export default class EmployeeController {
   }
 
   async getEmployee(req: Request, res: Response) {
-    if (!(await this.authCheck(req, res))) {
-      res.status(401);
-      return "Unauthorized";
-    }
-    if (!this.permissionsCheck(req, res)) {
-      res.status(403);
-      return "Wrong permissions";
-    }
-
     // Check for Required Path Parameter
     if (!req.params.employee_id) {
       res.status(422);

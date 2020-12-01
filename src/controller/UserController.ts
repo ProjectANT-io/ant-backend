@@ -1,6 +1,9 @@
 import { getRepository } from "typeorm";
 import { Request, Response } from "express";
+import * as bcrypt from "bcrypt";
 import User from "../entity/User";
+import Emmployee from "../entity/Employee";
+import Employee from "../entity/Employee";
 
 export default class UserController {
   private userRepository = getRepository(User);
@@ -14,18 +17,15 @@ export default class UserController {
   }
 
   async createUser(req: Request, res: Response) {
-    if (!(await this.authCheck(req, res))) {
-      res.status(401);
-      return "Unauthorized";
-    }
-    if (!this.permissionsCheck(req, res)) {
+    // ensure not logged in
+    if (req.isAuthenticated()) {
       res.status(403);
-      return "Wrong permissions";
+      return "Already logged in";
     }
 
     // check for missing required POST body fields
     let missingFields: string = "";
-    ["email", "password", "first_name", "last_name", "resume_url"].forEach(
+    ["email", "password"].forEach(
       (expectedField) => {
         if (!(expectedField in req.body)) {
           missingFields += `Missing ${expectedField}\n`;
@@ -37,11 +37,28 @@ export default class UserController {
       return missingFields;
     }
 
-    // Check for Correct Type of POST Body Fields, return 422 if type is not correct
-    // TODO
-
     try {
-      const newUserInfo = this.userRepository.create(req.body);
+      // check for existing user
+      const user = await this.userRepository.find({
+        where: {
+          email: req.body.email,
+        },
+      });
+      const employee = await getRepository(Employee).find({
+        where: {
+          email: req.body.email,
+        },
+      });
+      if (user.length > 0 || employee.length > 0) {
+        throw("Email is already registered to another user.");
+      }
+
+      // create user with encrypted password
+      const newUserInfo = this.userRepository.create({
+        ...req.body,
+        type: "user",
+        password: await bcrypt.hash(req.body.password, 5),
+      });
       const newUser = await this.userRepository.save(newUserInfo);
       return newUser;
     } catch (e) {
@@ -133,21 +150,19 @@ export default class UserController {
 
   async loginUser(req: Request, res: Response) {
     try {
-      // Find User
-      const user = await this.userRepository.findOne({ email: req.body.email });
+      // Create 30 day session cookie\
+      req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000;
+      return req.user;
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
 
-      // If User Does Not Exist
-      if (!user) {
-        res.status(404);
-        return `User with email ${req.body.email} not found.`;
-      }
-
-      // Found User
-      if (user.password !== req.body.password) {
-        res.status(401);
-        return "Incorrect Password";
-      }
-      return user;
+  async logoutUser(req: Request, res: Response) {
+    try {
+      req.logout();
+      return "Successfully logged out";
     } catch (e) {
       res.status(500);
       return e;

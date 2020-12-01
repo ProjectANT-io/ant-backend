@@ -2,6 +2,7 @@ import UserController from "./controller/UserController";
 import ProjectController from "./controller/ProjectController";
 import BusinessController from "./controller/BusinessController";
 import EmployeeController from "./controller/EmployeeController";
+import passport = require("passport");
 
 const Routes = [
   // User Routes
@@ -13,11 +14,25 @@ const Routes = [
   },
 
   {
-    // Login User
+    // Login User/Employee
     method: "post",
-    route: "/users/login",
+    route: "/login",
     controller: UserController,
     action: "loginUser",
+    auth: passport.authenticate("local"),
+  },
+  {
+    // Logout User/Employee
+    method: "post",
+    route: "/logout",
+    controller: UserController,
+    action: "logoutUser",
+  },
+  {
+    method: "post",
+    route: "/users/test",
+    controller: UserController,
+    action: "test",
   },
 
   {
@@ -104,15 +119,6 @@ const Routes = [
     controller: EmployeeController,
     action: "createEmployee",
   },
-
-  {
-    // Login Employee
-    method: "post",
-    route: "/employees/login",
-    controller: EmployeeController,
-    action: "loginEmployee",
-  },
-
   {
     method: "get",
     route: "/employees/:employee_id",

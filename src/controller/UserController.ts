@@ -2,7 +2,6 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import * as bcrypt from "bcrypt";
 import User from "../entity/User";
-import Emmployee from "../entity/Employee";
 import Employee from "../entity/Employee";
 
 export default class UserController {

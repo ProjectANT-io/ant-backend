@@ -2,7 +2,6 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import User from "../entity/User";
 
-const passport = require("passport");
 const authUtils = require("../utils/authUtils");
 
 export default class UserController {

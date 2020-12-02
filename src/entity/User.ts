@@ -17,7 +17,10 @@ export default class User implements IUser {
   email!: string;
 
   @Column()
-  password!: string; // TODO plaintext password temporary
+  hash!: string;
+
+  @Column()
+  salt!: string;
 
   @Column()
   first_name!: string;

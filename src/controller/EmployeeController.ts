@@ -2,6 +2,8 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import Employee from "../entity/Employee";
 
+const authUtils = require("../utils/authUtils");
+
 export default class EmployeeController {
   private employeeRepository = getRepository(Employee);
 
@@ -40,10 +42,21 @@ export default class EmployeeController {
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
     // TODO
 
+    const saltHash = authUtils.genPassword(req.body.password);
+    const { salt, hash } = saltHash;
+    req.body.hash = hash;
+    req.body.salt = salt;
+
     try {
       const newEmployeeInfo = this.employeeRepository.create(req.body);
       const newEmployee = await this.employeeRepository.save(newEmployeeInfo);
-      return newEmployee;
+      const jwt = authUtils.issueJWT(newEmployee, "employee");
+      return {
+        success: true,
+        user: newEmployee,
+        token: jwt.token,
+        expiresIn: jwt.expires,
+      };
     } catch (e) {
       res.status(500);
       return e;
@@ -146,12 +159,24 @@ export default class EmployeeController {
         return `Employee with email ${req.body.email} not found.`;
       }
 
+      const isValid = authUtils.validPassword(
+        req.body.password,
+        employee.hash,
+        employee.salt
+      );
+
       // Found Employee
-      if (employee.password !== req.body.password) {
+      if (!isValid) {
         res.status(401);
         return "Incorrect Password";
       }
-      return employee;
+      const tokenObject = authUtils.issueJWT(employee, "employee");
+      return {
+        success: true,
+        employee,
+        token: tokenObject.token,
+        expiresIn: tokenObject.expires,
+      };
     } catch (e) {
       res.status(500);
       return e;

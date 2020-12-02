@@ -2,6 +2,9 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import User from "../entity/User";
 
+const passport = require("passport");
+const authUtils = require("../utils/authUtils");
+
 export default class UserController {
   private userRepository = getRepository(User);
 
@@ -40,10 +43,22 @@ export default class UserController {
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
     // TODO
 
+    const saltHash = authUtils.genPassword(req.body.password);
+    const { salt, hash } = saltHash;
+    req.body.hash = hash;
+    req.body.salt = salt;
+
     try {
       const newUserInfo = this.userRepository.create(req.body);
       const newUser = await this.userRepository.save(newUserInfo);
-      return newUser;
+      const jwt = authUtils.issueJWT(newUser, "user");
+
+      return {
+        success: true,
+        user: newUser,
+        token: jwt.token,
+        expiresIn: jwt.expires,
+      };
     } catch (e) {
       res.status(500);
       return e;
@@ -138,16 +153,29 @@ export default class UserController {
 
       // If User Does Not Exist
       if (!user) {
-        res.status(404);
-        return `User with email ${req.body.email} not found.`;
+        res.status(401);
+        return `User with email ${req.body.email} could not be found.`;
       }
 
+      const isValid = authUtils.validPassword(
+        req.body.password,
+        user.hash,
+        user.salt
+      );
+
       // Found User
-      if (user.password !== req.body.password) {
+      if (!isValid) {
         res.status(401);
         return "Incorrect Password";
       }
-      return user;
+
+      const tokenObject = authUtils.issueJWT(user, "user");
+      return {
+        success: true,
+        user,
+        token: tokenObject.token,
+        expiresIn: tokenObject.expires,
+      };
     } catch (e) {
       res.status(500);
       return e;

@@ -2,6 +2,8 @@
 export default interface IUser {
   id: number; // Required, auto-generated
   email: string; // Required
+  hash: string;
+  salt: string;
   first_name: string; // Required
   last_name: string; // Required
   status: string;

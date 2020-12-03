@@ -98,7 +98,7 @@ CREATE TABLE "PROJECT_PREFERENCES" (
     role_type VARCHAR(30),
     role_length VARCHAR(50),
     compensation VARCHAR(20),
-    timezone VARCHAR(10),
+    timezone VARCHAR(10)
 );
 
 CREATE TABLE "PROJECT_SKILLS" (

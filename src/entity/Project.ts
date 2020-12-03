@@ -34,17 +34,14 @@ export default class Project implements IProject {
   business!: IBusiness["id"];
 
   // TODO to implement later
-  @ManyToOne("Business", "user")
-  employee!: IUser["id"];
+  // @ManyToOne("Business", "user")
+  // employee!: IUser["id"];
 
-  @ManyToMany("Skill")
-  required_skills!: ISkill[];
+  // @ManyToMany("Skill")
+  // required_skills!: ISkill[];
 
   @Column()
-  duration!: string;
-
-  @Column({ type: "integer" })
-  stipend!: number;
+  required_skills!: string[];
 
   @Column({ type: "timestamptz" })
   start_date!: string;
@@ -52,23 +49,23 @@ export default class Project implements IProject {
   @Column({ type: "timestamptz" })
   due_date!: string;
 
-  @Column()
-  stream!: string;
+  // @Column()
+  // stream!: string;
 
   @Column({ type: "integer" })
-  hourly_price!: number;
+  hourly_rate!: number;
 
   @Column()
   location!: string;
 
   @Column()
-  payment_type!: string;
+  payment_method!: string;
 
-  @Column()
-  remote!: boolean;
+  // @Column()
+  // remote!: boolean;
 
-  @Column("json", { default: [] })
-  milestones!: IProjectMilestone[];
+  // @Column("json", { default: [] })
+  // milestones!: IProjectMilestone[];
 
   @Column({ type: "integer", default: 0 })
   applicants!: number;
@@ -84,6 +81,45 @@ export default class Project implements IProject {
 
   @Column({ nullable: true })
   role!: string;
+
+  @Column({ nullable: true })
+  project_manager!: number;
+
+  @Column({ nullable: true })
+  cover_image!: string;
+
+  @Column({ nullable: true })
+  client_image!: string;
+
+  @Column({ nullable: true })
+  timeline!: string;
+
+  @Column({ nullable: true })
+  length!: string;
+
+  @Column({ nullable: true })
+  created_by!: string;
+
+  @Column({ nullable: true })
+  logo!: string;
+
+  @Column({ nullable: true })
+  client!: string;
+
+  @Column({ nullable: true, default: [] })
+  outputs!: string[];
+
+  @Column({ nullable: true })
+  compensation!: string;
+
+  @Column({ nullable: true })
+  timezone!: string;
+
+  @Column({ nullable: true, default: [] })
+  tasks!: string[];
+
+  @Column({ nullable: true })
+  student!: number;
 
   @UpdateDateColumn()
   updated!: string;

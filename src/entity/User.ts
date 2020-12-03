@@ -9,10 +9,10 @@ import {
 import * as bcrypt from "bcrypt";
 
 import IUser from "./IUser";
-import IEducation from "./IEducation";
+// import IEducation from "./IEducation";
 import IProject from "./IProject";
-import ICertification from "./ICertification";
-import IApplication from "./IApplication";
+// import ICertification from "./ICertification";
+// import IApplication from "./IApplication";
 
 @Entity()
 export default class User implements IUser {

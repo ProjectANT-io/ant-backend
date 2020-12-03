@@ -24,13 +24,11 @@ export default class UserController {
 
     // check for missing required POST body fields
     let missingFields: string = "";
-    ["email", "password"].forEach(
-      (expectedField) => {
-        if (!(expectedField in req.body)) {
-          missingFields += `Missing ${expectedField}\n`;
-        }
+    ["email", "password"].forEach((expectedField) => {
+      if (!(expectedField in req.body)) {
+        missingFields += `Missing ${expectedField}\n`;
       }
-    );
+    });
     if (missingFields) {
       res.status(422);
       return missingFields;
@@ -49,7 +47,7 @@ export default class UserController {
         },
       });
       if (user.length > 0 || employee.length > 0) {
-        throw("Email is already registered to another user.");
+        throw "Email is already registered to another user.";
       }
 
       // create user with encrypted password

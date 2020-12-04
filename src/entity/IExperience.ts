@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-import { Media } from "aws-sdk/clients/transcribeservice";
 
 export default interface IExperience {
     id: number; // required

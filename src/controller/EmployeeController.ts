@@ -59,6 +59,7 @@ export default class EmployeeController {
         password: await bcrypt.hash(req.body.password, 5),
       });
       const newEmployee = await this.employeeRepository.save(newEmployeeInfo);
+      newEmployee.type = 'employee';
       return newEmployee;
     } catch (e) {
       res.status(500);
@@ -94,6 +95,7 @@ export default class EmployeeController {
       }
 
       // Return Found Employee
+      employee.type = 'employee';
       return employee;
     } catch (e) {
       res.status(500);

@@ -64,12 +64,14 @@ passport.use(
             email: req.body.email,
           },
         });
+        user.type = 'user';
         const employeeRepository = getRepository(Employee);
         const employee = await employeeRepository.find({
           where: {
             email: req.body.email,
           },
         });
+        employee.type = 'employee';
         user.push(...employee);
         if (user.length === 0) {
           return done(null, false);

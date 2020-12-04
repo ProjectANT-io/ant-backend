@@ -57,6 +57,7 @@ export default class UserController {
         password: await bcrypt.hash(req.body.password, 5),
       });
       const newUser = await this.userRepository.save(newUserInfo);
+      newUser.type = 'user';
       return newUser;
     } catch (e) {
       res.status(500);
@@ -99,6 +100,7 @@ export default class UserController {
       }
 
       // Return Found User
+      user.type = 'user';
       return user;
     } catch (e) {
       res.status(500);

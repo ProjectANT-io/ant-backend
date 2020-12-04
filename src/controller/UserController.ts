@@ -3,9 +3,13 @@ import { Request, Response } from "express";
 import * as bcrypt from "bcrypt";
 import User from "../entity/User";
 import Employee from "../entity/Employee";
+import Education from "../entity/Education";
+//import Experience from "../entity/Experience";
 
 export default class UserController {
   private userRepository = getRepository(User);
+  private educationRepository = getRepository(Education);
+  //private experienceRepository = getRepository(Experience);
 
   async authCheck(request: Request, response: Response) {
     return true; // TODO
@@ -50,11 +54,29 @@ export default class UserController {
         throw "Email is already registered to another user.";
       }
 
+      // create educations, experiences
+      let educations = [];
+      let education;
+      for (education of req.body.education[0]) {
+        const newEducationInfo = this.educationRepository.create(education);
+        const newEducation:any = await this.educationRepository.save(newEducationInfo);
+        educations.push(newEducation.id);
+      }
+      let experiences = [];
+      let experience;
+      for (experience of req.body.work_experience[0]) {
+        //const newExperienceInfo = this.experienceRepository.create(experience);
+        //const newExperience = await this.experienceRepository.save(newExperienceInfo);
+        //experiences.push(newExperience.id);
+      }
+
       // create user with encrypted password
       const newUserInfo = this.userRepository.create({
         ...req.body,
         type: "user",
         password: await bcrypt.hash(req.body.password, 5),
+        education_ids: educations,
+        experience_ids: experiences,
       });
       const newUser = await this.userRepository.save(newUserInfo);
       return newUser;

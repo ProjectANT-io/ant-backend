@@ -27,15 +27,23 @@ export default class Experience implements IExperience {
   end_date!: string;
 
   @Column({ nullable: true })
-  media!: Media;
+  media!: string;
 
   @Column({ nullable: true })
   description!: string;
 
-  @Column({ nullable: true })
+  @Column("text", {
+    nullable: true,
+    array: true,
+    default: () => "array[]::integer[]",
+  })
   duties!: string[];
 
-  @Column()
+  @Column("text", {
+    nullable: true,
+    array: true,
+    default: () => "array[]::integer[]",
+  })
   skills!: string[];
 
 }

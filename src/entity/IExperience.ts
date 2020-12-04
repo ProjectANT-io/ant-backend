@@ -8,7 +8,7 @@ export default interface IExperience {
     location: string;
     start_date: string;
     end_date: string;
-    media: Media; 
+    media: string; 
     description: string;
     duties: string[];
     skills: string[];

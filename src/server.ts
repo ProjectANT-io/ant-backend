@@ -1,20 +1,22 @@
-require('dotenv').config();
-
 import "reflect-metadata";
 import * as express from "express";
 import { Request, Response } from "express";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
-import Routes from "./routes";
-import createLogger from "./utils/logger";
-import { TryDBConnect } from "../db_helper/index";
+import * as bcrypt from "bcrypt";
 import * as expressSession from "express-session";
 import passport = require("passport");
+
 const LocalStrategy = require("passport-local").Strategy;
 import { getRepository } from "typeorm";
+import { TryDBConnect } from "../db_helper/index";
+import Routes from "./routes";
+import createLogger from "./utils/logger";
 import User from "./entity/User";
 import Employee from "./entity/Employee";
-import * as bcrypt from "bcrypt";
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+require("dotenv").config();
 
 // === Initializing variables ===
 const app: express.Application = express();
@@ -36,60 +38,64 @@ app.use(async (req: Request, res: Response, next) => {
 });
 
 // === Passport setup ===
-app.use(expressSession({
-  secret: 'ant-secret-key-move-to-env-file-please',
-  resave: false,
-  saveUninitialized: false,
-}));
+app.use(
+  expressSession({
+    secret: "ant-secret-key-move-to-env-file-please",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use("local", new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: true
-  },
-  (req: any, email: string, password: string, done: Function) => {
-    loginAttempt();
-    async function loginAttempt() {
-      const userRepository = getRepository(User);
-      let user = await userRepository.find({
-        where: {
-          email: req.body.email,
-        },
-      });
-      const employeeRepository = getRepository(Employee);
-      const employee = await employeeRepository.find({
-        where: {
-          email: req.body.email,
-        },
-      });
-      user.push(...employee);
-      if (user.length === 0) {
-        return done(null, false);
-      } else {
-        bcrypt.compare(password, user[0].password, (err, check) => {
-          if (err) {
-            return done();
-          } else if (check) {
-            console.log(user[0]);
-            console.log(employee[0]);
-            return done(null, user[0]);
-          } else {
-            return done(null, false);
-          }
+passport.use(
+  "local",
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+      passReqToCallback: true,
+    },
+    (req: any, email: string, password: string, done: Function) => {
+      loginAttempt();
+      async function loginAttempt() {
+        const userRepository = getRepository(User);
+        let user = await userRepository.find({
+          where: {
+            email: req.body.email,
+          },
         });
+        const employeeRepository = getRepository(Employee);
+        const employee = await employeeRepository.find({
+          where: {
+            email: req.body.email,
+          },
+        });
+        user.push(...employee);
+        if (user.length === 0) {
+          return done(null, false);
+        } else {
+          bcrypt.compare(password, user[0].password, (err, check) => {
+            if (err) {
+              return done();
+            } else if (check) {
+              return done(null, user[0]);
+            } else {
+              return done(null, false);
+            }
+          });
+        }
       }
     }
-  })
+  )
 );
 
 passport.serializeUser((user, done) => {
   done(null, user);
-})
+});
 
 passport.deserializeUser((user, done) => {
   done(null, user);
-})
+});
 
 // === Initializing all routes ===
 Routes.forEach((route) => {

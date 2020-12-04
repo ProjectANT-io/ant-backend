@@ -18,10 +18,10 @@ export default class Project implements IProject {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column() // required
   title!: string;
 
-  @Column()
+  @Column({ nullable: true })
   description!: string;
 
   @Column({ default: "available" })
@@ -34,43 +34,44 @@ export default class Project implements IProject {
   business!: IBusiness["id"];
 
   // TODO to implement later
-  @ManyToOne("Business", "user")
-  employee!: IUser["id"];
+  // @ManyToOne("Business", "user")
+  // employee!: IUser["id"];
 
-  @ManyToMany("Skill")
-  required_skills!: ISkill[];
+  // @ManyToMany("Skill")
+  // required_skills!: ISkill[];
 
-  @Column()
-  duration!: string;
+  @Column("text", {
+    nullable: true,
+    array: true,
+    default: () => "array[]::integer[]",
+  })
+  required_skills!: string[];
 
-  @Column({ type: "integer" })
-  stipend!: number;
-
-  @Column({ type: "timestamptz" })
+  @Column({ type: "timestamptz", nullable: true })
   start_date!: string;
 
-  @Column({ type: "timestamptz" })
+  @Column({ type: "timestamptz", nullable: true })
   due_date!: string;
 
-  @Column()
-  stream!: string;
+  // @Column()
+  // stream!: string;
 
-  @Column({ type: "integer" })
-  hourly_price!: number;
+  @Column({ type: "integer", nullable: true })
+  hourly_rate!: number;
 
-  @Column()
+  @Column({ nullable: true })
   location!: string;
 
-  @Column()
-  payment_type!: string;
+  @Column({ nullable: true })
+  payment_method!: string;
 
-  @Column()
-  remote!: boolean;
+  // @Column()
+  // remote!: boolean;
 
-  @Column("json", { default: [] })
-  milestones!: IProjectMilestone[];
+  // @Column("json", { default: ()=>'array[]::integer[]' })
+  // milestones!: IProjectMilestone[];
 
-  @Column({ type: "integer", default: 0 })
+  @Column({ type: "integer", default: 0, nullable: true })
   applicants!: number;
 
   @Column({ nullable: true })
@@ -84,6 +85,53 @@ export default class Project implements IProject {
 
   @Column({ nullable: true })
   role!: string;
+
+  @Column({ nullable: true })
+  project_manager!: number;
+
+  @Column({ nullable: true })
+  cover_image!: string;
+
+  @Column({ nullable: true })
+  client_image!: string;
+
+  @Column({ nullable: true })
+  timeline!: string;
+
+  @Column({ nullable: true })
+  length!: string;
+
+  @Column({ nullable: true })
+  created_by!: string;
+
+  @Column({ nullable: true })
+  logo!: string;
+
+  @Column({ nullable: true })
+  client!: string;
+
+  @Column("text", {
+    nullable: true,
+    array: true,
+    default: () => "array[]::integer[]",
+  })
+  outputs!: string[];
+
+  @Column({ nullable: true })
+  compensation!: string;
+
+  @Column({ nullable: true })
+  timezone!: string;
+
+  @Column("text", {
+    nullable: true,
+    array: true,
+    default: () => "array[]::integer[]",
+  })
+  tasks!: string[];
+
+  @Column("integer", { nullable: true })
+  student!: number;
 
   @UpdateDateColumn()
   updated!: string;

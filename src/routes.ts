@@ -2,6 +2,9 @@ import UserController from "./controller/UserController";
 import ProjectController from "./controller/ProjectController";
 import BusinessController from "./controller/BusinessController";
 import EmployeeController from "./controller/EmployeeController";
+import EducationController from "./controller/EducationController";
+import TaskController from "./controller/TaskController";
+
 import passport = require("passport");
 
 const Routes = [
@@ -136,6 +139,58 @@ const Routes = [
     route: "/employees/:employee_id",
     controller: EmployeeController,
     action: "deleteEmployee",
+  },
+
+  // Education Routes
+  {
+    method: "post",
+    route: "/educations",
+    controller: EducationController,
+    action: "createEducation",
+  },
+  {
+    method: "get",
+    route: "/educations/:education_id",
+    controller: EducationController,
+    action: "getEducation",
+  },
+  {
+    method: "post",
+    route: "/educations/:education_id",
+    controller: EducationController,
+    action: "updateEducation",
+  },
+  {
+    method: "delete",
+    route: "/educations/:education_id",
+    controller: EducationController,
+    action: "deleteEducation",
+  },
+
+  // Task Routes
+  {
+    method: "post",
+    route: "/tasks",
+    controller: TaskController,
+    action: "createTask",
+  },
+  {
+    method: "get",
+    route: "/tasks/:task_id",
+    controller: TaskController,
+    action: "getTask",
+  },
+  {
+    method: "post",
+    route: "/tasks/:task_id",
+    controller: TaskController,
+    action: "updateTask",
+  },
+  {
+    method: "delete",
+    route: "/tasks/:task_id",
+    controller: TaskController,
+    action: "deleteTask",
   },
 ];
 

@@ -7,6 +7,7 @@ const stripe = require("stripe")(process.env.STRIPE_API_SECRET);
 export default class PaymentController {
   private SITE_DOMAIN = "http://localhost:8000";
 
+  // Basic Stripe-Sponsored Checkout Screen
   async createSession() {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -32,6 +33,7 @@ export default class PaymentController {
   }
 
   async createStripeAccount(req: Request, res: Response) {
+    // Expected POST Body: id <int> id of user
     // Create Stripe Account
     const account = await stripe.accounts.create({
       type: "express",
@@ -58,15 +60,28 @@ export default class PaymentController {
     return accountLinks.url;
   }
 
-  async createPaymentIntent(req: Request) {
-    const paymentIntent = await stripe.paymentIntents.create({
-      payment_method_types: ["card"],
-      amount: 100,
-      currency: "usd",
-      application_fee_amount: 5,
-      transfer_data: {
-        destination: req.body.stripeId,
-      },
-    });
+  async createPaymentIntent(req: Request, res: Response) {
+    // Expected POST Body: id <int> id of user
+
+    try {
+      const studentStripeId = await UserController.getStripeId(
+        Number(req.body.id)
+      );
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        payment_method_types: ["card"],
+        amount: 100,
+        currency: "usd",
+        application_fee_amount: 5,
+        transfer_data: {
+          destination: studentStripeId,
+        },
+      });
+
+      return paymentIntent.client_secret;
+    } catch (e) {
+      res.status(500);
+      return String(e);
+    }
   }
 }

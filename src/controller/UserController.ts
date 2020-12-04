@@ -154,8 +154,20 @@ export default class UserController {
     }
   }
 
+  static async getStripeId(userId: number) {
+    const userRepository = getRepository(User);
+    const user = await userRepository.findOne(userId);
+    if (!user || !user.stripeId) {
+      throw new Error(`User with id ${userId} not found/stripe ID invalid`);
+    }
+    return user.stripeId;
+  }
+
   static async assignStripeId(userId: number, stripeId: string) {
     const userRepository = getRepository(User);
-    await userRepository.update(userId, { stripeId });
+    if (!(await userRepository.findOne(userId))) {
+      throw new Error(`User with id ${userId} not found`);
+    }
+    return userRepository.update(userId, { stripeId });
   }
 }

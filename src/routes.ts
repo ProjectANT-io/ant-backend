@@ -146,6 +146,12 @@ const Routes = [
     controller: PaymentController,
     action: "createStripeAccount",
   },
+  {
+    method: "post",
+    route: "/payment/send-payment",
+    controller: PaymentController,
+    action: "createPaymentIntent",
+  },
 ];
 
 export default Routes;

@@ -2,9 +2,11 @@ import { getRepository } from "typeorm";
 import * as moment from "moment";
 import { Request, Response } from "express";
 import Project from "../entity/Project";
+import Task from "../entity/Task";
 
 export default class ProjectController {
   private projectRepository = getRepository(Project);
+  private taskRepository = getRepository(Task);
 
   async authCheck(req: Request, res: Response) {
     return true; // TODO
@@ -95,11 +97,25 @@ export default class ProjectController {
 
     // Save New Project to DB
     try {
-      const newProjectInfo = this.projectRepository.create(req.body);
+      // Create tasks from milestones in request body
+      let projectData = req.body;
+      projectData.tasks = [];
+      let milestone;
+      for (milestone of req.body.milestones) {
+        const newTaskInfo = this.taskRepository.create({
+          title: milestone.task,
+          hours: milestone.hours,
+          days: milestone.days,
+        });
+        const newTask = await this.taskRepository.save(newTaskInfo);
+        projectData.tasks.push(newTask.id);
+      }
+      const newProjectInfo = this.projectRepository.create(projectData);
       const newProject = await this.projectRepository.save(newProjectInfo);
       return newProject;
     } catch (e) {
       res.status(500);
+      console.log(e);
       return e;
     }
   }

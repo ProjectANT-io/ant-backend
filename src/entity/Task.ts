@@ -10,6 +10,12 @@ export default class Task implements ITask {
   @Column()
   title!: string;
 
+  @Column({ nullable: true })
+  hours!: string;
+
+  @Column({ nullable: true })
+  days!: string;
+
   @Column({ type: "timestamptz", nullable: true })
   due_date!: string;
 

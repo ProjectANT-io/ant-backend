@@ -22,7 +22,7 @@ export default class CertificationController {
 
     // check for missing required POST body fields
     let missingFields: string = "";
-    ["title", "date"].forEach((expectedField) => {
+    [].forEach((expectedField) => {
       if (!(expectedField in req.body)) {
         missingFields += `Missing ${expectedField}\n`;
       }

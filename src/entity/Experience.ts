@@ -11,25 +11,25 @@ export default class Experience implements IExperience {
   @Column({ nullable: true })
   image!: string;
 
-  @Column()
+  @Column({ nullable: true })
   role!: string;
 
-  @Column()
+  @Column({ nullable: true })
   company!: string;
 
-  @Column()
+  @Column({ nullable: true })
   location!: string;
 
-  @Column()
+  @Column({ nullable: true })
   start_date!: string;
 
-  @Column()
+  @Column({ nullable: true })
   end_date!: string;
 
-  @Column()
+  @Column({ nullable: true })
   media!: Media;
 
-  @Column()
+  @Column({ nullable: true })
   description!: string;
 
   @Column({ nullable: true })

@@ -4,8 +4,8 @@ import { Media } from "aws-sdk/clients/transcribeservice";
 export default interface IExperience {
     id: number; // required
     image: string;
-    company: string; // required
-    location: string; // required
+    company: string;
+    location: string;
     start_date: string;
     end_date: string;
     media: Media; 

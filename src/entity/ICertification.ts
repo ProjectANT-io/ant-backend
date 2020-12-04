@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 export default interface ICertification {
     id: number; // required
-    image: string; // required
+    title: string;
+    image: string;
     date: string;
     level: string;
   }

@@ -24,7 +24,7 @@ export default class ApplicationController {
     }
     // Check for Required POST Body Fields, return 422 if required field is missing
     let missingFields: string = "";
-    ["status", "date"].forEach((expectedField) => {
+    [].forEach((expectedField) => {
       if (!(expectedField in req.body)) {
         missingFields += `Missing ${expectedField}\n`;
       }

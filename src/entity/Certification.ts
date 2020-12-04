@@ -7,18 +7,15 @@ export default class Certification implements ICertification {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
-  Certification!: string;
+  @Column({ nullable: true })
+  title!: string;
 
   @Column({ nullable: true })
-  about_me!: string;
+  image!: string;
 
   @Column({ nullable: true })
-  profile_picture_url!: string;
+  date!: string;
 
   @Column({ nullable: true })
-  resume_url!: string;
-
-  @Column({ nullable: true })
-  location!: string;
+  level!: string;
 }

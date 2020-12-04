@@ -28,17 +28,17 @@ export default class ProjectController {
     let missingFields: string = "";
     [
       "title",
-      "description",
-      "business",
-      "duration",
-      "stipend",
-      "start_date",
-      "due_date",
-      "stream",
-      "hourly_price",
-      "location",
-      "payment_type",
-      "remote",
+      // "description",
+      // "business",
+      // "duration",
+      // "stipend",
+      // "start_date",
+      // "due_date",
+      // "stream",
+      // "hourly_price",
+      // "location",
+      // "payment_type",
+      // "remote",
     ].forEach((expectedField) => {
       if (!(expectedField in req.body)) {
         missingFields += `Missing ${expectedField} in POST body\n`;
@@ -49,49 +49,49 @@ export default class ProjectController {
       return missingFields;
     }
 
-    let wrongFields: string = "";
-    // Check for Correct Type of POST Body Fields, return 422 if type is not correct
-    ["business", "stipend", "hourly_price"].forEach((expectedField) => {
-      if (Number.isNaN(Number(req.body[expectedField]))) {
-        res.status(422);
-        wrongFields += `${expectedField} should be a number\n`;
-      }
-    });
-    if (wrongFields) {
-      res.status(422);
-      return wrongFields;
-    }
+    // let wrongFields: string = "";
+    // // Check for Correct Type of POST Body Fields, return 422 if type is not correct
+    // ["business", "stipend", "hourly_price"].forEach((expectedField) => {
+    //   if (Number.isNaN(Number(req.body[expectedField]))) {
+    //     res.status(422);
+    //     wrongFields += `${expectedField} should be a number\n`;
+    //   }
+    // });
+    // if (wrongFields) {
+    //   res.status(422);
+    //   return wrongFields;
+    // }
 
     // Check start_date for date format
-    if (
-      !moment(
-        req.body.start_date,
-        ["MM/DD/YYYY", "MM-DD-YYYY"],
-        true
-      ).isValid() ||
-      !moment(req.body.due_date, ["MM/DD/YYYY", "MM-DD-YYYY"], true).isValid()
-    ) {
-      res.status(422);
-      return "start_date should be a date (MM-DD-YYYY)";
-    }
+    // if (
+    //   !moment(
+    //     req.body.start_date,
+    //     ["MM/DD/YYYY", "MM-DD-YYYY"],
+    //     true
+    //   ).isValid() ||
+    //   !moment(req.body.due_date, ["MM/DD/YYYY", "MM-DD-YYYY"], true).isValid()
+    // ) {
+    //   res.status(422);
+    //   return "start_date should be a date (MM-DD-YYYY)";
+    // }
 
-    // Check remote for boolean format
-    if (req.body.remote !== "true" && req.body.remote !== "false") {
-      res.status(422);
-      return "remote should be a boolean (true/false)";
-    }
+    // // Check remote for boolean format
+    // if (req.body.remote !== "true" && req.body.remote !== "false") {
+    //   res.status(422);
+    //   return "remote should be a boolean (true/false)";
+    // }
 
-    // Convert Milestones Field to Postgres Array
-    if (req.body.milestones) {
-      try {
-        req.body.milestones = JSON.parse(req.body.milestones);
+    // // Convert Milestones Field to Postgres Array
+    // if (req.body.milestones) {
+    //   try {
+    //     req.body.milestones = JSON.parse(req.body.milestones);
 
-        // TODO check for required IProjectMilestone fields
-      } catch (e) {
-        res.status(415);
-        return `milestones improperly formatted\n${e}`;
-      }
-    }
+    //     // TODO check for required IProjectMilestone fields
+    //   } catch (e) {
+    //     res.status(415);
+    //     return `milestones improperly formatted\n${e}`;
+    //   }
+    // }
 
     // Save New Project to DB
     try {

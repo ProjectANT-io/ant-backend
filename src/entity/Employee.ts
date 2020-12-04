@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 import {
   Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  UpdateDateColumn,
+  // PrimaryGeneratedColumn,
+  // Column,
+  // UpdateDateColumn,
   ManyToOne,
 } from "typeorm";
 import IBusiness from "./IBusiness";

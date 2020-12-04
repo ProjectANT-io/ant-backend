@@ -4,12 +4,12 @@ import * as bcrypt from "bcrypt";
 import User from "../entity/User";
 import Employee from "../entity/Employee";
 import Education from "../entity/Education";
-//import Experience from "../entity/Experience";
+import Experience from "../entity/Experience";
 
 export default class UserController {
   private userRepository = getRepository(User);
   private educationRepository = getRepository(Education);
-  //private experienceRepository = getRepository(Experience);
+  private experienceRepository = getRepository(Experience);
 
   async authCheck(request: Request, response: Response) {
     return true; // TODO
@@ -65,9 +65,9 @@ export default class UserController {
       let experiences = [];
       let experience;
       for (experience of req.body.work_experience[0]) {
-        //const newExperienceInfo = this.experienceRepository.create(experience);
-        //const newExperience = await this.experienceRepository.save(newExperienceInfo);
-        //experiences.push(newExperience.id);
+        const newExperienceInfo = this.experienceRepository.create(experience);
+        const newExperience:any = await this.experienceRepository.save(newExperienceInfo);
+        experiences.push(newExperience.id);
       }
 
       // create user with encrypted password

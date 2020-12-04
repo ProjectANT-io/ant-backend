@@ -7,16 +7,16 @@ export default class Education implements IEducation {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ nullable: true })
   image!: string;
 
-  @Column()
+  @Column({ nullable: true })
   location!: string;
 
   @Column()
   institution!: string;
 
-  @Column()
+  @Column({ nullable: true })
   graduation_date!: string;
 
   @Column({ nullable: true })

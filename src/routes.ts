@@ -146,7 +146,7 @@ const Routes = [
     method: "post",
     route: "/educations",
     controller: EducationController,
-    action: "newEducation",
+    action: "createEducation",
   },
   {
     method: "get",
@@ -172,7 +172,7 @@ const Routes = [
     method: "post",
     route: "/tasks",
     controller: TaskController,
-    action: "newTask",
+    action: "createTask",
   },
   {
     method: "get",

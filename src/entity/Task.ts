@@ -10,15 +10,15 @@ export default class Task implements ITask {
   @Column()
   title!: string;
 
-  @Column({ type: "timestamptz" })
+  @Column({ type: "timestamptz", nullable: true })
   due_date!: string;
 
-  @Column({ type: "timestamptz" })
+  @Column({ type: "timestamptz", nullable: true })
   last_updated!: string;
 
-  @Column()
+  @Column({ nullable: true })
   compensation!: string;
 
-  @Column({ type: "timestamptz" })
+  @Column({ type: "timestamptz", nullable: true })
   payment_date!: string;
 }

@@ -63,17 +63,17 @@ export default class ProjectController {
     // }
 
     // Check start_date for date format
-    if (
-      !moment(
-        req.body.start_date,
-        ["MM/DD/YYYY", "MM-DD-YYYY"],
-        true
-      ).isValid() ||
-      !moment(req.body.due_date, ["MM/DD/YYYY", "MM-DD-YYYY"], true).isValid()
-    ) {
-      res.status(422);
-      return "start_date should be a date (MM-DD-YYYY)";
-    }
+    // if (
+    //   !moment(
+    //     req.body.start_date,
+    //     ["MM/DD/YYYY", "MM-DD-YYYY"],
+    //     true
+    //   ).isValid() ||
+    //   !moment(req.body.due_date, ["MM/DD/YYYY", "MM-DD-YYYY"], true).isValid()
+    // ) {
+    //   res.status(422);
+    //   return "start_date should be a date (MM-DD-YYYY)";
+    // }
 
     // // Check remote for boolean format
     // if (req.body.remote !== "true" && req.body.remote !== "false") {

@@ -37,7 +37,11 @@ export default class User implements IUser {
   @Column({ nullable: true })
   status!: string;
 
-  @Column({ nullable: true, array: true })
+  @Column("text", {
+    nullable: true,
+    array: true,
+    default: () => "array[]::integer[]",
+  })
   headline!: string[];
 
   @Column({ nullable: true })
@@ -55,10 +59,18 @@ export default class User implements IUser {
   @Column({ nullable: true })
   desired_pay!: string;
 
-  @Column("string", { nullable: true, array: true })
+  @Column("text", {
+    nullable: true,
+    array: true,
+    default: () => "array[]::integer[]",
+  })
   skills!: string[];
 
-  @Column("string", { nullable: true, array: true })
+  @Column("text", {
+    nullable: true,
+    array: true,
+    default: () => "array[]::integer[]",
+  })
   preference!: string[];
 
   @Column({ nullable: true })
@@ -67,7 +79,11 @@ export default class User implements IUser {
   @Column({ nullable: true })
   role!: string;
 
-  @Column({ nullable: true })
+  @Column("text", {
+    nullable: true,
+    array: true,
+    default: () => "array[]::integer[]",
+  })
   achievements!: string[];
 
   @Column("simple-json", { nullable: true, default: {} })
@@ -86,19 +102,39 @@ export default class User implements IUser {
     other: string[];
   };
 
-  @Column("number", { nullable: true, array: true, default: [] })
+  @Column("integer", {
+    nullable: true,
+    array: true,
+    default: () => "array[]::integer[]",
+  })
   education_ids!: number[];
 
-  @Column("number", { nullable: true, array: true, default: [] })
+  @Column("integer", {
+    nullable: true,
+    array: true,
+    default: () => "array[]::integer[]",
+  })
   experience_ids!: number[];
 
-  @Column("number", { nullable: true, array: true, default: [] })
+  @Column("integer", {
+    nullable: true,
+    array: true,
+    default: () => "array[]::integer[]",
+  })
   project_ids!: number[];
 
-  @Column("number", { nullable: true, array: true, default: [] })
+  @Column("integer", {
+    nullable: true,
+    array: true,
+    default: () => "array[]::integer[]",
+  })
   certification_ids!: number[];
 
-  @Column("number", { nullable: true, array: true, default: [] })
+  @Column("integer", {
+    nullable: true,
+    array: true,
+    default: () => "array[]::integer[]",
+  })
   applications_ids!: number[];
 
   @UpdateDateColumn()

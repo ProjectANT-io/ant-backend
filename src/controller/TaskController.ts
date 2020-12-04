@@ -1,7 +1,6 @@
 import { getRepository } from "typeorm";
 import { Request, Response } from "express";
-import Task from "../entity/task";
-import User from "../entity/User";
+import Task from "../entity/Task";
 
 export default class TaskController {
   private taskRepository = getRepository(Task);

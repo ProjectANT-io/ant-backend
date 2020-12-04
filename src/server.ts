@@ -64,14 +64,12 @@ passport.use(
             email: req.body.email,
           },
         });
-        user.type = 'user';
         const employeeRepository = getRepository(Employee);
         const employee = await employeeRepository.find({
           where: {
             email: req.body.email,
           },
         });
-        employee.type = 'employee';
         user.push(...employee);
         if (user.length === 0) {
           return done(null, false);
@@ -80,8 +78,6 @@ passport.use(
             if (err) {
               return done();
             } else if (check) {
-              console.log(user[0]);
-              console.log(employee[0]);
               return done(null, user[0]);
             } else {
               return done(null, false);

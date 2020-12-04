@@ -5,6 +5,7 @@ export default interface IUser {
   last_name: string; // Required
   email: string; // Required
   resume_url: string; // Required
+  type: string; // Required ('employee', 'user')
 
   password: string;
   status: string;

@@ -25,14 +25,17 @@ export default class User implements IUser {
   @Column({ nullable: true })
   last_name!: string;
 
-  @Column()
+  @Column({ nullable: false })
   email!: string;
 
   @Column({ nullable: true })
   resume_url!: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   password!: string;
+
+  @Column({ nullable: false })
+  type!: string;
 
   @Column({ nullable: true })
   status!: string;

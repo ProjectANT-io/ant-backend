@@ -30,7 +30,6 @@ export default class ProjectController {
       "title",
       "description",
       "business",
-      "duration",
       "stipend",
       "start_date",
       "due_date",
@@ -62,15 +61,18 @@ export default class ProjectController {
       return wrongFields;
     }
 
-    // Check start_date for date format
-    if (
-      !moment(
-        req.body.start_date,
-        ["MM/DD/YYYY", "MM-DD-YYYY"],
-        true
-      ).isValid() ||
-      !moment(req.body.due_date, ["MM/DD/YYYY", "MM-DD-YYYY"], true).isValid()
-    ) {
+    // Check start_date, end_date for date format
+    const startDateMoment = moment(
+      req.body.start_date,
+      ["MM/DD/YYYY", "MM-DD-YYYY"],
+      true
+    );
+    const dueDateMoment = moment(
+      req.body.due_date,
+      ["MM/DD/YYYY", "MM-DD-YYYY"],
+      true
+    );
+    if (!startDateMoment.isValid() || !dueDateMoment.isValid()) {
       res.status(422);
       return "start_date should be a date (MM-DD-YYYY)";
     }
@@ -92,6 +94,9 @@ export default class ProjectController {
         return `milestones improperly formatted\n${e}`;
       }
     }
+
+    // Calculate duration in days by end_date - start_date
+    req.body.duration = dueDateMoment.diff(startDateMoment, "days");
 
     // Save New Project to DB
     try {

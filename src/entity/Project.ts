@@ -41,7 +41,7 @@ export default class Project implements IProject {
   required_skills!: ISkill[];
 
   @Column()
-  duration!: string;
+  duration!: number;
 
   @Column({ type: "integer" })
   stipend!: number;

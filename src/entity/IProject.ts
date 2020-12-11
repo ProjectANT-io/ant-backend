@@ -11,7 +11,7 @@ export default interface IProject {
   business: number; // required
   employee: number;
   required_skills: ISkill[];
-  duration: string; // required
+  duration: number; // required, auto-generated
   stipend: number; // required
   start_date: string; // required
   due_date: string; // required

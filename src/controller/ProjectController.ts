@@ -34,6 +34,7 @@ export default class ProjectController {
       "start_date",
       "due_date",
       "stream",
+      "project_detail",
       "hourly_price",
       "location",
       "payment_type",
@@ -96,7 +97,12 @@ export default class ProjectController {
     }
 
     // Calculate duration in days by end_date - start_date
+    // TODO do this in updateProject as well
     req.body.duration = dueDateMoment.diff(startDateMoment, "days");
+
+    // Parse project detail array
+    // TODO do this in updateProject as well
+    req.body.project_detail = req.body.project_detail.split(",");
 
     // Save New Project to DB
     try {

@@ -49,8 +49,8 @@ export default class User implements IUser {
   @Column("text", { array: false, nullable: true })
   external_urls!: string;
 
-  // @Column("json", { nullable: true })
-  // skills!: ISkill[];
+  @Column("int", { array: true, nullable: true })
+  skills!: ISkill["id"][];
 
   // @ManyToMany("Education")
   // educations!: IEducation[];

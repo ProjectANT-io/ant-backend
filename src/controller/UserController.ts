@@ -40,6 +40,11 @@ export default class UserController {
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
     // TODO
 
+    // Parse Skills Field
+    if (req.body.skills) {
+      req.body.skills = req.body.skills.split(",");
+    }
+
     try {
       const newUserInfo = this.userRepository.create(req.body);
       const newUser = await this.userRepository.save(newUserInfo);
@@ -97,6 +102,11 @@ export default class UserController {
     if (res.statusCode !== 200) {
       // calling this.getUser() returned an error, so return the error
       return user;
+    }
+
+    // Parse Skills Field
+    if (req.body.skills) {
+      req.body.skills = req.body.skills.split(",");
     }
 
     // Update User in DB

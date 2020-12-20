@@ -14,7 +14,7 @@ export default interface IUser {
   role: string;
   external_urls: string;
 
-  // skills: ISkill[];
+  skills: number[];
   // educations: IEducation[];
   // previous_outside_projects: IPreviousOutsideProject[];
   // work_experiences: IWorkExperience;

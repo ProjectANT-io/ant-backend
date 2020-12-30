@@ -27,7 +27,9 @@ const Routes = [
     route: "/users/:user_id",
     controller: UserController,
     action: "getUser",
-    auth: passport.authenticate("jwt", { session: false }),
+    // Should this be here? If a user tries to access another users Profile,
+    // It will crash because the current users JWT token does not match another users JWT
+    // auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",

@@ -27,7 +27,9 @@ export default class UserController {
 
     // check for missing required POST body fields
     let missingFields: string = "";
-    ["email", "password", "first_name", "last_name", "resume_url"].forEach(
+    // Took off resume_url TEMP. Having trouble signing up employee as user when resume its required
+    // but not asked in onboarding
+    ["email", "password", "first_name", "last_name"].forEach(
       (expectedField) => {
         if (!(expectedField in req.body)) {
           missingFields += `Missing ${expectedField}\n`;

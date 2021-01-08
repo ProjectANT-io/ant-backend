@@ -41,7 +41,7 @@ export default class Project implements IProject {
   required_skills!: ISkill[];
 
   @Column()
-  duration!: string;
+  duration!: number;
 
   @Column({ type: "integer" })
   stipend!: number;
@@ -54,6 +54,9 @@ export default class Project implements IProject {
 
   @Column()
   stream!: string;
+
+  @Column("text", {array: true})
+  project_detail!: string[];
 
   @Column({ type: "integer" })
   hourly_price!: number;

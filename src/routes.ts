@@ -2,6 +2,7 @@ import UserController from "./controller/UserController";
 import ProjectController from "./controller/ProjectController";
 import BusinessController from "./controller/BusinessController";
 import EmployeeController from "./controller/EmployeeController";
+import PaymentController from "./controller/PaymentController";
 // eslint-disable-next-line import/order
 import passport = require("passport");
 
@@ -140,6 +141,26 @@ const Routes = [
     controller: EmployeeController,
     action: "deleteEmployee",
     auth: passport.authenticate("jwt", { session: false }),
+  },
+
+  // Payment Routes
+  {
+    method: "post",
+    route: "/create-session",
+    controller: PaymentController,
+    action: "createSession",
+  },
+  {
+    method: "post",
+    route: "/payment/create-account",
+    controller: PaymentController,
+    action: "createStripeAccount",
+  },
+  {
+    method: "post",
+    route: "/payment/send-payment",
+    controller: PaymentController,
+    action: "createPaymentIntent",
   },
 ];
 

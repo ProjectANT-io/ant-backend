@@ -5,7 +5,7 @@ require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_API_SECRET);
 
 export default class PaymentController {
-  private SITE_DOMAIN = "http://localhost:8000";
+  private SITE_DOMAIN = "http://localhost:3000";
 
   // Basic Stripe-Sponsored Checkout Screen
   async createSession() {

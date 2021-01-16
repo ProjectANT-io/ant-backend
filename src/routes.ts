@@ -85,6 +85,7 @@ const Routes = [
     route: "/businesses",
     controller: BusinessController,
     action: "createBusiness",
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "get",
@@ -97,12 +98,14 @@ const Routes = [
     route: "/businesses/:business_id",
     controller: BusinessController,
     action: "updateBusiness",
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "delete",
     route: "/businesses/:business_id",
     controller: BusinessController,
     action: "deleteBusiness",
+    auth: passport.authenticate("jwt", { session: false }),
   },
 
   // Employee Routes

@@ -33,6 +33,10 @@ app.use(async (req: Request, res: Response, next) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("Hello ANT");
+});
+
 // === Initializing all routes ===
 Routes.forEach((route) => {
   (app as any)[route.method](

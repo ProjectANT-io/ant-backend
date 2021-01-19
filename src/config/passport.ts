@@ -7,7 +7,7 @@ const path = require("path");
 const JwtStrategy = require("passport-jwt").Strategy;
 const { ExtractJwt } = require("passport-jwt");
 
-const pathToKey = path.join(__dirname, "..", "auth_keys", "id_rsa_pub.pem");
+const pathToKey = path.join(__dirname, "..", "..", "KEYS", "id_rsa_pub.pem");
 const PUB_KEY = fs.readFileSync(pathToKey, "utf8");
 
 const options = {

@@ -1,6 +1,5 @@
 import { getRepository } from "typeorm";
 import User from "../entity/User";
-import Employee from "../entity/Employee";
 
 const fs = require("fs");
 const path = require("path");
@@ -21,15 +20,7 @@ module.exports = (passport: { use: (arg0: any) => void }) => {
   // The JWT payload is passed into the verify callback
   passport.use(
     new JwtStrategy(options, async (jwtPayload: any, done: any) => {
-      // console.log(jwtPayload);
-
-      let repository = getRepository(User);
-
-      if (jwtPayload.type === "user") {
-        repository = getRepository(User);
-      } else {
-        repository = getRepository(Employee);
-      }
+      const repository = getRepository(User);
 
       try {
         const user = await repository.findOne(jwtPayload.sub);

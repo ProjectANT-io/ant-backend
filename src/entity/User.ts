@@ -52,10 +52,10 @@ export default class User implements IUser {
   @Column("text", { array: false, nullable: true })
   external_urls!: string;
 
-  @Column("text", { default: "user" })
+  @Column("text", { default: "student" })
   type!: string;
 
-  @Column("number", { nullable: true })
+  @Column({ nullable: true })
   business_id!: number;
 
   // @Column("json", { nullable: true })

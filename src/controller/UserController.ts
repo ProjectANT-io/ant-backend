@@ -163,7 +163,6 @@ export default class UserController {
     try {
       // Delete the User in DB
       await this.userRepository.delete(user.id);
-
       // Return the Deleted User
       return user;
     } catch (e) {

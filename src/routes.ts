@@ -85,7 +85,6 @@ const Routes = [
     route: "/businesses",
     controller: BusinessController,
     action: "createBusiness",
-    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "get",

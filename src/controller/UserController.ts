@@ -1,11 +1,13 @@
 import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import User from "../entity/User";
+import Business from "../entity/Business";
 
 const authUtils = require("../utils/authUtils");
 
 export default class UserController {
   private userRepository = getRepository(User);
+  private businessRepository = getRepository(Business);
 
   async authCheck(request: Request, response: Response) {
     return true; // TODO
@@ -41,14 +43,6 @@ export default class UserController {
       return missingFields;
     }
 
-    if (
-      req.body.type &&
-      req.body.type === "employee" &&
-      typeof req.body.business_id === "number"
-    ) {
-      return "Employee needs to choose a business affiliated to it.";
-    }
-
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
     // TODO
 
@@ -57,7 +51,30 @@ export default class UserController {
     req.body.hash = hash;
     req.body.salt = salt;
 
+    if (
+      req.body.type &&
+      req.body.type === "employee" &&
+      typeof req.body.business_id === "number"
+    ) {
+      return "Employee needs to choose a business affiliated to it.";
+    }
+
     try {
+      let business;
+      if (req.body.type === "employee") {
+        business = await this.businessRepository.findOne(req.body.business_id);
+
+        if (!business) {
+          res.status(404);
+          return `Business with ID ${req.body.business_id} not found.`;
+        }
+
+        await this.businessRepository.save({
+          ...business, // retrieve existing properties
+          ...req.body, // override some existing properties
+        });
+      }
+
       const newUserInfo = this.userRepository.create(req.body);
       const newUser = await this.userRepository.save(newUserInfo);
       const jwt = authUtils.issueJWT(newUser, "user");

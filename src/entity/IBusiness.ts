@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import IEmployee from "./IEmployee";
+import IUser from "./IUser";
 import IProject from "./IProject";
 
 export default interface IBusiness {
@@ -16,7 +16,7 @@ export default interface IBusiness {
   description: string;
   external_link_urls: string; // TODO
   culture: string; // TODO
-  employees: IEmployee[];
+  employees: IUser[];
   projects: IProject[];
 
   updated: string; // auto-generated

@@ -108,44 +108,6 @@ const Routes = [
     auth: passport.authenticate("jwt", { session: false }),
   },
 
-  // Employee Routes
-  {
-    method: "post",
-    route: "/employees",
-    controller: EmployeeController,
-    action: "createEmployee",
-  },
-
-  {
-    // Login Employee
-    method: "post",
-    route: "/employees/login",
-    controller: EmployeeController,
-    action: "loginEmployee",
-  },
-
-  {
-    method: "get",
-    route: "/employees/:employee_id",
-    controller: EmployeeController,
-    action: "getEmployee",
-    auth: passport.authenticate("jwt", { session: false }),
-  },
-  {
-    method: "post",
-    route: "/employees/:employee_id",
-    controller: EmployeeController,
-    action: "updateEmployee",
-    auth: passport.authenticate("jwt", { session: false }),
-  },
-  {
-    method: "delete",
-    route: "/employees/:employee_id",
-    controller: EmployeeController,
-    action: "deleteEmployee",
-    auth: passport.authenticate("jwt", { session: false }),
-  },
-
   // Payment Routes
   {
     method: "post",

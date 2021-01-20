@@ -44,9 +44,8 @@ Routes.forEach((route) => {
     (req: Request, res: Response, next: Function) => {
       if (route.auth) {
         return route.auth(req, res, next);
-      } else {
-        next();
       }
+      next();
     },
     (req: Request, res: Response, next: Function) => {
       logger.info(`Doing something after authentication`);

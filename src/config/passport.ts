@@ -20,8 +20,8 @@ const options = {
 module.exports = (passport: { use: (arg0: any) => void }) => {
   // The JWT payload is passed into the verify callback
   passport.use(
-    new JwtStrategy(options, async (jwtPayload, done) => {
-      console.log(jwtPayload);
+    new JwtStrategy(options, async (jwtPayload: any, done: any) => {
+      // console.log(jwtPayload);
 
       let repository = getRepository(User);
 

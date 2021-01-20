@@ -41,6 +41,14 @@ export default class UserController {
       return missingFields;
     }
 
+    if (
+      req.body.type &&
+      req.body.type === "employee" &&
+      typeof req.body.business_id === "number"
+    ) {
+      return "Employee needs to choose a business affiliated to it.";
+    }
+
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
     // TODO
 

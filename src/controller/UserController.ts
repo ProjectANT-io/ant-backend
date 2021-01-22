@@ -54,7 +54,7 @@ export default class UserController {
     if (
       req.body.type &&
       req.body.type === "employee" &&
-      typeof req.body.business_id === "number"
+      typeof req.body.business_id !== "number"
     ) {
       return "Employee needs to choose a business affiliated to it.";
     }

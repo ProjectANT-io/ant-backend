@@ -133,6 +133,7 @@ const Routes = [
     route: "/previousoutsideproject",
     controller: PreviousOutsideProjectController,
     action: "newPreviousOutsideProject",
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "get",
@@ -145,12 +146,14 @@ const Routes = [
     route: "/previousoutsideproject/:previous_outside_project_id",
     controller: PreviousOutsideProjectController,
     action: "updatePreviousOutsideProject",
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "delete",
     route: "/previousoutsideproject/:previous_outside_project_id",
     controller: PreviousOutsideProjectController,
     action: "deletePreviousOutsideProject",
+    auth: passport.authenticate("jwt", { session: false }),
   },
 ];
 

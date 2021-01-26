@@ -1,7 +1,15 @@
 /* eslint-disable camelcase */
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  UpdateDateColumn,
+} from "typeorm";
 import IBusiness from "./IBusiness";
+import IEmployee from "./IEmployee";
 import IProject from "./IProject";
+import IUser from "./IUser";
 
 @Entity()
 export default class Business implements IBusiness {
@@ -15,20 +23,41 @@ export default class Business implements IBusiness {
   logo!: string;
 
   @Column({ nullable: true })
-  headline!: string;
+  photo!: string;
 
   @Column({ nullable: true })
-  description!: string;
+  tagline!: string;
+
+  @Column({ nullable: true })
+  year_founded!: string;
 
   @Column({ nullable: true })
   location!: string;
 
   @Column({ nullable: true })
+  size!: string;
+
+  @Column({ nullable: true })
+  stage!: string;
+
+  @Column({ nullable: true })
   industry!: string;
+
+  @Column({ nullable: true })
+  description!: string;
+
+  @Column({ nullable: true })
+  external_link_urls!: string;
 
   @Column({ nullable: true })
   culture!: string;
 
+  @OneToMany("User", "business")
+  employees!: IUser[];
+
   @OneToMany("Project", "business")
   projects!: IProject[];
+
+  @UpdateDateColumn()
+  updated!: string;
 }

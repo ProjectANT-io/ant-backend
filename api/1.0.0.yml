@@ -1,692 +1,692 @@
 ---
 openapi: 3.0.0
 info:
-    version: 1.0.0
-    title: Project ANT Backend
+  version: 1.0.0
+  title: Project ANT Backend
 servers:
-    - url: https://projectant.io/api/v1
+  - url: https://projectant.io/api/v1
 paths:
-    "/users":
-        post:
-            summary: Create a new user
-            description: Create a new user.
-            operationId: newUser
-            requestBody:
-                description: Necessary information to add new user.
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/NewUser"
-            responses:
-                "200":
-                    description: User created successfully
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/User"
-                "401":
-                    description: 401 Unauthorized
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "403":
-                    description: 403 Permissions Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "422":
-                    description: 422 Missing a required POST body field
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: 500 Unexpected Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-    "/users/{user_id}":
-        get:
-            summary: Get details about a user
-            description: Returns the record of a user based on their ID.
-            operationId: getUser
-            parameters:
-                -   name: user_id
-                    in: path
-                    description: ID of the user
-                    required: true
-                    schema:
-                        type: string
-            responses:
-                "200":
-                    description: 200 Details about a user
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/User"
-                "401":
-                    description: 401 Unauthorized
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "403":
-                    description: 403 Permissions Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "404":
-                    description: 404 Project Not Found
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: 500 Unexpected Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-        post:
-            summary: Update an existing user
-            description: Update an existing user.
-            operationId: updateUser
-            parameters:
-                -   name: user_id
-                    in: path
-                    description: ID of the user
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                description: Necessary information to update the user.
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/User"
-            responses:
-                "200":
-                    description: 200 User updated successfully.
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/User"
-                "401":
-                    description: 401 Unauthorized
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "403":
-                    description: 403 Permissions Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "404":
-                    description: 404 Project Not Found
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "422":
-                    description: 422 Missing a required POST body field
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: 500 Unexpected Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-        delete:
-            summary: Delete a user
-            description: Deletes a user and returns their full details.
-            operationId: deleteUser
-            parameters:
-                -   name: user_id
-                    in: path
-                    description: ID of the user
-                    required: true
-                    schema:
-                        type: string
-            responses:
-                "200":
-                    description: 200 User deleted successfully
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/User"
-                "401":
-                    description: 401 Unauthorized
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "403":
-                    description: 403 Permissions Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "404":
-                    description: 404 Project Not Found
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: 500 Unexpected Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-    "/projects":
-        post:
-            summary: Create a new project
-            description: Create a new project.
-            operationId: newProject
-            requestBody:
-                description: Necessary information to add a new project.
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/AntProject"
-            responses:
-                "200":
-                    description: Project created successfully
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/AntProject"
-                "401":
-                    description: 401 Unauthorized
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "403":
-                    description: 403 Permissions Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "422":
-                    description: 422 Missing a required POST body field
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: 500 Unexpected Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-    "/projects/{project_id}":
-        get:
-            summary: Get details about a project
-            description: Returns the full details of a project based on its ID.
-            operationId: getProject
-            parameters:
-                -   name: project_id
-                    in: path
-                    description: ID of the project
-                    required: true
-                    schema:
-                        type: string
-            responses:
-                "200":
-                    description: 200 Details about the project
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/AntProject"
-                "401":
-                    description: 401 Unauthorized
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "403":
-                    description: 403 Permissions Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "404":
-                    description: 404 Project Not Found
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: 500 Unexpected Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-        post:
-            summary: Update an existing project
-            description: Update an existing project.
-            operationId: updateProject
-            parameters:
-                -   name: project_id
-                    in: path
-                    description: ID of the project
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                description: Necessary information to update the project.
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/AntProject"
-            responses:
-                "200":
-                    description: 200 Project updated successfully.
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/AntProject"
-                "401":
-                    description: 401 Unauthorized
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "403":
-                    description: 403 Permissions Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "404":
-                    description: 404 Project Not Found
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "422":
-                    description: 422 Missing a required POST body field
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: 500 Unexpected Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-        delete:
-            summary: Delete a project
-            description: Deletes a project and returns its full details.
-            operationId: deleteProject
-            parameters:
-                -   name: project_id
-                    in: path
-                    description: ID of the project
-                    required: true
-                    schema:
-                        type: string
-            responses:
-                "200":
-                    description: 200 Project deleted successfully
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/AntProject"
-                "401":
-                    description: 401 Unauthorized
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "403":
-                    description: 403 Permissions Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "404":
-                    description: 404 Project Not Found
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: 500 Unexpected Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-    "/projects/accept/{project_id}":
-        post:
-            summary: Accept user for project
-            description: Accept a user for a project.
-            operationId: acceptProject
-            parameters:
-                -   name: project_id
-                    in: path
-                    description: ID of the project
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                description: Necessary information to update the project.
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            type: object
-                            required:
-                                - user_id
-                            properties:
-                                user_id:
-                                    $ref: "#/components/schemas/Index"
-            responses:
-                "200":
-                    description: 200 Project updated successfully.
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/AntProject"
-                "401":
-                    description: 401 Unauthorized
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "403":
-                    description: 403 Permissions Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "404":
-                    description: 404 Project Not Found
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                "422":
-                    description: 422 Missing a required POST body field
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: 500 Unexpected Error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-components:
-    schemas:
-        Index:
+  "/users":
+    post:
+      summary: Create a new user
+      description: Create a new user.
+      operationId: newUser
+      requestBody:
+        description: Necessary information to add new user.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewUser"
+      responses:
+        "200":
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: 403 Permissions Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: 422 Missing a required POST body field
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: 500 Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  "/users/{user_id}":
+    get:
+      summary: Get details about a user
+      description: Returns the record of a user based on their ID.
+      operationId: getUser
+      parameters:
+        - name: user_id
+          in: path
+          description: ID of the user
+          required: true
+          schema:
             type: string
-            format: uuid
-        User:
-            allOf:
-                - $ref: "#/components/schemas/NewUser"
-                -   type: object
-                    required:
-                        - id
-                    properties:
-                        id:
-                            $ref: "#/components/schemas/Index"
-                        ant_projects:
-                            type: array
-                            items:
-                                $ref: "#/components/schemas/AntProject"
-        NewUser:
-            type: object
-            required:
-                - first_name
-                - last_name
-                - resume_url
-                - skills
-            properties:
-                first_name:
-                    type: string
-                last_name:
-                    type: string
-                status:
-                    type: string
-                about_me:
-                    type: string
-                profile_picture_url:
-                    type: string
-                    format: uri
-                resume_url:
-                    type: string
-                    format: uri
-                skills:
-                    type: array
-                    items:
-                        $ref: "#/components/schemas/Index"
-                external_urls:
-                    type: array
-                    items:
-                        type: string
-                        format: uri
-                educations:
-                    type: array
-                    items:
-                        $ref: "#/components/schemas/Education"
-                previous_outside_projects:
-                    type: array
-                    items:
-                        $ref: "#/components/schemas/PreviousOutsideProject"
-                work_experiences:
-                    type: array
-                    items:
-                        $ref: "#/components/schemas/WorkExperience"
-                project_preference:
-                    $ref: "#/components/schemas/Education"
-        Error:
-            type: object
-            required:
-                - code
-                - message
-            properties:
-                code:
-                    type: integer
-                    format: int32
-                message:
-                    type: string
-        Education:
-            type: object
-            required:
-                - id
+      responses:
+        "200":
+          description: 200 Details about a user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: 403 Permissions Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: 404 Project Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: 500 Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Update an existing user
+      description: Update an existing user.
+      operationId: updateUser
+      parameters:
+        - name: user_id
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Necessary information to update the user.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: 200 User updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: 403 Permissions Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: 404 Project Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: 422 Missing a required POST body field
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: 500 Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete a user
+      description: Deletes a user and returns their full details.
+      operationId: deleteUser
+      parameters:
+        - name: user_id
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 200 User deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: 403 Permissions Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: 404 Project Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: 500 Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  "/projects":
+    post:
+      summary: Create a new project
+      description: Create a new project.
+      operationId: newProject
+      requestBody:
+        description: Necessary information to add a new project.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AntProject"
+      responses:
+        "200":
+          description: Project created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AntProject"
+        "401":
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: 403 Permissions Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: 422 Missing a required POST body field
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: 500 Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  "/projects/{project_id}":
+    get:
+      summary: Get details about a project
+      description: Returns the full details of a project based on its ID.
+      operationId: getProject
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the project
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 200 Details about the project
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AntProject"
+        "401":
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: 403 Permissions Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: 404 Project Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: 500 Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Update an existing project
+      description: Update an existing project.
+      operationId: updateProject
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the project
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Necessary information to update the project.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AntProject"
+      responses:
+        "200":
+          description: 200 Project updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AntProject"
+        "401":
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: 403 Permissions Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: 404 Project Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: 422 Missing a required POST body field
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: 500 Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete a project
+      description: Deletes a project and returns its full details.
+      operationId: deleteProject
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the project
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 200 Project deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AntProject"
+        "401":
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: 403 Permissions Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: 404 Project Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: 500 Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  "/projects/accept/{project_id}":
+    post:
+      summary: Accept user for project
+      description: Accept a user for a project.
+      operationId: acceptProject
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the project
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Necessary information to update the project.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
                 - user_id
-                - institution
-                - graduation_date
-            properties:
-                id:
-                    $ref: "#/components/schemas/Index"
+              properties:
                 user_id:
-                    $ref: "#/components/schemas/Index"
-                institution:
-                    type: string
-                graduation_date:
-                    type: string
-                gpa:
-                    type: string
-                degree:
-                    type: string
-                major:
-                    type: string
-                minor:
-                    type: string
-        PreviousOutsideProject:
-            type: object
-            required:
-                - id
-                - user_id
-                - title
-                - company
-            properties:
-                id:
-                    $ref: "#/components/schemas/Index"
-                user_id:
-                    $ref: "#/components/schemas/Index"
-                title:
-                    type: string
-                company:
-                    type: string
-                description:
-                    type: string
-        Project:
-            type: object
-            required:
-                - id
-                - title
-                - description
-                - company_id
-                - employee_id
-            properties:
-                id:
-                    $ref: "#/components/schemas/Index"
-                title:
-                    type: string
-                description:
-                    type: string
-                company_id:
-                    $ref: "#/components/schemas/Index"
-                employee_id:
-                    $ref: "#/components/schemas/Index"
-                skills:
-                    type: array
-                    items:
-                        $ref: "#/components/schemas/Index"
-                duration:
-                    type: string
-                stipend:
-                    type: integer
-                    format: int32
-                start_date:
-                    type: string
-                    format: date-time
-        Skill:
-            type: object
-            required:
-                - id
-                - skill
-            properties:
-                id:
-                    $ref: "#/components/schemas/Index"
-                skill:
-                    type: string
-        WorkExperience:
-            type: object
-            required:
-                - id
-                - user_id
-                - role
-                - company
-                - location
-                - start_date
-            properties:
-                id:
-                    $ref: "#/components/schemas/Index"
-                user_id:
-                    $ref: "#/components/schemas/Index"
-                role:
-                    type: string
-                company:
-                    type: string
-                location:
-                    type: string
-                start_date:
-                    type: string
-                    format: date
-                end_date:
-                    type: string
-                    format: date
-                media:
-                    type: string
-                    format: binary
-                description:
-                    type: string
-        Company:
-            type: object
-            required:
-                - id
-                - name
-            properties:
-                id:
-                    $ref: "#/components/schemas/Index"
-                name:
-                    type: string
-                logo:
-                    type: string
-                    format: uri
-                headline:
-                    type: string
-                description:
-                    type: string
-                location:
-                    type: string
-                industry:
-                    type: string
-                company_culture:
-                    type: string
-        ProjectPreference:
-            type: object
-            required:
-                - id
-                - user_id
-            properties:
-                id:
-                    $ref: "#/components/schemas/Index"
-                user_id:
-                    $ref: "#/components/schemas/Index"
-                preference:
-                    type: string
-        AntProjectApplication:
-            type: object
-            required:
-                - id
-                - user_id
-                - project_id
-                - status
-            properties:
-                id:
-                    $ref: "#/components/schemas/Index"
-                user_id:
-                    $ref: "#/components/schemas/Index"
-                project_id:
-                    $ref: "#/components/schemas/Index"
-                status:
-                    type: string
-        AntProjectMilestones:
-            type: object
-            required:
-                - id
-                - project_id
-            properties:
-                id:
-                    $ref: "#/components/schemas/Index"
-                project_id:
-                    $ref: "#/components/schemas/Index"
-                milestones:
-                    type: array
-                    items:
-                        type: string
-                milestones_statuses:
-                    type: array
-                    items:
-                        type: string
+                  $ref: "#/components/schemas/Index"
+      responses:
+        "200":
+          description: 200 Project updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AntProject"
+        "401":
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: 403 Permissions Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: 404 Project Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: 422 Missing a required POST body field
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: 500 Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Index:
+      type: string
+      format: uuid
+    User:
+      allOf:
+        - $ref: "#/components/schemas/NewUser"
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              $ref: "#/components/schemas/Index"
+            ant_projects:
+              type: array
+              items:
+                $ref: "#/components/schemas/AntProject"
+    NewUser:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - resume_url
+        - skills
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        status:
+          type: string
+        about_me:
+          type: string
+        profile_picture_url:
+          type: string
+          format: uri
+        resume_url:
+          type: string
+          format: uri
+        skills:
+          type: array
+          items:
+            $ref: "#/components/schemas/Index"
+        external_urls:
+          type: array
+          items:
+            type: string
+            format: uri
+        educations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Education"
+        previous_outside_projects:
+          type: array
+          items:
+            $ref: "#/components/schemas/PreviousOutsideProject"
+        work_experiences:
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkExperience"
+        project_preference:
+          $ref: "#/components/schemas/Education"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    Education:
+      type: object
+      required:
+        - id
+        - user_id
+        - institution
+        - graduation_date
+      properties:
+        id:
+          $ref: "#/components/schemas/Index"
+        user_id:
+          $ref: "#/components/schemas/Index"
+        institution:
+          type: string
+        graduation_date:
+          type: string
+        gpa:
+          type: string
+        degree:
+          type: string
+        major:
+          type: string
+        minor:
+          type: string
+    PreviousOutsideProject:
+      type: object
+      required:
+        - id
+        - user_id
+        - title
+        - company
+      properties:
+        id:
+          $ref: "#/components/schemas/Index"
+        user_id:
+          $ref: "#/components/schemas/Index"
+        title:
+          type: string
+        company:
+          type: string
+        description:
+          type: string
+    Project:
+      type: object
+      required:
+        - id
+        - title
+        - description
+        - company_id
+        - employee_id
+      properties:
+        id:
+          $ref: "#/components/schemas/Index"
+        title:
+          type: string
+        description:
+          type: string
+        company_id:
+          $ref: "#/components/schemas/Index"
+        employee_id:
+          $ref: "#/components/schemas/Index"
+        skills:
+          type: array
+          items:
+            $ref: "#/components/schemas/Index"
+        duration:
+          type: string
+        stipend:
+          type: integer
+          format: int32
+        start_date:
+          type: string
+          format: date-time
+    Skill:
+      type: object
+      required:
+        - id
+        - skill
+      properties:
+        id:
+          $ref: "#/components/schemas/Index"
+        skill:
+          type: string
+    WorkExperience:
+      type: object
+      required:
+        - id
+        - user_id
+        - role
+        - company
+        - location
+        - start_date
+      properties:
+        id:
+          $ref: "#/components/schemas/Index"
+        user_id:
+          $ref: "#/components/schemas/Index"
+        role:
+          type: string
+        company:
+          type: string
+        location:
+          type: string
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        media:
+          type: string
+          format: binary
+        description:
+          type: string
+    Company:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          $ref: "#/components/schemas/Index"
+        name:
+          type: string
+        logo:
+          type: string
+          format: uri
+        headline:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        industry:
+          type: string
+        company_culture:
+          type: string
+    ProjectPreference:
+      type: object
+      required:
+        - id
+        - user_id
+      properties:
+        id:
+          $ref: "#/components/schemas/Index"
+        user_id:
+          $ref: "#/components/schemas/Index"
+        preference:
+          type: string
+    AntProjectApplication:
+      type: object
+      required:
+        - id
+        - user_id
+        - project_id
+        - status
+      properties:
+        id:
+          $ref: "#/components/schemas/Index"
+        user_id:
+          $ref: "#/components/schemas/Index"
+        project_id:
+          $ref: "#/components/schemas/Index"
+        status:
+          type: string
+    AntProjectMilestones:
+      type: object
+      required:
+        - id
+        - project_id
+      properties:
+        id:
+          $ref: "#/components/schemas/Index"
+        project_id:
+          $ref: "#/components/schemas/Index"
+        milestones:
+          type: array
+          items:
+            type: string
+        milestones_statuses:
+          type: array
+          items:
+            type: string

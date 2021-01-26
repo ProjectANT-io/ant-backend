@@ -2,6 +2,9 @@ import UserController from "./controller/UserController";
 import ProjectController from "./controller/ProjectController";
 import BusinessController from "./controller/BusinessController";
 import PreviousOutsideProjectController from "./controller/PreviousOutsideProjectController";
+import PaymentController from "./controller/PaymentController";
+// eslint-disable-next-line import/order
+import passport = require("passport");
 
 const Routes = [
   // User Routes
@@ -9,25 +12,39 @@ const Routes = [
     method: "post",
     route: "/users",
     controller: UserController,
-    action: "newUser",
+    action: "createUser",
   },
+
+  {
+    // Login User
+    method: "post",
+    route: "/users/login",
+    controller: UserController,
+    action: "loginUser",
+  },
+
   {
     method: "get",
     route: "/users/:user_id",
     controller: UserController,
     action: "getUser",
+    // Should this be here? If a user tries to access another users Profile,
+    // It will crash because the current users JWT token does not match another users JWT
+    // auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",
     route: "/users/:user_id",
     controller: UserController,
     action: "updateUser",
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "delete",
     route: "/users/:user_id",
     controller: UserController,
     action: "deleteUser",
+    auth: passport.authenticate("jwt", { session: false }),
   },
 
   // Project Routes
@@ -67,7 +84,7 @@ const Routes = [
     method: "post",
     route: "/businesses",
     controller: BusinessController,
-    action: "newBusiness",
+    action: "createBusiness",
   },
   {
     method: "get",
@@ -80,12 +97,34 @@ const Routes = [
     route: "/businesses/:business_id",
     controller: BusinessController,
     action: "updateBusiness",
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "delete",
     route: "/businesses/:business_id",
     controller: BusinessController,
     action: "deleteBusiness",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+
+  // Payment Routes
+  {
+    method: "post",
+    route: "/create-session",
+    controller: PaymentController,
+    action: "createSession",
+  },
+  {
+    method: "post",
+    route: "/payment/create-account",
+    controller: PaymentController,
+    action: "createStripeAccount",
+  },
+  {
+    method: "post",
+    route: "/payment/send-payment",
+    controller: PaymentController,
+    action: "createPaymentIntent",
   },
 
   // Previous Outside Project

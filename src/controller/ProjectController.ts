@@ -1,4 +1,5 @@
 import { getRepository } from "typeorm";
+import * as moment from "moment";
 import { Request, Response } from "express";
 import Project from "../entity/Project";
 
@@ -25,27 +26,83 @@ export default class ProjectController {
 
     // Check for Required POST Body Fields, return 422 if required field is missing
     let missingFields: string = "";
-    ["title", "description", "business_id", "employee_id"].forEach(
-      (expectedField) => {
-        if (!(expectedField in req.body)) {
-          missingFields += `Missing ${expectedField}\n`;
-        }
+    [
+      "title",
+      "description",
+      "business",
+      "stipend",
+      "start_date",
+      "due_date",
+      "stream",
+      "project_detail",
+      "hourly_price",
+      "location",
+      "payment_type",
+      "remote",
+    ].forEach((expectedField) => {
+      if (!(expectedField in req.body)) {
+        missingFields += `Missing ${expectedField} in POST body\n`;
       }
-    );
+    });
     if (missingFields) {
       res.status(422);
       return missingFields;
     }
 
+    let wrongFields: string = "";
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
-    if (Number.isNaN(Number(req.body.business_id))) {
+    ["business", "stipend", "hourly_price"].forEach((expectedField) => {
+      if (Number.isNaN(Number(req.body[expectedField]))) {
+        res.status(422);
+        wrongFields += `${expectedField} should be a number\n`;
+      }
+    });
+    if (wrongFields) {
       res.status(422);
-      return "business_id should be a number";
+      return wrongFields;
     }
-    if (Number.isNaN(Number(req.body.employee_id))) {
+
+    // Check start_date, end_date for date format
+    const startDateMoment = moment(
+      req.body.start_date,
+      ["MM/DD/YYYY", "MM-DD-YYYY"],
+      true
+    );
+    const dueDateMoment = moment(
+      req.body.due_date,
+      ["MM/DD/YYYY", "MM-DD-YYYY"],
+      true
+    );
+    if (!startDateMoment.isValid() || !dueDateMoment.isValid()) {
       res.status(422);
-      return "employee_id should be a number";
+      return "start_date should be a date (MM-DD-YYYY)";
     }
+
+    // Check remote for boolean format
+    if (req.body.remote !== "true" && req.body.remote !== "false") {
+      res.status(422);
+      return "remote should be a boolean (true/false)";
+    }
+
+    // Convert Milestones Field to Postgres Array
+    if (req.body.milestones) {
+      try {
+        req.body.milestones = JSON.parse(req.body.milestones);
+
+        // TODO check for required IProjectMilestone fields
+      } catch (e) {
+        res.status(415);
+        return `milestones improperly formatted\n${e}`;
+      }
+    }
+
+    // Calculate duration in days by end_date - start_date
+    // TODO do this in updateProject as well
+    req.body.duration = dueDateMoment.diff(startDateMoment, "days");
+
+    // Parse project detail array
+    // TODO do this in updateProject as well
+    req.body.project_detail = req.body.project_detail.split(",");
 
     // Save New Project to DB
     try {
@@ -76,7 +133,7 @@ export default class ProjectController {
 
     // Check for Correct Type of Required Path Parameter
     const projectID = Number(req.params.project_id);
-    if (Number.isNaN(projectID)) {
+    if (Number.isNaN(Number(projectID))) {
       res.status(422);
       return "project_id should be a number";
     }
@@ -84,7 +141,9 @@ export default class ProjectController {
     // Get Project in DB
     try {
       // Find Project
-      const project = await this.projectRepository.findOne(projectID);
+      const project = await this.projectRepository.findOne(projectID, {
+        relations: ["business"], // return business relation
+      });
 
       // If Project Does Not Exist
       if (!project) {
@@ -105,6 +164,22 @@ export default class ProjectController {
     if (res.statusCode !== 200) {
       // calling this.getProject() returned an error, so return the error
       return project;
+    }
+
+    // let newFields = JSON.parse(JSON.stringify(req.body));
+
+    // TODO validate all POST Body fields
+
+    // Convert Milestones Field to Postgres Array
+    if (req.body.milestones) {
+      try {
+        req.body.milestones = JSON.parse(req.body.milestones);
+
+        // TODO check for required IProjectMilestone fields
+      } catch (e) {
+        res.status(415);
+        return `milestones improperly formatted\n${e}`;
+      }
     }
 
     // Update Project in DB

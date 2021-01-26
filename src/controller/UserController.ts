@@ -1,9 +1,13 @@
 import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import User from "../entity/User";
+import Business from "../entity/Business";
 
-class UserController {
+const authUtils = require("../utils/authUtils");
+
+export default class UserController {
   private userRepository = getRepository(User);
+  private businessRepository = getRepository(Business);
 
   async authCheck(request: Request, response: Response) {
     return true; // TODO
@@ -13,7 +17,7 @@ class UserController {
     return true; // TODO
   }
 
-  async newUser(req: Request, res: Response) {
+  async createUser(req: Request, res: Response) {
     if (!(await this.authCheck(req, res))) {
       res.status(401);
       return "Unauthorized";
@@ -25,7 +29,9 @@ class UserController {
 
     // check for missing required POST body fields
     let missingFields: string = "";
-    ["first_name", "last_name", "resume_url", "skills"].forEach(
+    // Took off resume_url TEMP. Having trouble signing up employee as user when resume its required
+    // but not asked in onboarding
+    ["email", "password", "first_name", "last_name"].forEach(
       (expectedField) => {
         if (!(expectedField in req.body)) {
           missingFields += `Missing ${expectedField}\n`;
@@ -37,60 +43,52 @@ class UserController {
       return missingFields;
     }
 
-    // const firstName, lastName, resumeURL, skills
-    const firstName = req.body.first_name;
-    const lastName = req.body.last_name;
-    const resumeURL = req.body.resume_url;
-    const { skills } = req.body;
-
-    let wrongType = "";
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
-    if (typeof firstName !== "string") {
-      wrongType += `${typeof firstName}: first_name should be a string\n`;
-    }
-    if (typeof lastName !== "string") {
-      wrongType += `${typeof lastName}: last_name should be a string\n`;
-    }
-    if (typeof resumeURL !== "string") {
-      wrongType += `${typeof resumeURL}: resume_url should be a string\n`;
-    }
-    if (typeof skills !== "string") {
-      wrongType += `${typeof skills}: skills should be a string\n`;
-    }
-    if (wrongType) {
-      res.status(422);
-      return wrongType;
-    }
+    // TODO
 
-    // TODO Telvin remove ESLint disable-line once DB code is in place
-    // eslint-disable-next-line no-unused-vars
-    // const user = {
-    //   first_name: req.body.first_name,
-    //   last_name: req.body.last_name,
-    //   status: "unverified", // TODO
-    //   about_me: "",
-    //   profile_picture_url: "",
-    //   resume_url: req.body.resume_url,
-    //   skills:
-    //     typeof req.body.skills === "string"
-    //       ? req.body.skills.split(",")
-    //       : req.body.skills,
-    //   external_urls: [],
-    //   educations: [],
-    //   previous_projects: [],
-    //   work_experiences: [],
-    //   project_preference: [],
-    // };
+    const saltHash = authUtils.genPassword(req.body.password);
+    const { salt, hash } = saltHash;
+    req.body.hash = hash;
+    req.body.salt = salt;
+
+    if (
+      req.body.type &&
+      req.body.type === "employee" &&
+      typeof req.body.business_id === "number"
+    ) {
+      return "Employee needs to choose a business affiliated to it.";
+    }
 
     try {
+      let business;
+      if (req.body.type === "employee") {
+        business = await this.businessRepository.findOne(req.body.business_id);
+
+        if (!business) {
+          res.status(404);
+          return `Business with ID ${req.body.business_id} not found.`;
+        }
+
+        await this.businessRepository.save({
+          ...business, // retrieve existing properties
+          ...req.body, // override some existing properties
+        });
+      }
+
       const newUserInfo = this.userRepository.create(req.body);
       const newUser = await this.userRepository.save(newUserInfo);
-      return newUser;
+      const jwt = authUtils.issueJWT(newUser, "user");
+
+      return {
+        success: true,
+        user: newUser,
+        token: jwt.token,
+        expiresIn: jwt.expires,
+      };
     } catch (e) {
       res.status(500);
       return e;
     }
-    // return user
   }
 
   async getUser(req: Request, res: Response) {
@@ -165,7 +163,6 @@ class UserController {
     try {
       // Delete the User in DB
       await this.userRepository.delete(user.id);
-
       // Return the Deleted User
       return user;
     } catch (e) {
@@ -173,6 +170,57 @@ class UserController {
       return e;
     }
   }
-}
 
-export default UserController;
+  async loginUser(req: Request, res: Response) {
+    try {
+      // Find User
+      const user = await this.userRepository.findOne({ email: req.body.email });
+
+      // If User Does Not Exist
+      if (!user) {
+        res.status(401);
+        return `User with email ${req.body.email} could not be found.`;
+      }
+
+      const isValid = authUtils.validPassword(
+        req.body.password,
+        user.hash,
+        user.salt
+      );
+
+      // Found User
+      if (!isValid) {
+        res.status(401);
+        return "Incorrect Password";
+      }
+
+      const tokenObject = authUtils.issueJWT(user, "user");
+      return {
+        success: true,
+        user,
+        token: tokenObject.token,
+        expiresIn: tokenObject.expires,
+      };
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
+  static async getStripeId(userId: number) {
+    const userRepository = getRepository(User);
+    const user = await userRepository.findOne(userId);
+    if (!user || !user.stripeId) {
+      throw new Error(`User with id ${userId} not found/stripe ID invalid`);
+    }
+    return user.stripeId;
+  }
+
+  static async assignStripeId(userId: number, stripeId: string) {
+    const userRepository = getRepository(User);
+    if (!(await userRepository.findOne(userId))) {
+      throw new Error(`User with id ${userId} not found`);
+    }
+    return userRepository.update(userId, { stripeId });
+  }
+}

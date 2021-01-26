@@ -2,6 +2,7 @@ import "reflect-metadata";
 import * as express from "express";
 import { Request, Response } from "express";
 import * as bodyParser from "body-parser";
+import * as cors from "cors";
 import Routes from "./routes";
 import createLogger from "./utils/logger";
 import { TryDBConnect } from "../db_helper/index";
@@ -10,11 +11,30 @@ import { TryDBConnect } from "../db_helper/index";
 const app: express.Application = express();
 const logger = createLogger("Root");
 
+const passport = require("passport");
+
+require("./config/passport")(passport);
+
+app.use(passport.initialize());
+
 // === app.use() ===
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
+
 app.use(async (req: Request, res: Response, next) => {
-  await TryDBConnect((e: Error) => res.json(e), next);
+  try {
+    await TryDBConnect((e: Error) => {
+      throw e;
+    }, next);
+  } catch (e) {
+    res.status(500);
+    res.json(e.message);
+  }
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello ANT");
 });
 
 // === Initializing all routes ===
@@ -22,6 +42,13 @@ Routes.forEach((route) => {
   (app as any)[route.method](
     `/api/v1${route.route}`,
     (req: Request, res: Response, next: Function) => {
+      if (route.auth) {
+        return route.auth(req, res, next);
+      }
+      next();
+    },
+    (req: Request, res: Response, next: Function) => {
+      logger.info(`Doing something after authentication`);
       const result = new (route.controller as any)()[route.action](
         req,
         res,
@@ -36,32 +63,9 @@ Routes.forEach((route) => {
   );
 });
 
-// Root URI call
-app.get("/", async (req, res) => {
-  logger.info("connected with browser");
-  res.status(200).send("Hello ANT");
-});
-
 // === Server Listening ===
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   logger.info(`server running http://localhost:${port}`);
   logger.info(`press CTRL+C to stop server`);
 });
-
-// insert new users for test
-// TODO: Testing for inserting new users should be in UserController.ts (Code refactoring purposes!!)
-// Reference: https://typeorm.io/#/
-/* await connection.manager.save(
-    connection.manager.create(User, {
-      firstName: "Timber",
-      lastName: "Saw",
-      age: 27,
-    })
-  );
-  await connection.manager.save(
-    connection.manager.create(User, {
-      firstName: "Phantom",
-      lastName: "Assassin",
-      age: 24,
-    }) */

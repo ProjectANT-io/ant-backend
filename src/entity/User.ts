@@ -1,6 +1,12 @@
 /* eslint-disable camelcase */
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  UpdateDateColumn,
+} from "typeorm";
 import IUser from "./IUser";
+import ISkill from "./ISkill";
 
 @Entity()
 export default class User implements IUser {
@@ -8,28 +14,52 @@ export default class User implements IUser {
   id!: number;
 
   @Column()
+  email!: string;
+
+  @Column()
+  hash!: string;
+
+  @Column()
+  salt!: string;
+
+  @Column()
   first_name!: string;
 
   @Column()
   last_name!: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ nullable: true })
   status!: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ nullable: true })
   about_me!: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ nullable: true })
   profile_picture_url!: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ nullable: true })
   resume_url!: string;
 
-  // @ManyToMany("Skill")
-  // skills!: ISkill[];
+  @Column({ nullable: true })
+  location!: string;
 
-  @Column({ type: "simple-array", nullable: true })
-  external_urls!: string[];
+  @Column({ nullable: true })
+  gender!: string;
+
+  @Column({ nullable: true })
+  role!: string;
+
+  @Column("text", { array: false, nullable: true })
+  external_urls!: string;
+
+  @Column("text", { default: "student" })
+  type!: string;
+
+  @Column({ nullable: true })
+  business_id!: number;
+
+  // @Column("json", { nullable: true })
+  // skills!: ISkill[];
 
   // @ManyToMany("Education")
   // educations!: IEducation[];
@@ -42,4 +72,10 @@ export default class User implements IUser {
 
   // @ManyToMany("Education")
   // project_preference!: IEducation;
+
+  @Column({ nullable: true })
+  stripeId!: string;
+
+  @UpdateDateColumn()
+  updated!: string;
 }

@@ -11,10 +11,17 @@ import { TryDBConnect } from "../db_helper/index";
 const app: express.Application = express();
 const logger = createLogger("Root");
 
+const passport = require("passport");
+
+require("./config/passport")(passport);
+
+app.use(passport.initialize());
+
 // === app.use() ===
-app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
+
 app.use(async (req: Request, res: Response, next) => {
   try {
     await TryDBConnect((e: Error) => {
@@ -26,11 +33,22 @@ app.use(async (req: Request, res: Response, next) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("Hello ANT");
+});
+
 // === Initializing all routes ===
 Routes.forEach((route) => {
   (app as any)[route.method](
     `/api/v1${route.route}`,
     (req: Request, res: Response, next: Function) => {
+      if (route.auth) {
+        return route.auth(req, res, next);
+      }
+      next();
+    },
+    (req: Request, res: Response, next: Function) => {
+      logger.info(`Doing something after authentication`);
       const result = new (route.controller as any)()[route.action](
         req,
         res,

@@ -17,7 +17,10 @@ export default class User implements IUser {
   email!: string;
 
   @Column()
-  password!: string; // TODO plaintext password temporary
+  hash!: string;
+
+  @Column()
+  salt!: string;
 
   @Column()
   first_name!: string;
@@ -49,6 +52,12 @@ export default class User implements IUser {
   @Column("text", { array: false, nullable: true })
   external_urls!: string;
 
+  @Column("text", { default: "student" })
+  type!: string;
+
+  @Column({ nullable: true })
+  business_id!: number;
+
   // @Column("json", { nullable: true })
   // skills!: ISkill[];
 
@@ -63,6 +72,9 @@ export default class User implements IUser {
 
   // @ManyToMany("Education")
   // project_preference!: IEducation;
+
+  @Column({ nullable: true })
+  stripeId!: string;
 
   @UpdateDateColumn()
   updated!: string;

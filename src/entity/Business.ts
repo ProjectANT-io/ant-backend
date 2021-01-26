@@ -52,8 +52,8 @@ export default class Business implements IBusiness {
   @Column({ nullable: true })
   culture!: string;
 
-  @OneToMany("Employee", "business")
-  employees!: IEmployee[];
+  @OneToMany("User", "business")
+  employees!: IUser[];
 
   @OneToMany("Project", "business")
   projects!: IProject[];

@@ -2,6 +2,8 @@
 export default interface IUser {
   id: number; // Required, auto-generated
   email: string; // Required
+  hash: string;
+  salt: string;
   first_name: string; // Required
   last_name: string; // Required
   status: string;
@@ -13,6 +15,9 @@ export default interface IUser {
   gender: string;
   role: string;
   external_urls: string;
+
+  type: string; // Required
+  business_id: number;
 
   // skills: ISkill[];
   // educations: IEducation[];

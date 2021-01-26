@@ -1,7 +1,10 @@
 import UserController from "./controller/UserController";
 import ProjectController from "./controller/ProjectController";
 import BusinessController from "./controller/BusinessController";
-import EmployeeController from "./controller/EmployeeController";
+import PreviousOutsideProjectController from "./controller/PreviousOutsideProjectController";
+import PaymentController from "./controller/PaymentController";
+// eslint-disable-next-line import/order
+import passport = require("passport");
 
 const Routes = [
   // User Routes
@@ -25,18 +28,23 @@ const Routes = [
     route: "/users/:user_id",
     controller: UserController,
     action: "getUser",
+    // Should this be here? If a user tries to access another users Profile,
+    // It will crash because the current users JWT token does not match another users JWT
+    // auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",
     route: "/users/:user_id",
     controller: UserController,
     action: "updateUser",
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "delete",
     route: "/users/:user_id",
     controller: UserController,
     action: "deleteUser",
+    auth: passport.authenticate("jwt", { session: false }),
   },
 
   // Project Routes
@@ -89,47 +97,63 @@ const Routes = [
     route: "/businesses/:business_id",
     controller: BusinessController,
     action: "updateBusiness",
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "delete",
     route: "/businesses/:business_id",
     controller: BusinessController,
     action: "deleteBusiness",
+    auth: passport.authenticate("jwt", { session: false }),
   },
 
-  // Employee Routes
+  // Payment Routes
   {
     method: "post",
-    route: "/employees",
-    controller: EmployeeController,
-    action: "createEmployee",
+    route: "/create-session",
+    controller: PaymentController,
+    action: "createSession",
   },
-
   {
-    // Login Employee
     method: "post",
-    route: "/employees/login",
-    controller: EmployeeController,
-    action: "loginEmployee",
+    route: "/payment/create-account",
+    controller: PaymentController,
+    action: "createStripeAccount",
+  },
+  {
+    method: "post",
+    route: "/payment/send-payment",
+    controller: PaymentController,
+    action: "createPaymentIntent",
   },
 
+  // Previous Outside Project
+  {
+    method: "post",
+    route: "/previousoutsideproject",
+    controller: PreviousOutsideProjectController,
+    action: "newPreviousOutsideProject",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
   {
     method: "get",
-    route: "/employees/:employee_id",
-    controller: EmployeeController,
-    action: "getEmployee",
+    route: "/previousoutsideproject/:previous_outside_project_id",
+    controller: PreviousOutsideProjectController,
+    action: "getPreviousOutsideProject",
   },
   {
     method: "post",
-    route: "/employees/:employee_id",
-    controller: EmployeeController,
-    action: "updateEmployee",
+    route: "/previousoutsideproject/:previous_outside_project_id",
+    controller: PreviousOutsideProjectController,
+    action: "updatePreviousOutsideProject",
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "delete",
-    route: "/employees/:employee_id",
-    controller: EmployeeController,
-    action: "deleteEmployee",
+    route: "/previousoutsideproject/:previous_outside_project_id",
+    controller: PreviousOutsideProjectController,
+    action: "deletePreviousOutsideProject",
+    auth: passport.authenticate("jwt", { session: false }),
   },
 ];
 

@@ -37,6 +37,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.0",
     "@types/passport": "^1.0.4",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
     "@typescript-eslint/parser": "^4.4.1",

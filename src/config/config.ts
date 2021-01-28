@@ -1,5 +1,8 @@
-export const config = {
-  /* Deveopment Environment Variables
+const config = {
+  jwt: {
+    secret: process.env.JWT_SECRET,
+  },
+  /* Development Environment Variables
   dev: {
     username: process.env.POSTGRESS_USERNAME,
     password: process.env.POSTGRESS_PASSWORD,
@@ -11,9 +14,6 @@ export const config = {
     aws_media_bucket: process.env.AWS_MEDIA_BUCKET,
   },
   */
-  jwt: {
-    secret: process.env.JWT_SECRET,
-  },
   /* Production environment Variables 
   prod: {
     username: '',
@@ -24,3 +24,5 @@ export const config = {
   },
   */
 };
+
+export default config;

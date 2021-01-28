@@ -7,6 +7,7 @@ const authUtils = require("../utils/authUtils");
 
 export default class UserController {
   private userRepository = getRepository(User);
+
   private businessRepository = getRepository(Business);
 
   async authCheck(request: Request, response: Response) {
@@ -54,7 +55,7 @@ export default class UserController {
     if (
       req.body.type &&
       req.body.type === "employee" &&
-      typeof req.body.business_id === "number"
+      typeof req.body.business_id !== "number"
     ) {
       return "Employee needs to choose a business affiliated to it.";
     }

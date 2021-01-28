@@ -166,16 +166,13 @@ export default class ProjectController {
       return project;
     }
 
-    // let newFields = JSON.parse(JSON.stringify(req.body));
-
     // TODO validate all POST Body fields
 
     // Convert Milestones Field to Postgres Array
     if (req.body.milestones) {
       try {
-        // TEMP - this was throwing errors - SyntaxError: Unexpected token o in JSON at position 1
+        // TODO TEMP - this was throwing errors - SyntaxError: Unexpected token o in JSON at position 1
         // req.body.milestones = JSON.parse(req.body.milestones);
-
         // TODO check for required IProjectMilestone fields
       } catch (e) {
         res.status(415);
@@ -222,12 +219,13 @@ export default class ProjectController {
       return project;
     }
 
+    // TODO validation
+
     // Update & Return Found Project
-    // TODO update status field of project -- but status field has not been created yet
     try {
       return await this.projectRepository.save({
         ...project,
-        ...req.body
+        ...req.body,
       });
     } catch (e) {
       res.status(500);

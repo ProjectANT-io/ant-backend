@@ -16,7 +16,8 @@ const options = {
 };
 
 // app.js will pass the global passport object here, and this function will configure it
-module.exports = (passport: { use: (arg0: any) => void }) => {
+// eslint-disable-next-line no-unused-vars
+module.exports = (passport: { use: (_: any) => void }) => {
   // The JWT payload is passed into the verify callback
   passport.use(
     new JwtStrategy(options, async (jwtPayload: any, done: any) => {

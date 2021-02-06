@@ -7,6 +7,7 @@ const authUtils = require("../utils/authUtils");
 
 export default class UserController {
   private userRepository = getRepository(User);
+
   private businessRepository = getRepository(Business);
 
   async authCheck(request: Request, response: Response) {

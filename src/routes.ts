@@ -1,7 +1,7 @@
 import UserController from "./controller/UserController";
 import ProjectController from "./controller/ProjectController";
 import BusinessController from "./controller/BusinessController";
-import EmployeeController from "./controller/EmployeeController";
+import PreviousOutsideProjectController from "./controller/PreviousOutsideProjectController";
 import PaymentController from "./controller/PaymentController";
 // eslint-disable-next-line import/order
 import passport = require("passport");
@@ -125,6 +125,35 @@ const Routes = [
     route: "/payment/send-payment",
     controller: PaymentController,
     action: "createPaymentIntent",
+  },
+
+  // Previous Outside Project
+  {
+    method: "post",
+    route: "/previousoutsideproject",
+    controller: PreviousOutsideProjectController,
+    action: "newPreviousOutsideProject",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "get",
+    route: "/previousoutsideproject/:previous_outside_project_id",
+    controller: PreviousOutsideProjectController,
+    action: "getPreviousOutsideProject",
+  },
+  {
+    method: "post",
+    route: "/previousoutsideproject/:previous_outside_project_id",
+    controller: PreviousOutsideProjectController,
+    action: "updatePreviousOutsideProject",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "delete",
+    route: "/previousoutsideproject/:previous_outside_project_id",
+    controller: PreviousOutsideProjectController,
+    action: "deletePreviousOutsideProject",
+    auth: passport.authenticate("jwt", { session: false }),
   },
 ];
 

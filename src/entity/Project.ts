@@ -55,7 +55,7 @@ export default class Project implements IProject {
   @Column()
   stream!: string;
 
-  @Column("text", {array: true})
+  @Column("text", { array: true })
   project_detail!: string[];
 
   @Column({ type: "integer" })

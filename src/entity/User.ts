@@ -4,9 +4,14 @@ import {
   PrimaryGeneratedColumn,
   Column,
   UpdateDateColumn,
+  ManyToOne,
+  OneToMany,
 } from "typeorm";
 import IUser from "./IUser";
 import ISkill from "./ISkill";
+import IBusiness from "./IBusiness";
+import IProject from "./IProject";
+import IPreviousOutsideProject from "./IPreviousOutsideProject";
 
 @Entity()
 export default class User implements IUser {
@@ -55,8 +60,11 @@ export default class User implements IUser {
   @Column("text", { default: "student" })
   type!: string;
 
-  @Column({ nullable: true })
-  business_id!: number;
+  @ManyToOne("Business", "employees")
+  business!: IBusiness;
+
+  @OneToMany("Project", "student")
+  projects!: IProject[];
 
   // @Column("json", { nullable: true })
   // skills!: ISkill[];
@@ -64,8 +72,8 @@ export default class User implements IUser {
   // @ManyToMany("Education")
   // educations!: IEducation[];
 
-  // @ManyToMany("PreviousOutsideProject-array")
-  // previous_outside_projects!: IPreviousOutsideProject[];
+  @OneToMany("PreviousOutsideProject", "student")
+  previous_outside_projects!: IPreviousOutsideProject[];
 
   // @ManyToMany("WorkExperience")
   // work_experiences!: IWorkExperience;

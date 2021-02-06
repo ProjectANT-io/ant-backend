@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import PreviousOutsideProject from "../entity/PreviousOutsideProject";
 
 // === GLOBAL VARIABLE ===
-const REQUIRED_ATTRIBUTES = ["user_id", "title", "company"];
+const REQUIRED_ATTRIBUTES = ["student", "title", "company"];
 
 class PreviousOutsideProjectController {
   private previousOutsideProjectRepository = getRepository(
@@ -40,7 +40,7 @@ class PreviousOutsideProjectController {
     }
 
     // const firstName, lastName, resumeURL, skills
-    const userID = Number(req.body.user_id);
+    const userID = Number(req.body.student);
     const { title, company } = req.body;
 
     let wrongType = "";

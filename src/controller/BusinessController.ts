@@ -74,10 +74,10 @@ export default class BusinessController {
     // Get Business in DB
     try {
       // Find Business
-      const business = await this.businessRepository.findOne(businessID);
-      // const business = await this.businessRepository.findOne(businessID, {
-      //   relations: ["projects", "employees"],
-      // });
+      // const business = await this.businessRepository.findOne(businessID);
+      const business = await this.businessRepository.findOne(businessID, {
+        relations: ["projects", "employees"], // attach projects and employees tables to business data object
+      });
 
       // If Business Does Not Exist
       if (!business) {
@@ -88,6 +88,7 @@ export default class BusinessController {
       // Return Found Business
       return business;
     } catch (e) {
+      console.log(e);
       res.status(500);
       return e;
     }

@@ -8,8 +8,8 @@ export default interface IProject {
   description: string; // required
   project_type: string; // required, auto-generated
   status: string; // required, auto-generated
-  business: number; // required
-  employee: number;
+  // business: number; // required
+  // employee: number;
   required_skills: ISkill[];
   duration: number; // required, auto-generated
   stipend: number; // required

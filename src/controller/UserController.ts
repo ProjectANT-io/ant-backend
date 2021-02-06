@@ -55,7 +55,7 @@ export default class UserController {
     if (
       req.body.type &&
       req.body.type === "employee" &&
-      typeof req.body.business_id !== "number"
+      typeof req.body.business !== "number"
     ) {
       return "Employee needs to choose a business affiliated to it.";
     }
@@ -118,7 +118,9 @@ export default class UserController {
     // Get User in DB
     try {
       // Find User
-      const user = await this.userRepository.findOne(userID);
+      const user = await this.userRepository.findOne(userID, {
+        relations: ["projects", "previous_outside_projects"],
+      });
 
       // If User Does Not Exist
       if (!user) {

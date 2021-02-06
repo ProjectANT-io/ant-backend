@@ -31,11 +31,13 @@ export default class Project implements IProject {
   status!: string;
 
   @ManyToOne("Business", "projects")
-  business!: IBusiness["id"];
+  business!: IBusiness;
 
-  // TODO to implement later
   @ManyToOne("Business", "user")
-  employee!: IUser["id"];
+  employee!: IUser;
+
+  @ManyToOne("User", "projects")
+  student!: IUser;
 
   @ManyToMany("Skill")
   required_skills!: ISkill[];

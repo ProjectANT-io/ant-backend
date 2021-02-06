@@ -17,7 +17,7 @@ export default interface IUser {
   external_urls: string;
 
   type: string; // Required
-  business_id: number;
+  // business: number;
 
   // skills: ISkill[];
   // educations: IEducation[];

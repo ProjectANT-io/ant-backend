@@ -1,14 +1,18 @@
 /* eslint-disable camelcase */
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  UpdateDateColumn,
+} from "typeorm";
 import IPreviousOutsideProject from "./IPreviousOutsideProject";
+import IUser from "./IUser";
 
 @Entity()
 export default class PreviousOutsideProject implements IPreviousOutsideProject {
   @PrimaryGeneratedColumn()
   id!: number;
-
-  @Column()
-  user_id!: number;
 
   @Column()
   title!: string;
@@ -39,4 +43,10 @@ export default class PreviousOutsideProject implements IPreviousOutsideProject {
 
   @Column("text", { array: true, default: {} })
   photos_url!: string[];
+
+  @ManyToOne("User", "previous_outside_projects")
+  student!: IUser;
+
+  @UpdateDateColumn()
+  updated!: string;
 }

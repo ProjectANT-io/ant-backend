@@ -1,5 +1,10 @@
 /* eslint-disable camelcase */
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  UpdateDateColumn,
+} from "typeorm";
 import IEducation from "./IEducation";
 
 @Entity()
@@ -30,4 +35,7 @@ export default class Education implements IEducation {
 
   @Column({ nullable: true })
   minor!: string;
+
+  @UpdateDateColumn()
+  updated!: string;
 }

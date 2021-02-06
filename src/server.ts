@@ -48,7 +48,6 @@ Routes.forEach((route) => {
       return next();
     },
     (req: Request, res: Response, next: Function) => {
-      logger.info(`Doing something after authentication`);
       const result = new (route.controller as any)()[route.action](
         req,
         res,

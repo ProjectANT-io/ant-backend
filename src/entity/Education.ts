@@ -3,9 +3,11 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  ManyToOne,
   UpdateDateColumn,
 } from "typeorm";
 import IEducation from "./IEducation";
+import IUser from "./IUser";
 
 @Entity()
 export default class Education implements IEducation {
@@ -35,6 +37,9 @@ export default class Education implements IEducation {
 
   @Column({ nullable: true })
   minor!: string;
+
+  @ManyToOne("User", "education")
+  student!: IUser;
 
   @UpdateDateColumn()
   updated!: string;

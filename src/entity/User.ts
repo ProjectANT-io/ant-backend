@@ -18,7 +18,7 @@ export default class User implements IUser {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ unique: true })
   email!: string;
 
   @Column()

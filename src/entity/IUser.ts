@@ -19,7 +19,8 @@ export default interface IUser {
   type: string; // Required
   // business: number;
 
-  // skills: ISkill[];
+  skills: string[];
+
   // educations: IEducation[];
   // previous_outside_projects: IPreviousOutsideProject[];
   // work_experiences: IWorkExperience;

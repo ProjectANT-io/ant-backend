@@ -8,10 +8,10 @@ import {
   OneToMany,
 } from "typeorm";
 import IUser from "./IUser";
-import ISkill from "./ISkill";
 import IBusiness from "./IBusiness";
 import IProject from "./IProject";
 import IPreviousOutsideProject from "./IPreviousOutsideProject";
+import IEducation from "./IEducation";
 
 @Entity()
 export default class User implements IUser {
@@ -60,17 +60,17 @@ export default class User implements IUser {
   @Column("text", { default: "student" })
   type!: string;
 
+  @Column("text")
+  skills!: string[];
+
   @ManyToOne("Business", "employees")
   business!: IBusiness;
 
   @OneToMany("Project", "student")
   projects!: IProject[];
 
-  // @Column("json", { nullable: true })
-  // skills!: ISkill[];
-
-  // @ManyToMany("Education")
-  // educations!: IEducation[];
+  @OneToMany("Education", "student")
+  education!: IEducation[];
 
   @OneToMany("PreviousOutsideProject", "student")
   previous_outside_projects!: IPreviousOutsideProject[];

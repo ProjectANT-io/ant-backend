@@ -10,7 +10,6 @@ import {
 import IBusiness from "./IBusiness";
 import IProject from "./IProject";
 import IProjectMilestone from "./IProjectMilestone";
-import ISkill from "./ISkill";
 import IUser from "./IUser";
 
 @Entity()
@@ -39,13 +38,13 @@ export default class Project implements IProject {
   @ManyToOne("User", "projects")
   student!: IUser;
 
-  @ManyToMany("Skill")
-  required_skills!: ISkill[];
+  @Column()
+  required_skills!: string[];
 
   @Column()
   duration!: number;
 
-  @Column({ type: "integer" })
+  @Column({ type: "integer", nullable: true })
   stipend!: number;
 
   @Column({ type: "timestamptz" })

@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-import ISkill from "./ISkill";
 import IProjectMilestone from "./IProjectMilestone";
 
 export default interface IProject {
@@ -10,9 +9,9 @@ export default interface IProject {
   status: string; // required, auto-generated
   // business: number; // required
   // employee: number;
-  required_skills: ISkill[];
+  required_skills: string[];
   duration: number; // required, auto-generated
-  stipend: number; // required
+  stipend: number;
   start_date: string; // required
   due_date: string; // required
   stream: string; // required

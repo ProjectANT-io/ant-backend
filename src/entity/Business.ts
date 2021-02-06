@@ -7,7 +7,6 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import IBusiness from "./IBusiness";
-import IEmployee from "./IEmployee";
 import IProject from "./IProject";
 import IUser from "./IUser";
 

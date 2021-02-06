@@ -111,6 +111,4 @@ dist
 .tern-port
 
 # KEYS
-./KEYS/id_rsa_priv.pem
-./KEYS/id_rsa_pub.pem
-./generate_keys
+KEYS/

@@ -38,7 +38,7 @@ export default class Project implements IProject {
   @ManyToOne("User", "projects")
   student!: IUser;
 
-  @Column()
+  @Column("text", { array: true })
   required_skills!: string[];
 
   @Column()

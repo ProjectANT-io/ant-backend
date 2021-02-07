@@ -60,7 +60,7 @@ export default class User implements IUser {
   @Column("text", { default: "student" })
   type!: string;
 
-  @Column("text")
+  @Column("text", { array: true, nullable: true })
   skills!: string[];
 
   @ManyToOne("Business", "employees")

@@ -12,6 +12,7 @@ import IBusiness from "./IBusiness";
 import IProject from "./IProject";
 import IPreviousOutsideProject from "./IPreviousOutsideProject";
 import IEducation from "./IEducation";
+import IWorkExperience from "./IWorkExperience";
 
 @Entity()
 export default class User implements IUser {
@@ -71,6 +72,9 @@ export default class User implements IUser {
 
   @OneToMany("Education", "student")
   education!: IEducation[];
+
+  @OneToMany("WorkExperience", "student")
+  work_experiences!: IWorkExperience[];
 
   @OneToMany("PreviousOutsideProject", "student")
   previous_outside_projects!: IPreviousOutsideProject[];

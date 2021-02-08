@@ -119,7 +119,7 @@ export default class UserController {
     try {
       // Find User
       const user = await this.userRepository.findOne(userID, {
-        relations: ["projects", "previous_outside_projects"],
+        relations: ["projects", "previous_outside_projects", "education", "work_experiences"],
       });
 
       // If User Does Not Exist

@@ -9,7 +9,9 @@ export default interface IPreviousOutsideProject {
   role: string;
   external_link: string;
   skills: string[];
-  company: string; // required
+  tools: string[];
+  client: string;
   description: string;
   photos_url: string[];
+  status: string;
 }

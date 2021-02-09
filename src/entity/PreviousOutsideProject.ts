@@ -35,8 +35,14 @@ export default class PreviousOutsideProject implements IPreviousOutsideProject {
   @Column("text", { array: true, default: {} })
   skills!: string[];
 
+  @Column("text", { array: true, default: {} })
+  tools!: string[];
+
+  @Column({ default: "incomplete" })
+  status!: string;
+
   @Column({ nullable: true })
-  company!: string;
+  client!: string;
 
   @Column({ nullable: true })
   description!: string;

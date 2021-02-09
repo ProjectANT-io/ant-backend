@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import PreviousOutsideProject from "../entity/PreviousOutsideProject";
 
 // === GLOBAL VARIABLE ===
-const REQUIRED_ATTRIBUTES = ["student", "title", "company"];
+const REQUIRED_ATTRIBUTES = ["student", "title"];
 
 class PreviousOutsideProjectController {
   private previousOutsideProjectRepository = getRepository(
@@ -41,7 +41,7 @@ class PreviousOutsideProjectController {
 
     // const firstName, lastName, resumeURL, skills
     const userID = Number(req.body.student);
-    const { title, company } = req.body;
+    const { title } = req.body;
 
     let wrongType = "";
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
@@ -50,9 +50,6 @@ class PreviousOutsideProjectController {
     }
     if (typeof title !== "string") {
       wrongType += `${typeof title}: title should be a string\n`;
-    }
-    if (typeof company !== "string") {
-      wrongType += `${typeof company}: company should be a string\n`;
     }
     if (wrongType) {
       res.status(422);

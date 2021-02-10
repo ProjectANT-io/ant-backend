@@ -3,6 +3,8 @@ import ProjectController from "./controller/ProjectController";
 import BusinessController from "./controller/BusinessController";
 import PreviousOutsideProjectController from "./controller/PreviousOutsideProjectController";
 import PaymentController from "./controller/PaymentController";
+import WorkExperienceController from "./controller/WorkExpienceController";
+import EducationController from "./controller/EducationController";
 // eslint-disable-next-line import/order
 import passport = require("passport");
 
@@ -155,6 +157,63 @@ const Routes = [
     action: "deletePreviousOutsideProject",
     auth: passport.authenticate("jwt", { session: false }),
   },
+  // Work Experience routes
+  {
+    method: "post",
+    route: "/workexperience",
+    controller: WorkExperienceController,
+    action: "newWorkExperience",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "get",
+    route: "/workexperience/:work_experience_id",
+    controller: WorkExperienceController,
+    action: "getWorkExperience",
+  },
+  {
+    method: "post",
+    route: "/workexperience/:work_experience_id",
+    controller: WorkExperienceController,
+    action: "updateWorkExperience",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "delete",
+    route: "/workexperience/:work_experience_id",
+    controller: WorkExperienceController,
+    action: "deleteWorkExperience",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+    // Education routes
+    {
+      method: "post",
+      route: "/education",
+      controller: EducationController,
+      action: "newEducation",
+      auth: passport.authenticate("jwt", { session: false }),
+    },
+    {
+      method: "get",
+      route: "/education/:education_id",
+      controller: EducationController,
+      action: "getEducation",
+    },
+    {
+      method: "post",
+      route: "/education/:education_id",
+      controller: EducationController,
+      action: "updateEducation",
+      auth: passport.authenticate("jwt", { session: false }),
+    },
+    {
+      method: "delete",
+      route: "/education/:education_id",
+      controller: EducationController,
+      action: "deleteEducation",
+      auth: passport.authenticate("jwt", { session: false }),
+    },
+
 ];
 
 export default Routes;

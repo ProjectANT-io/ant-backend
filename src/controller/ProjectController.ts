@@ -15,6 +15,7 @@ export default class ProjectController {
   }
 
   async createProject(req: Request, res: Response) {
+    
     if (!(await this.authCheck(req, res))) {
       res.status(401);
       return "Unauthorized";

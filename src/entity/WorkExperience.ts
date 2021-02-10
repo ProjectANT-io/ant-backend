@@ -32,9 +32,6 @@ export default class WorkExperience implements IWorkExperience {
   @Column()
   role!: string;
 
-  @Column({ nullable: true })
-  minor!: string;
-
   @ManyToOne("User", "WorkExperience")
   student!: IUser;
 

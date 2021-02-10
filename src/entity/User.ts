@@ -67,7 +67,7 @@ export default class User implements IUser {
   @ManyToOne("Business", "employees")
   business!: IBusiness;
   
-  @Column()
+  @Column({ nullable: true})
   business_id!: number;
 
   @OneToMany("Project", "student")

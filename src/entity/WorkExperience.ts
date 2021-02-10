@@ -14,16 +14,16 @@ export default class WorkExperience implements IWorkExperience {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ nullable: true })
   location!: string;
 
   @Column()
   company!: string;
 
-  @Column()
+  @Column({ type: "timestamptz" })
   start_date!: string;
 
-  @Column({ nullable: true })
+  @Column({ type: "timestamptz", nullable: true })
   end_date!: string;
 
   @Column()

@@ -3,6 +3,7 @@ import ProjectController from "./controller/ProjectController";
 import BusinessController from "./controller/BusinessController";
 import PreviousOutsideProjectController from "./controller/PreviousOutsideProjectController";
 import PaymentController from "./controller/PaymentController";
+import WorkExperienceController from "./controller/WorkExpienceController";
 // eslint-disable-next-line import/order
 import passport = require("passport");
 
@@ -155,6 +156,36 @@ const Routes = [
     action: "deletePreviousOutsideProject",
     auth: passport.authenticate("jwt", { session: false }),
   },
+  // Work Experience routes
+  {
+    method: "post",
+    route: "/workexperience",
+    controller: WorkExperienceController,
+    action: "newWorkExperience",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "get",
+    route: "/workexperience/:previous_outside_project_id",
+    controller: WorkExperienceController,
+    action: "getWorkExperience",
+  },
+  {
+    method: "post",
+    route: "/workexperience/:previous_outside_project_id",
+    controller: WorkExperienceController,
+    action: "updateWorkExperience",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "delete",
+    route: "/workexperience/:previous_outside_project_id",
+    controller: WorkExperienceController,
+    action: "deleteWorkExperience",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  
+
 ];
 
 export default Routes;

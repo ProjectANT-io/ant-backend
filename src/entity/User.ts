@@ -66,6 +66,9 @@ export default class User implements IUser {
 
   @ManyToOne("Business", "employees")
   business!: IBusiness;
+  
+  @Column()
+  business_id!: number;
 
   @OneToMany("Project", "student")
   projects!: IProject[];

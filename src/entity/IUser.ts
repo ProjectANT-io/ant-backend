@@ -18,6 +18,7 @@ export default interface IUser {
 
   type: string; // Required
   // business: number;
+  business_id: number;
 
   skills: string[];
 

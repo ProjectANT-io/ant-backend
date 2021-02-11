@@ -48,6 +48,11 @@ class WorkExperienceController {
       ["MM/DD/YYYY", "MM-DD-YYYY"],
       true
     );
+    const endDateMoment = moment(
+      req.body.end_date,
+      ["MM/DD/YYYY", "MM-DD-YYYY"],
+      true
+    );
 
     let wrongType = "";
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
@@ -56,11 +61,13 @@ class WorkExperienceController {
     if (typeof role !== "string") wrongType += `${typeof role}: role should be a string\n`;
     if (startDateMoment.isValid() === false) wrongType += `start_date should be a date (MM-DD-YYYY)`;
     if (current !== true && current !== false) wrongType += `${current} current should be a boolean (true/false)`;
-    
+    if (current === false && endDateMoment.isValid() === false) wrongType += `If not current end_date should be a date (MM-DD-YYYY)`;
     if (wrongType) {
       res.status(422);
       return wrongType;
     }
+
+    if (current) req.body.end_date = null;
 
     try {
       const newInfo = this.WorkExperienceRepository.create(req.body);

@@ -80,7 +80,7 @@ export default class ProjectController {
     }
 
     // Check remote for boolean format
-    if (req.body.remote !== "true" && req.body.remote !== "false") {
+    if (req.body.remote !== true && req.body.remote !== false) {
       res.status(422);
       return "remote should be a boolean (true/false)";
     }

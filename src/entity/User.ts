@@ -50,9 +50,6 @@ export default class User implements IUser {
   location!: string;
 
   @Column({ nullable: true })
-  gender!: string;
-
-  @Column({ nullable: true })
   role!: string;
 
   @Column("text", { array: false, nullable: true })

@@ -89,6 +89,9 @@ export default class Project implements IProject {
   @Column({ nullable: true })
   role!: string;
 
+  @Column()
+  created_by!: string;
+
   @UpdateDateColumn()
   updated!: string;
 }

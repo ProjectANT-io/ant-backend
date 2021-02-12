@@ -6,6 +6,7 @@ export default interface IUser {
   salt: string;
   first_name: string; // Required
   last_name: string; // Required
+  mobile_number: string;
   status: string;
 
   about_me: string;

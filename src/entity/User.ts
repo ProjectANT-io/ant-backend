@@ -35,6 +35,9 @@ export default class User implements IUser {
   last_name!: string;
 
   @Column({ nullable: true })
+  mobile_number!: string;
+
+  @Column({ nullable: true })
   status!: string;
 
   @Column({ nullable: true })

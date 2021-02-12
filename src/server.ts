@@ -5,7 +5,7 @@ import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import Routes from "./routes";
 import createLogger from "./utils/logger";
-import { TryDBConnect } from "../db_helper/index";
+import { TryDBConnect } from "./db_helper/index";
 
 // === Initializing variables ===
 const app: express.Application = express();

@@ -4,7 +4,7 @@ import Education from "../entity/Education";
 import * as moment from "moment";
 
 // === GLOBAL VARIABLE ===
-const REQUIRED_ATTRIBUTES = ["student", "location", "institution", "image", "graduation_date"];
+const REQUIRED_ATTRIBUTES = ["student", "institution", "graduation_date"];
 
 class EducationController {
   private EducationRepository = getRepository(
@@ -40,7 +40,7 @@ class EducationController {
       return missingFields;
     }
 
-    // const firstName, lastName, resumeURL, skills
+    
     const userID = Number(req.body.student);
     const { location, institution, image } = req.body;
     const graduationDateMoment = moment(
@@ -52,8 +52,6 @@ class EducationController {
     let wrongType = "";
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
     if (typeof userID !== "number") wrongType += `${typeof userID}: userID should be a number\n`;
-    if (typeof location !== "string") wrongType += `${typeof location}: location should be a string\n`;
-    if (typeof image !== "string") wrongType += `${typeof image}: image should be a string\n`;
     if (typeof institution !== "string") wrongType += `${typeof institution}: institution should be a string\n`;
     if (graduationDateMoment.isValid() === false) wrongType += `graduation_date should be a date (MM-DD-YYYY)`;
     

@@ -26,6 +26,6 @@ export default interface IProject {
   introduction: string;
   industry: string;
   role: string;
-
+  created_by: string;
   updated: string; // auto-generated
 }

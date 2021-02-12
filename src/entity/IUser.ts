@@ -13,12 +13,12 @@ export default interface IUser {
   profile_picture_url: string;
   resume_url: string; // Required
   location: string;
-  gender: string;
   role: string;
   external_urls: string;
 
   type: string; // Required
   // business: number;
+  business_id: number;
 
   skills: string[];
 

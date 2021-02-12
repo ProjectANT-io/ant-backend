@@ -1,3 +1,4 @@
+import * as path from "path";
 import {
   Connection,
   createConnection,
@@ -27,9 +28,9 @@ export const DBConnect = async () => {
       database: process.env.DB_DATABASE,
       synchronize: true,
       logging: false,
-      entities: ["src/entity/**/*.ts"],
-      migrations: ["src/migration/**/*.ts"],
-      subscribers: ["src/subscriber/**/*.ts"],
+      entities: [path.join(__dirname, "../entity/**/*")],
+      migrations: [path.join(__dirname, "../migration/**/*")],
+      subscribers: [path.join(__dirname, "../subscriber/**/*")],
       cli: {
         entitiesDir: "src/entity",
         migrationsDir: "src/migration",

@@ -4,7 +4,7 @@ import WorkExperience from "../entity/WorkExperience";
 import * as moment from "moment";
 
 // === GLOBAL VARIABLE ===
-const REQUIRED_ATTRIBUTES = ["student", "company", "start_date", "current", "role"];
+const REQUIRED_ATTRIBUTES = ["student", "employer", "start_date", "current", "role"];
 
 class WorkExperienceController {
   private WorkExperienceRepository = getRepository(
@@ -42,7 +42,7 @@ class WorkExperienceController {
 
     // const firstName, lastName, resumeURL, skills
     const userID = Number(req.body.student);
-    const { company, role, current } = req.body;
+    const { employer, role, current } = req.body;
     const startDateMoment = moment(
       req.body.start_date,
       ["MM/DD/YYYY", "MM-DD-YYYY"],
@@ -57,7 +57,7 @@ class WorkExperienceController {
     let wrongType = "";
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
     if (typeof userID !== "number") wrongType += `${typeof userID}: userID should be a number\n`;
-    if (typeof company !== "string") wrongType += `${typeof company}: company should be a string\n`;
+    if (typeof employer !== "string") wrongType += `${typeof employer}: employer should be a string\n`;
     if (typeof role !== "string") wrongType += `${typeof role}: role should be a string\n`;
     if (startDateMoment.isValid() === false) wrongType += `start_date should be a date (MM-DD-YYYY)`;
     if (current !== true && current !== false) wrongType += `${current} current should be a boolean (true/false)`;

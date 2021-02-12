@@ -18,7 +18,10 @@ export default class WorkExperience implements IWorkExperience {
   location!: string;
 
   @Column()
-  company!: string;
+  employer!: string;
+
+  @Column("text", { array: true, nullable: true })
+  skills!: string[];
 
   @Column({ type: "timestamptz" })
   start_date!: string;

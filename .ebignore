@@ -111,7 +111,7 @@ dist
 .tern-port
 
 # KEYS
-KEYS/
+# KEYS/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

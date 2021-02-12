@@ -1,28 +1,32 @@
-FROM node:14-alpine
+FROM node:alpine
+#  AS builder
 
 WORKDIR /app
 
-# Install cURL
-RUN apk --no-cache add curl
-
-# Install AWS
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-RUN unzip awscliv2.zip
-RUN ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
-
-# Install dependencies
 COPY package*.json ./
-COPY .npmrc ./
-RUN npm install --production
 
-# Copy app source
-COPY build/ ./
+RUN npm install
 
-# Set Environment
+COPY ./ ./
+
+RUN npm run build
+
+FROM node:alpine
+#  AS prod
+
 ENV NODE_ENV production
-ENV PORT 3000
+ENV PORT 80
 
-# Bind the port that the image will run on
-EXPOSE 3000
+WORKDIR /app
 
-CMD ["npm", "start"]
+COPY package*.json ./
+
+RUN npm ci --production
+
+COPY . .
+
+COPY --from=0 /app/build build/
+
+EXPOSE 80
+
+CMD ["node", "server.js"]

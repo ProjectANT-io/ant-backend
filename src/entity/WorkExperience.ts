@@ -30,6 +30,9 @@ export default class WorkExperience implements IWorkExperience {
   end_date!: string;
 
   @Column()
+  description!: string;
+
+  @Column()
   current!: boolean;
 
   @Column()
@@ -40,4 +43,7 @@ export default class WorkExperience implements IWorkExperience {
 
   @UpdateDateColumn()
   updated!: string;
+
+  @Column({ nullable: true })
+  media!: string;
 }

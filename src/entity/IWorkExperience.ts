@@ -8,4 +8,6 @@ export default interface IWorkExperience {
   end_date: string;
   current: boolean;
   role: string;
+  description: string;
+  media: string;
 }

@@ -36,6 +36,9 @@ export default class Education implements IEducation {
   @ManyToOne("User", "education")
   student!: IUser;
   
+  @Column({ nullable: true })
+  media!: string;
+  
   @UpdateDateColumn()
   updated!: string;
 }

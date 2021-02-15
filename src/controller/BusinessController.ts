@@ -1,6 +1,7 @@
 import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import Business from "../entity/Business";
+import { businessRequiredCols } from "../entity/IBusiness";
 
 export default class BusinessController {
   private businessRepository = getRepository(Business);
@@ -24,7 +25,7 @@ export default class BusinessController {
     }
     // Check for Required POST Body Fields, return 422 if required field is missing
     let missingFields: string = "";
-    ["name"].forEach((expectedField) => {
+    businessRequiredCols.forEach((expectedField) => {
       if (!(expectedField in req.body)) {
         missingFields += `Missing ${expectedField}\n`;
       }
@@ -66,7 +67,7 @@ export default class BusinessController {
 
     // Check for Correct Type of Required Path Parameter
     const businessID = Number(req.params.business_id);
-    if (Number.isNaN(businessID)) {
+    if (Number.isNaN(Number(businessID))) {
       res.status(422);
       return "business_id should be a number";
     }

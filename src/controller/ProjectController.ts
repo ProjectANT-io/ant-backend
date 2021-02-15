@@ -2,6 +2,7 @@ import { getRepository } from "typeorm";
 import * as moment from "moment";
 import { Request, Response } from "express";
 import Project from "../entity/Project";
+import { projectRequiredCols } from "../entity/IProject";
 
 export default class ProjectController {
   private projectRepository = getRepository(Project);
@@ -15,7 +16,6 @@ export default class ProjectController {
   }
 
   async createProject(req: Request, res: Response) {
-    
     if (!(await this.authCheck(req, res))) {
       res.status(401);
       return "Unauthorized";
@@ -27,20 +27,7 @@ export default class ProjectController {
 
     // Check for Required POST Body Fields, return 422 if required field is missing
     let missingFields: string = "";
-    [
-      "title",
-      "description",
-      "business",
-      "stipend",
-      "start_date",
-      "due_date",
-      "stream",
-      "project_detail",
-      "hourly_price",
-      "location",
-      "payment_type",
-      "remote",
-    ].forEach((expectedField) => {
+    projectRequiredCols.forEach((expectedField) => {
       if (!(expectedField in req.body)) {
         missingFields += `Missing ${expectedField} in POST body\n`;
       }

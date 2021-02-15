@@ -7,5 +7,6 @@ export default interface IEducation {
   degree: string;
   major: string;
   minor: string;
+  location: string;
   media: string;
 }

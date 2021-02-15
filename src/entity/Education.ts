@@ -32,6 +32,9 @@ export default class Education implements IEducation {
   
   @Column({ nullable: true })
   minor!: string;
+
+  @Column({ nullable: true })
+  location!: string;
   
   @ManyToOne("User", "education")
   student!: IUser;

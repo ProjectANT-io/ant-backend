@@ -3,7 +3,7 @@ import ProjectController from "./controller/ProjectController";
 import BusinessController from "./controller/BusinessController";
 import PreviousOutsideProjectController from "./controller/PreviousOutsideProjectController";
 import PaymentController from "./controller/PaymentController";
-import WorkExperienceController from "./controller/WorkExpienceController";
+import WorkExperienceController from "./controller/WorkExperienceController";
 import EducationController from "./controller/EducationController";
 // eslint-disable-next-line import/order
 import passport = require("passport");

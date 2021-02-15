@@ -1,15 +1,11 @@
 import { getRepository } from "typeorm";
 import { Request, Response } from "express";
-import WorkExperience from "../entity/WorkExperience";
 import * as moment from "moment";
-
-// === GLOBAL VARIABLE ===
-const REQUIRED_ATTRIBUTES = ["student", "employer", "start_date", "current", "role"];
+import WorkExperience from "../entity/WorkExperience";
+import { workExperienceRequiredCols } from "../entity/IWorkExperience";
 
 class WorkExperienceController {
-  private WorkExperienceRepository = getRepository(
-    WorkExperience
-  );
+  private workExperienceRepository = getRepository(WorkExperience);
 
   async authCheck(request: Request, response: Response) {
     return true; // TODO
@@ -19,7 +15,7 @@ class WorkExperienceController {
     return true; // TODO
   }
 
-  async newWorkExperience(req: Request, res: Response) {
+  async createWorkExperience(req: Request, res: Response) {
     if (!(await this.authCheck(req, res))) {
       res.status(401);
       return "Unauthorized";
@@ -30,7 +26,7 @@ class WorkExperienceController {
     }
 
     let missingFields: string = "";
-    REQUIRED_ATTRIBUTES.forEach((expectedField) => {
+    workExperienceRequiredCols.forEach((expectedField) => {
       if (!(expectedField in req.body)) {
         missingFields += `Missing ${expectedField}\n`;
       }
@@ -40,9 +36,7 @@ class WorkExperienceController {
       return missingFields;
     }
 
-    // const firstName, lastName, resumeURL, skills
-    const userID = Number(req.body.student);
-    const { employer, role, current } = req.body;
+    const { current } = req.body;
     const startDateMoment = moment(
       req.body.start_date,
       ["MM/DD/YYYY", "MM-DD-YYYY"],
@@ -56,12 +50,14 @@ class WorkExperienceController {
 
     let wrongType = "";
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
-    if (typeof userID !== "number") wrongType += `${typeof userID}: userID should be a number\n`;
-    if (typeof employer !== "string") wrongType += `${typeof employer}: employer should be a string\n`;
-    if (typeof role !== "string") wrongType += `${typeof role}: role should be a string\n`;
-    if (startDateMoment.isValid() === false) wrongType += `start_date should be a date (MM-DD-YYYY)`;
-    if (current !== true && current !== false) wrongType += `${current} current should be a boolean (true/false)`;
-    if (current === false && endDateMoment.isValid() === false) wrongType += `If not current end_date should be a date (MM-DD-YYYY)`;
+    if (Number.isNaN(Number(req.body.student)))
+      wrongType += `student should be a number\n`;
+    if (startDateMoment.isValid() === false)
+      wrongType += `start_date should be a date (MM-DD-YYYY)\n`;
+    if (current !== true && current !== false)
+      wrongType += `current should be a boolean (true/false)\n`;
+    if (current === false && endDateMoment.isValid() === false)
+      wrongType += `If not current end_date should be a date (MM-DD-YYYY)\n`;
     if (wrongType) {
       res.status(422);
       return wrongType;
@@ -70,8 +66,8 @@ class WorkExperienceController {
     if (current) req.body.end_date = null;
 
     try {
-      const newInfo = this.WorkExperienceRepository.create(req.body);
-      const newWorkExperience = await this.WorkExperienceRepository.save(
+      const newInfo = this.workExperienceRepository.create(req.body);
+      const newWorkExperience = await this.workExperienceRepository.save(
         newInfo
       );
       return newWorkExperience;
@@ -98,27 +94,25 @@ class WorkExperienceController {
     }
 
     // Check for Correct Type of Required Path Parameter
-    const WorkExperienceID = Number(
-      req.params.work_experience_id
-    );
-    if (Number.isNaN(WorkExperienceID)) {
+    const workExperienceID = Number(req.params.work_experience_id);
+    if (Number.isNaN(Number(workExperienceID))) {
       res.status(422);
       return "work_experience_id should be a number";
     }
 
     // Get User in DB
     try {
-      const WorkExperience = await this.WorkExperienceRepository.findOne(
-        WorkExperienceID
+      const workExperience = await this.workExperienceRepository.findOne(
+        workExperienceID
       );
 
-      if (!WorkExperience) {
+      if (!workExperience) {
         res.status(404);
-        return `WorkExperience with ID ${WorkExperienceID} not found.`;
+        return `workExperience with ID ${workExperienceID} not found.`;
       }
 
       // Return Found User
-      return WorkExperience;
+      return workExperience;
     } catch (e) {
       res.status(500);
       return e;
@@ -126,20 +120,17 @@ class WorkExperienceController {
   }
 
   async updateWorkExperience(req: Request, res: Response) {
-    const WorkExperience = await this.getWorkExperience(
-      req,
-      res
-    );
+    const workExperience = await this.getWorkExperience(req, res);
     if (res.statusCode !== 200) {
       // calling this.getWorkExperience() returned an error, so return the error
-      return WorkExperience;
+      return workExperience;
     }
 
     // Update User in DB
     try {
       // Update & Return Found User
-      return await this.WorkExperienceRepository.save({
-        ...WorkExperience, // retrieve existing properties
+      return await this.workExperienceRepository.save({
+        ...workExperience, // retrieve existing properties
         ...req.body, // override some existing properties
       });
     } catch (e) {
@@ -149,10 +140,7 @@ class WorkExperienceController {
   }
 
   async deleteWorkExperience(req: Request, res: Response) {
-    const WorkExperience = await this.getWorkExperience(
-      req,
-      res
-    );
+    const workExperience = await this.getWorkExperience(req, res);
     if (res.statusCode !== 200) {
       // calling this.getWorkExperience() returned an error, so return the error
       return WorkExperience;
@@ -160,12 +148,10 @@ class WorkExperienceController {
 
     try {
       // Delete the User in DB
-      await this.WorkExperienceRepository.delete(
-        WorkExperience.id
-      );
+      await this.workExperienceRepository.delete(workExperience.id);
 
       // Return the Deleted User
-      return WorkExperience;
+      return workExperience;
     } catch (e) {
       res.status(500);
       return e;

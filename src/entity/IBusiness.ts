@@ -1,4 +1,4 @@
-/* eslint-disable camelcase */
+/* eslint-disable camelcase, import/no-cycle */
 import IUser from "./IUser";
 import IProject from "./IProject";
 
@@ -21,3 +21,5 @@ export default interface IBusiness {
 
   updated: string; // auto-generated
 }
+
+export const businessRequiredCols = ["name"];

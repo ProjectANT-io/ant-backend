@@ -1,9 +1,7 @@
 import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import PreviousOutsideProject from "../entity/PreviousOutsideProject";
-
-// === GLOBAL VARIABLE ===
-const REQUIRED_ATTRIBUTES = ["student", "title"];
+import { previousOutsideProjectRequiredCols } from "../entity/IPreviousOutsideProject";
 
 class PreviousOutsideProjectController {
   private previousOutsideProjectRepository = getRepository(
@@ -18,7 +16,7 @@ class PreviousOutsideProjectController {
     return true; // TODO
   }
 
-  async newPreviousOutsideProject(req: Request, res: Response) {
+  async createPreviousOutsideProject(req: Request, res: Response) {
     if (!(await this.authCheck(req, res))) {
       res.status(401);
       return "Unauthorized";
@@ -29,7 +27,7 @@ class PreviousOutsideProjectController {
     }
 
     let missingFields: string = "";
-    REQUIRED_ATTRIBUTES.forEach((expectedField) => {
+    previousOutsideProjectRequiredCols.forEach((expectedField) => {
       if (!(expectedField in req.body)) {
         missingFields += `Missing ${expectedField}\n`;
       }
@@ -39,17 +37,10 @@ class PreviousOutsideProjectController {
       return missingFields;
     }
 
-    // const firstName, lastName, resumeURL, skills
-    const userID = Number(req.body.student);
-    const { title } = req.body;
-
     let wrongType = "";
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
-    if (typeof userID !== "number") {
-      wrongType += `${typeof userID}: userID should be a number\n`;
-    }
-    if (typeof title !== "string") {
-      wrongType += `${typeof title}: title should be a string\n`;
+    if (Number.isNaN(Number(req.body.student))) {
+      wrongType += "student should be a number\n";
     }
     if (wrongType) {
       res.status(422);
@@ -88,7 +79,7 @@ class PreviousOutsideProjectController {
     const previousOutsideProjectID = Number(
       req.params.previous_outside_project_id
     );
-    if (Number.isNaN(previousOutsideProjectID)) {
+    if (Number.isNaN(Number(previousOutsideProjectID))) {
       res.status(422);
       return "previous_outside_project_id should be a number";
     }

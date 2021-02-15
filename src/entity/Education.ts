@@ -6,39 +6,41 @@ import {
   ManyToOne,
   UpdateDateColumn,
 } from "typeorm";
-import IEducation from "./IEducation";
+import isNullGenerator from "../utils/isNullGenerator";
+import IEducation, { educationRequiredCols } from "./IEducation";
 import IUser from "./IUser";
+
+const isNullable = isNullGenerator(educationRequiredCols);
 
 @Entity()
 export default class Education implements IEducation {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  
-  @Column()
-  institution!: string;
-  
-  @Column()
-  graduation_date!: string;
-  
-  @Column({ nullable: true })
-  gpa!: string;
-  
-  @Column({ nullable: true })
-  degree!: string;
-  
-  @Column({ nullable: true })
-  major!: string;
-  
-  @Column({ nullable: true })
-  minor!: string;
-  
   @ManyToOne("User", "education")
   student!: IUser;
-  
-  @Column({ nullable: true })
+
+  @Column({ nullable: isNullable("institution") })
+  institution!: string;
+
+  @Column({ nullable: isNullable("graduation_date") })
+  graduation_date!: string;
+
+  @Column({ nullable: isNullable("gpa") })
+  gpa!: string;
+
+  @Column({ nullable: isNullable("degree") })
+  degree!: string;
+
+  @Column({ nullable: isNullable("major") })
+  major!: string;
+
+  @Column({ nullable: isNullable("minor") })
+  minor!: string;
+
+  @Column({ nullable: isNullable("media") })
   media!: string;
-  
+
   @UpdateDateColumn()
   updated!: string;
 }

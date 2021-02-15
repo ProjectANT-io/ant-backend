@@ -2,6 +2,7 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import User from "../entity/User";
 import Business from "../entity/Business";
+import { userRequiredCols } from "../entity/IUser";
 
 const authUtils = require("../utils/authUtils");
 
@@ -32,13 +33,11 @@ export default class UserController {
     let missingFields: string = "";
     // Took off resume_url TEMP. Having trouble signing up employee as user when resume its required
     // but not asked in onboarding
-    ["email", "password", "first_name", "last_name"].forEach(
-      (expectedField) => {
-        if (!(expectedField in req.body)) {
-          missingFields += `Missing ${expectedField}\n`;
-        }
+    userRequiredCols.forEach((expectedField) => {
+      if (!(expectedField in req.body)) {
+        missingFields += `Missing ${expectedField}\n`;
       }
-    );
+    });
     if (missingFields) {
       res.status(422);
       return missingFields;
@@ -57,6 +56,7 @@ export default class UserController {
       req.body.type === "employee" &&
       typeof req.body.business !== "number"
     ) {
+      res.status(422);
       return "Employee needs to choose a business affiliated to it.";
     }
 
@@ -70,10 +70,10 @@ export default class UserController {
           return `Business with ID ${req.body.business_id} not found.`;
         }
 
-        await this.businessRepository.save({
-          ...business, // retrieve existing properties
-          ...req.body, // override some existing properties
-        });
+        // await this.businessRepository.save({
+        //   ...business, // retrieve existing properties
+        //   ...req.body, // override some existing properties
+        // });
       }
 
       const newUserInfo = this.userRepository.create(req.body);
@@ -119,7 +119,12 @@ export default class UserController {
     try {
       // Find User
       const user = await this.userRepository.findOne(userID, {
-        relations: ["projects", "previous_outside_projects", "education", "work_experiences"],
+        relations: [
+          "projects",
+          "previous_outside_projects",
+          "education",
+          "work_experiences",
+        ],
       });
 
       // If User Does Not Exist

@@ -54,9 +54,9 @@ class WorkExperienceController {
       wrongType += `student should be a number\n`;
     if (startDateMoment.isValid() === false)
       wrongType += `start_date should be a date (MM-DD-YYYY)\n`;
-    if (current !== true && current !== false)
+    if (JSON.parse(current) !== true && JSON.parse(current) !== false)
       wrongType += `current should be a boolean (true/false)\n`;
-    if (current === false && endDateMoment.isValid() === false)
+    if (JSON.parse(current) === false && endDateMoment.isValid() === false)
       wrongType += `If not current end_date should be a date (MM-DD-YYYY)\n`;
     if (wrongType) {
       res.status(422);

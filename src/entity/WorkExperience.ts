@@ -29,10 +29,10 @@ export default class WorkExperience implements IWorkExperience {
   @Column("text", { array: true, default: {} })
   skills!: string[];
 
-  @Column({ type: "timestamptz", nullable: isNullable("start_date") })
+  @Column({ nullable: isNullable("start_date") })
   start_date!: string;
 
-  @Column({ type: "timestamptz", nullable: isNullable("end_date") })
+  @Column({ nullable: isNullable("end_date") })
   end_date!: string;
 
   @Column({ nullable: isNullable("description") })

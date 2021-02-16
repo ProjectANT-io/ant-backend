@@ -120,6 +120,7 @@ export default class UserController {
       // Find User
       const user = await this.userRepository.findOne(userID, {
         relations: [
+          "business",
           "projects",
           "previous_outside_projects",
           "education",

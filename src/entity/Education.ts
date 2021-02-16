@@ -1,33 +1,49 @@
 /* eslint-disable camelcase */
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-import IEducation from "./IEducation";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  UpdateDateColumn,
+} from "typeorm";
+import isNullGenerator from "../utils/isNullGenerator";
+import IEducation, { educationRequiredCols } from "./IEducation";
+import IUser from "./IUser";
+
+const isNullable = isNullGenerator(educationRequiredCols);
 
 @Entity()
 export default class Education implements IEducation {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
-  image!: string;
+  @ManyToOne("User", "education")
+  student!: IUser;
 
-  @Column()
-  location!: string;
-
-  @Column()
+  @Column({ nullable: isNullable("institution") })
   institution!: string;
 
-  @Column()
+  @Column({ nullable: isNullable("graduation_date") })
   graduation_date!: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: isNullable("gpa") })
   gpa!: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: isNullable("degree") })
   degree!: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: isNullable("major") })
   major!: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: isNullable("minor") })
   minor!: string;
+
+  @Column({ nullable: isNullable("location") })
+  location!: string;
+
+  @Column({ nullable: isNullable("media") })
+  media!: string;
+
+  @UpdateDateColumn()
+  updated!: string;
 }

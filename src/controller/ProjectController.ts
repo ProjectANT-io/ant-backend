@@ -2,6 +2,7 @@ import { getRepository } from "typeorm";
 import * as moment from "moment";
 import { Request, Response } from "express";
 import Project from "../entity/Project";
+import { projectRequiredCols } from "../entity/IProject";
 
 export default class ProjectController {
   private projectRepository = getRepository(Project);
@@ -26,20 +27,7 @@ export default class ProjectController {
 
     // Check for Required POST Body Fields, return 422 if required field is missing
     let missingFields: string = "";
-    [
-      "title",
-      "description",
-      "business",
-      "stipend",
-      "start_date",
-      "due_date",
-      "stream",
-      "project_detail",
-      "hourly_price",
-      "location",
-      "payment_type",
-      "remote",
-    ].forEach((expectedField) => {
+    projectRequiredCols.forEach((expectedField) => {
       if (!(expectedField in req.body)) {
         missingFields += `Missing ${expectedField} in POST body\n`;
       }
@@ -79,7 +67,7 @@ export default class ProjectController {
     }
 
     // Check remote for boolean format
-    if (req.body.remote !== "true" && req.body.remote !== "false") {
+    if (req.body.remote !== true && req.body.remote !== false) {
       res.status(422);
       return "remote should be a boolean (true/false)";
     }

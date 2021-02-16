@@ -5,7 +5,7 @@ import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import Routes from "./routes";
 import createLogger from "./utils/logger";
-import { TryDBConnect } from "../db_helper/index";
+import { TryDBConnect } from "./db_helper/index";
 
 // === Initializing variables ===
 const app: express.Application = express();
@@ -48,7 +48,6 @@ Routes.forEach((route) => {
       return next();
     },
     (req: Request, res: Response, next: Function) => {
-      logger.info(`Doing something after authentication`);
       const result = new (route.controller as any)()[route.action](
         req,
         res,

@@ -38,7 +38,7 @@ export default class Education implements IEducation {
   @Column({ nullable: isNullable("minor") })
   minor!: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: isNullable("location") })
   location!: string;
 
   @Column({ nullable: isNullable("media") })

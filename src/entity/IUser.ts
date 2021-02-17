@@ -24,6 +24,8 @@ export default interface IUser {
 
   type: string;
   skills: string[];
+  certifications: string[];
+  others: string[];
 
   business: IBusiness;
   projects: IProject[];

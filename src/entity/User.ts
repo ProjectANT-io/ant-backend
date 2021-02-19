@@ -76,8 +76,8 @@ export default class User implements IUser {
   @Column("json", { default: [] })
   certifications!: string[];
   
-  @Column("json", { default: [] })
-  others!: string[];
+  @Column("text", { array: false, nullable: isNullable("others") })
+  others!: string;
 
   @ManyToOne("Business", "employees")
   business!: IBusiness;

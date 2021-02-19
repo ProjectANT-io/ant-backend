@@ -3,7 +3,8 @@ import { Request, Response } from "express";
 import * as moment from "moment";
 import WorkExperience from "../entity/WorkExperience";
 import { workExperienceRequiredCols } from "../entity/IWorkExperience";
-import checkUsersAuth from "../utils/authCheck";
+
+const authChecks = require("../utils/authChecks");
 
 class WorkExperienceController {
   private workExperienceRepository = getRepository(WorkExperience);
@@ -46,7 +47,7 @@ class WorkExperienceController {
       res.status(422);
       return wrongType;
     }
-    if (!await checkUsersAuth(req.user, req.body.student)) {
+    if (!authChecks.checkUsersAuth(req.user, req.body.student)) {
       res.status(401);
       return "Unauthorized";
     }
@@ -105,7 +106,7 @@ class WorkExperienceController {
       return workExperience;
     }
 
-    if (!await checkUsersAuth(req.user, workExperience.student)) {
+    if (!authChecks.checkUsersAuth(req.user, workExperience.student)) {
       res.status(401);
       return "Unauthorized";
     }
@@ -130,7 +131,7 @@ class WorkExperienceController {
       return WorkExperience;
     }
 
-    if (!await checkUsersAuth(req.user, workExperience.student)) {
+    if (!authChecks.checkUsersAuth(req.user, workExperience.student)) {
       res.status(401);
       return "Unauthorized";
     }

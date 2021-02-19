@@ -27,7 +27,9 @@ module.exports = (passport: { use: (_: any) => void }) => {
       const repository = getRepository(User);
 
       try {
-        const user = await repository.findOne(jwtPayload.sub);
+        const user = await repository.findOne(jwtPayload.sub, {
+          relations: ["business"],
+        });
         if (user) {
           return done(null, user);
         }

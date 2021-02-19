@@ -3,8 +3,8 @@ import { Request, Response } from "express";
 import User from "../entity/User";
 import Business from "../entity/Business";
 import { userRequiredCols } from "../entity/IUser";
-import checkUsersAuth from "../utils/authCheck";
 
+const authChecks = require("../utils/authChecks");
 const authUtils = require("../utils/authUtils");
 
 export default class UserController {
@@ -123,7 +123,7 @@ export default class UserController {
       // calling this.getUser() returned an error, so return the error
       return user;
     }
-    if (!await checkUsersAuth(req.user, user.id)) {
+    if (!authChecks.checkUsersAuth(req.user, user.id)) {
       res.status(401);
       return "Unauthorized";
     }
@@ -146,7 +146,7 @@ export default class UserController {
       // calling this.getUser() returned an error, so return the error
       return user;
     }
-    if (!await checkUsersAuth(req.user, user.id)) {
+    if (!authChecks.checkUsersAuth(req.user, user.id)) {
       res.status(401);
       return "Unauthorized";
     }

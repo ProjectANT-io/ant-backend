@@ -2,7 +2,8 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import PreviousOutsideProject from "../entity/PreviousOutsideProject";
 import { previousOutsideProjectRequiredCols } from "../entity/IPreviousOutsideProject";
-import checkUsersAuth from "../utils/authCheck";
+
+const authChecks = require("../utils/authChecks");
 
 class PreviousOutsideProjectController {
   private previousOutsideProjectRepository = getRepository(
@@ -30,7 +31,7 @@ class PreviousOutsideProjectController {
       res.status(422);
       return wrongType;
     }
-    if (!await checkUsersAuth(req.user, req.body.student)) {
+    if (!authChecks.checkUsersAuth(req.user, req.body.student)) {
       res.status(401);
       return "Unauthorized";
     }
@@ -91,7 +92,7 @@ class PreviousOutsideProjectController {
       // calling this.getPreviousOutsideProject() returned an error, so return the error
       return previousOutsideProject;
     }
-    if (!await checkUsersAuth(req.user, previousOutsideProject.student)) {
+    if (!authChecks.checkUsersAuth(req.user, previousOutsideProject.student)) {
       res.status(401);
       return "Unauthorized";
     }
@@ -118,7 +119,7 @@ class PreviousOutsideProjectController {
       // calling this.getPreviousOutsideProject() returned an error, so return the error
       return previousOutsideProject;
     }
-    if (!await checkUsersAuth(req.user, previousOutsideProject.student)) {
+    if (!authChecks.checkUsersAuth(req.user, previousOutsideProject.student)) {
       res.status(401);
       return "Unauthorized";
     }

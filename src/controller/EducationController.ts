@@ -2,13 +2,13 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import Education from "../entity/Education";
 import { educationRequiredCols } from "../entity/IEducation";
-import checkUsersAuth from "../utils/authCheck";
+
+const authChecks = require("../utils/authChecks");
 
 class EducationController {
   private educationRepository = getRepository(Education);
 
   async createEducation(req: Request, res: Response) {
-
     let missingFields: string = "";
     educationRequiredCols.forEach((expectedField) => {
       if (!(expectedField in req.body)) {
@@ -29,7 +29,7 @@ class EducationController {
       res.status(422);
       return wrongType;
     }
-    if (!await checkUsersAuth(req.user, req.body.student)) {
+    if (!authChecks.checkUsersAuth(req.user, req.body.student)) {
       res.status(401);
       return "Unauthorized";
     }
@@ -46,7 +46,6 @@ class EducationController {
   }
 
   async getEducation(req: Request, res: Response) {
-
     // Check for Required Path Parameter
     if (!req.params.education_id) {
       res.status(422);
@@ -83,7 +82,7 @@ class EducationController {
       // calling this.getEducation() returned an error, so return the error
       return education;
     }
-    if (!await checkUsersAuth(req.user, education.student)) {
+    if (!authChecks.checkUsersAuth(req.user, education.student)) {
       res.status(401);
       return "Unauthorized";
     }
@@ -107,7 +106,7 @@ class EducationController {
       // calling this.getEducation() returned an error, so return the error
       return education;
     }
-    if (!await checkUsersAuth(req.user, education.student)) {
+    if (!authChecks.checkUsersAuth(req.user, education.student)) {
       res.status(401);
       return "Unauthorized";
     }

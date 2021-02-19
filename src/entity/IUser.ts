@@ -16,6 +16,7 @@ export default interface IUser {
   status: string;
 
   about_me: string;
+  headline: string;
   profile_picture_url: string;
   resume_url: string;
   location: string;
@@ -24,6 +25,7 @@ export default interface IUser {
 
   type: string;
   skills: string[];
+  preferences: string[];
   certifications: string[];
   others: string[];
 

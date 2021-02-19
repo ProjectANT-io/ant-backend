@@ -89,7 +89,6 @@ export default class BusinessController {
       // Return Found Business
       return business;
     } catch (e) {
-      console.log(e);
       res.status(500);
       return e;
     }

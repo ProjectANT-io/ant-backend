@@ -35,10 +35,10 @@ export default class PreviousOutsideProject implements IPreviousOutsideProject {
   @Column({ nullable: isNullable("category") })
   category!: string;
 
-  @Column({ type: "timestamptz", nullable: isNullable("start_date") })
+  @Column({ nullable: isNullable("start_date") })
   start_date!: string;
 
-  @Column({ type: "timestamptz", nullable: isNullable("end_date") })
+  @Column({ nullable: isNullable("end_date") })
   end_date!: string;
 
   @Column({ nullable: isNullable("role") })

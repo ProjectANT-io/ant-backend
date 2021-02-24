@@ -4,7 +4,6 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  ManyToMany,
   UpdateDateColumn,
 } from "typeorm";
 import isNullGenerator from "../utils/isNullGenerator";
@@ -83,8 +82,8 @@ export default class Project implements IProject {
   @Column("json", { default: [] })
   milestones!: IProjectMilestone[];
 
-  @Column({ type: "integer", default: 0, nullable: isNullable("applicants") })
-  applicants!: number;
+  @Column({ type: "json", default: [] })
+  applications!: string;
 
   @Column({ nullable: isNullable("image") })
   image!: string;

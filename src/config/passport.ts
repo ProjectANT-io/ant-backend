@@ -21,6 +21,7 @@ module.exports = (passport: { use: (_: any) => void }) => {
   // The JWT payload is passed into the verify callback
   passport.use(
     new JwtStrategy(options, async (jwtPayload: any, done: any) => {
+      // Checking if bearer token is expired
       if (jwtPayload.exp < Date.now()) {
         return done("Bearer token is expired", false);
       }
@@ -30,6 +31,7 @@ module.exports = (passport: { use: (_: any) => void }) => {
         const user = await repository.findOne(jwtPayload.sub, {
           relations: ["business"],
         });
+
         if (user) {
           return done(null, user);
         }

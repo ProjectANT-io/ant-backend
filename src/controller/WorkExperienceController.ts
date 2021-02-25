@@ -48,7 +48,7 @@ class WorkExperienceController {
       return wrongType;
     }
     if (!authChecks.checkUsersAuth(req.user, req.body.student)) {
-      res.status(401);
+      res.status(403);
       return "Unauthorized";
     }
 
@@ -107,7 +107,7 @@ class WorkExperienceController {
     }
 
     if (!authChecks.checkUsersAuth(req.user, workExperience.student)) {
-      res.status(401);
+      res.status(403);
       return "Unauthorized";
     }
 
@@ -132,7 +132,7 @@ class WorkExperienceController {
     }
 
     if (!authChecks.checkUsersAuth(req.user, workExperience.student)) {
-      res.status(401);
+      res.status(403);
       return "Unauthorized";
     }
 

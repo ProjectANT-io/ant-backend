@@ -11,7 +11,7 @@ export default class ProjectController {
 
   async createProject(req: Request, res: Response) {
     if (!authChecks.checkUsersAuthForBusiness(req.user, req.body.business)) {
-      res.status(401);
+      res.status(403);
       return "Unauthorized";
     }
     // Check for Required POST Body Fields, return 422 if required field is missing
@@ -110,7 +110,7 @@ export default class ProjectController {
     try {
       // Find Project
       const project = await this.projectRepository.findOne(projectID, {
-        relations: ["business", "employee"], // return business relation
+        relations: ["business", "employee", "student"], // return business relation
       });
 
       // If Project Does Not Exist
@@ -132,6 +132,17 @@ export default class ProjectController {
     if (res.statusCode !== 200) {
       // calling this.getProject() returned an error, so return the error
       return project;
+    }
+
+    if (
+      !authChecks.checkUsersAuthForProjects(
+        req.user,
+        project.business.id,
+        project.student
+      )
+    ) {
+      res.status(403);
+      return "Unauthorized";
     }
 
     // TODO validate all POST Body fields
@@ -168,7 +179,7 @@ export default class ProjectController {
       return project;
     }
     if (!authChecks.checkUsersAuthForBusiness(req.user, project.business)) {
-      res.status(401);
+      res.status(403);
       return "Unauthorized";
     }
 

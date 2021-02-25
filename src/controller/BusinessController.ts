@@ -3,26 +3,12 @@ import { Request, Response } from "express";
 import Business from "../entity/Business";
 import { businessRequiredCols } from "../entity/IBusiness";
 
+const authChecks = require("../utils/authChecks");
+
 export default class BusinessController {
   private businessRepository = getRepository(Business);
 
-  async authCheck(req: Request, res: Response) {
-    return true; // TODO
-  }
-
-  async permissionsCheck(req: Request, res: Response) {
-    return true; // TODO
-  }
-
   async createBusiness(req: Request, res: Response) {
-    if (!(await this.authCheck(req, res))) {
-      res.status(401);
-      return "Unauthorized";
-    }
-    if (!this.permissionsCheck(req, res)) {
-      res.status(403);
-      return "Wrong permissions";
-    }
     // Check for Required POST Body Fields, return 422 if required field is missing
     let missingFields: string = "";
     businessRequiredCols.forEach((expectedField) => {
@@ -50,15 +36,6 @@ export default class BusinessController {
   }
 
   async getBusiness(req: Request, res: Response) {
-    if (!(await this.authCheck(req, res))) {
-      res.status(401);
-      return "Unauthorized";
-    }
-    if (!this.permissionsCheck(req, res)) {
-      res.status(403);
-      return "Wrong permissions";
-    }
-
     // Check for Required Path Parameter
     if (!req.params.business_id) {
       res.status(422);
@@ -100,6 +77,10 @@ export default class BusinessController {
       // calling this.getBusiness() returned an error, so return the error
       return business;
     }
+    if (!authChecks.checkUsersAuthForBusiness(req.user, business.id)) {
+      res.status(403);
+      return "Unauthorized";
+    }
 
     // Update Business in DB
     try {
@@ -119,6 +100,10 @@ export default class BusinessController {
     if (res.statusCode !== 200) {
       // calling this.getBusiness() returned an error, so return the error
       return business;
+    }
+    if (!authChecks.checkUsersAuthForBusiness(req.user, business.id)) {
+      res.status(403);
+      return "Unauthorized";
     }
 
     try {

@@ -30,7 +30,7 @@ class EducationController {
       return wrongType;
     }
     if (!authChecks.checkUsersAuth(req.user, req.body.student)) {
-      res.status(401);
+      res.status(403);
       return "Unauthorized";
     }
     try {
@@ -83,7 +83,7 @@ class EducationController {
       return education;
     }
     if (!authChecks.checkUsersAuth(req.user, education.student)) {
-      res.status(401);
+      res.status(403);
       return "Unauthorized";
     }
 
@@ -107,7 +107,7 @@ class EducationController {
       return education;
     }
     if (!authChecks.checkUsersAuth(req.user, education.student)) {
-      res.status(401);
+      res.status(403);
       return "Unauthorized";
     }
 

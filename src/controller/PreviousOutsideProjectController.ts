@@ -32,7 +32,7 @@ class PreviousOutsideProjectController {
       return wrongType;
     }
     if (!authChecks.checkUsersAuth(req.user, req.body.student)) {
-      res.status(401);
+      res.status(403);
       return "Unauthorized";
     }
 
@@ -93,7 +93,7 @@ class PreviousOutsideProjectController {
       return previousOutsideProject;
     }
     if (!authChecks.checkUsersAuth(req.user, previousOutsideProject.student)) {
-      res.status(401);
+      res.status(403);
       return "Unauthorized";
     }
 
@@ -120,7 +120,7 @@ class PreviousOutsideProjectController {
       return previousOutsideProject;
     }
     if (!authChecks.checkUsersAuth(req.user, previousOutsideProject.student)) {
-      res.status(401);
+      res.status(403);
       return "Unauthorized";
     }
 

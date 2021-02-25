@@ -124,7 +124,7 @@ export default class UserController {
       return user;
     }
     if (!authChecks.checkUsersAuth(req.user, user.id)) {
-      res.status(401);
+      res.status(403);
       return "Unauthorized";
     }
     // Update User in DB
@@ -147,7 +147,7 @@ export default class UserController {
       return user;
     }
     if (!authChecks.checkUsersAuth(req.user, user.id)) {
-      res.status(401);
+      res.status(403);
       return "Unauthorized";
     }
 

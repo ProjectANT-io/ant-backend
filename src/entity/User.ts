@@ -67,6 +67,9 @@ export default class User implements IUser {
   @Column("text", { default: "student", nullable: isNullable("type") })
   type!: string;
 
+  @Column("text", { nullable: isNullable("desired_pay") })
+  desired_pay!: string;
+
   @Column("text", { array: true, default: {} })
   skills!: string[];
 

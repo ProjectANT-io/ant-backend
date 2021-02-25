@@ -22,13 +22,13 @@ export default interface IUser {
   location: string;
   role: string;
   external_urls: string;
+  desired_pay: string;
 
   type: string;
   skills: string[];
   preferences: string[];
   certifications: string[];
   others: string;
-
   business: IBusiness;
   projects: IProject[];
   education: IEducation[];

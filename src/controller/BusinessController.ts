@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import Business from "../entity/Business";
 import { businessRequiredCols } from "../entity/IBusiness";
 
-const authChecks = require("../utils/authChecks");
+import { checkUsersAuthForBusiness } from "../utils/authChecks";
 
 export default class BusinessController {
   private businessRepository = getRepository(Business);
@@ -77,7 +77,7 @@ export default class BusinessController {
       // calling this.getBusiness() returned an error, so return the error
       return business;
     }
-    if (!authChecks.checkUsersAuthForBusiness(req.user, business.id)) {
+    if (!checkUsersAuthForBusiness(req.user as any, business.id)) {
       res.status(403);
       return "Unauthorized";
     }
@@ -101,7 +101,7 @@ export default class BusinessController {
       // calling this.getBusiness() returned an error, so return the error
       return business;
     }
-    if (!authChecks.checkUsersAuthForBusiness(req.user, business.id)) {
+    if (!checkUsersAuthForBusiness(req.user as any, business.id)) {
       res.status(403);
       return "Unauthorized";
     }

@@ -4,7 +4,9 @@ import User from "../entity/User";
 import Business from "../entity/Business";
 import { userRequiredCols } from "../entity/IUser";
 
-const authChecks = require("../utils/authChecks");
+import { checkUsersAuth } from "../utils/authChecks";
+
+// TODO change to ES6 import
 const authUtils = require("../utils/authUtils");
 
 export default class UserController {
@@ -123,7 +125,7 @@ export default class UserController {
       // calling this.getUser() returned an error, so return the error
       return user;
     }
-    if (!authChecks.checkUsersAuth(req.user, user.id)) {
+    if (!checkUsersAuth(req.user as any, user.id)) {
       res.status(403);
       return "Unauthorized";
     }
@@ -146,7 +148,7 @@ export default class UserController {
       // calling this.getUser() returned an error, so return the error
       return user;
     }
-    if (!authChecks.checkUsersAuth(req.user, user.id)) {
+    if (!checkUsersAuth(req.user as any, user.id)) {
       res.status(403);
       return "Unauthorized";
     }

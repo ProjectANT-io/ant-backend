@@ -4,13 +4,16 @@ import { Request, Response } from "express";
 import Project from "../entity/Project";
 import { projectRequiredCols } from "../entity/IProject";
 
-const authChecks = require("../utils/authChecks");
+import {
+  checkUsersAuthForBusiness,
+  checkUsersAuthForProjects,
+} from "../utils/authChecks";
 
 export default class ProjectController {
   private projectRepository = getRepository(Project);
 
   async createProject(req: Request, res: Response) {
-    if (!authChecks.checkUsersAuthForBusiness(req.user, req.body.business)) {
+    if (!checkUsersAuthForBusiness(req.user as any, req.body.business)) {
       res.status(403);
       return "Unauthorized";
     }
@@ -135,8 +138,8 @@ export default class ProjectController {
     }
 
     if (
-      !authChecks.checkUsersAuthForProjects(
-        req.user,
+      !checkUsersAuthForProjects(
+        req.user as any,
         project.business.id,
         project.student
       )
@@ -178,7 +181,7 @@ export default class ProjectController {
       // calling this.getProject() returned an error, so return the error
       return project;
     }
-    if (!authChecks.checkUsersAuthForBusiness(req.user, project.business)) {
+    if (!checkUsersAuthForBusiness(req.user as any, project.business)) {
       res.status(403);
       return "Unauthorized";
     }

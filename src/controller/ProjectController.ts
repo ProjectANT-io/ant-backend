@@ -4,27 +4,19 @@ import { Request, Response } from "express";
 import Project from "../entity/Project";
 import { projectRequiredCols } from "../entity/IProject";
 
+import {
+  checkUsersAuthForBusiness,
+  checkUsersAuthForProjects,
+} from "../utils/authChecks";
+
 export default class ProjectController {
   private projectRepository = getRepository(Project);
 
-  async authCheck(req: Request, res: Response) {
-    return true; // TODO
-  }
-
-  async permissionsCheck(req: Request, res: Response) {
-    return true; // TODO
-  }
-
   async createProject(req: Request, res: Response) {
-    if (!(await this.authCheck(req, res))) {
-      res.status(401);
+    if (!checkUsersAuthForBusiness(req.user as any, req.body.business)) {
+      res.status(403);
       return "Unauthorized";
     }
-    if (!this.permissionsCheck(req, res)) {
-      res.status(403);
-      return "Wrong permissions";
-    }
-
     // Check for Required POST Body Fields, return 422 if required field is missing
     let missingFields: string = "";
     projectRequiredCols.forEach((expectedField) => {
@@ -104,15 +96,6 @@ export default class ProjectController {
   }
 
   async getProject(req: Request, res: Response) {
-    if (!(await this.authCheck(req, res))) {
-      res.status(401);
-      return "Unauthorized";
-    }
-    if (!this.permissionsCheck(req, res)) {
-      res.status(403);
-      return "Wrong permissions";
-    }
-
     // Check for Required Path Parameter
     if (!req.params.project_id) {
       res.status(422);
@@ -130,7 +113,7 @@ export default class ProjectController {
     try {
       // Find Project
       const project = await this.projectRepository.findOne(projectID, {
-        relations: ["business"], // return business relation
+        relations: ["business", "employee", "student"], // return business relation
       });
 
       // If Project Does Not Exist
@@ -152,6 +135,17 @@ export default class ProjectController {
     if (res.statusCode !== 200) {
       // calling this.getProject() returned an error, so return the error
       return project;
+    }
+
+    if (
+      !checkUsersAuthForProjects(
+        req.user as any,
+        project.business.id,
+        project.student
+      )
+    ) {
+      res.status(403);
+      return "Unauthorized";
     }
 
     // TODO validate all POST Body fields
@@ -186,6 +180,10 @@ export default class ProjectController {
     if (res.statusCode !== 200) {
       // calling this.getProject() returned an error, so return the error
       return project;
+    }
+    if (!checkUsersAuthForBusiness(req.user as any, project.business)) {
+      res.status(403);
+      return "Unauthorized";
     }
 
     try {

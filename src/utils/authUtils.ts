@@ -53,8 +53,8 @@ function genPassword(password: string) {
  */
 function issueJWT(user: { id: any }, type: string) {
   const { id } = user;
-
-  const expiresIn = "2w";
+  const day = 86400000;
+  const expiresIn = day;
 
   const payload = {
     sub: id,

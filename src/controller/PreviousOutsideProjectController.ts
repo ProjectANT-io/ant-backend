@@ -3,29 +3,14 @@ import { Request, Response } from "express";
 import PreviousOutsideProject from "../entity/PreviousOutsideProject";
 import { previousOutsideProjectRequiredCols } from "../entity/IPreviousOutsideProject";
 
+import { checkUsersAuth } from "../utils/authChecks";
+
 class PreviousOutsideProjectController {
   private previousOutsideProjectRepository = getRepository(
     PreviousOutsideProject
   );
 
-  async authCheck(request: Request, response: Response) {
-    return true; // TODO
-  }
-
-  async permissionsCheck(request: Request, response: Response) {
-    return true; // TODO
-  }
-
   async createPreviousOutsideProject(req: Request, res: Response) {
-    if (!(await this.authCheck(req, res))) {
-      res.status(401);
-      return "Unauthorized";
-    }
-    if (!this.permissionsCheck(req, res)) {
-      res.status(403);
-      return "Wrong permissions";
-    }
-
     let missingFields: string = "";
     previousOutsideProjectRequiredCols.forEach((expectedField) => {
       if (!(expectedField in req.body)) {
@@ -46,6 +31,10 @@ class PreviousOutsideProjectController {
       res.status(422);
       return wrongType;
     }
+    if (!checkUsersAuth(req.user as any, req.body.student)) {
+      res.status(403);
+      return "Unauthorized";
+    }
 
     try {
       const newInfo = this.previousOutsideProjectRepository.create(req.body);
@@ -60,15 +49,6 @@ class PreviousOutsideProjectController {
   }
 
   async getPreviousOutsideProject(req: Request, res: Response) {
-    if (!(await this.authCheck(req, res))) {
-      res.status(401);
-      return "Unauthorized";
-    }
-    if (!this.permissionsCheck(req, res)) {
-      res.status(403);
-      return "Wrong permissions";
-    }
-
     // Check for Required Path Parameter
     if (!req.params.previous_outside_project_id) {
       res.status(422);
@@ -112,6 +92,10 @@ class PreviousOutsideProjectController {
       // calling this.getPreviousOutsideProject() returned an error, so return the error
       return previousOutsideProject;
     }
+    if (!checkUsersAuth(req.user as any, previousOutsideProject.student)) {
+      res.status(403);
+      return "Unauthorized";
+    }
 
     // Update User in DB
     try {
@@ -134,6 +118,10 @@ class PreviousOutsideProjectController {
     if (res.statusCode !== 200) {
       // calling this.getPreviousOutsideProject() returned an error, so return the error
       return previousOutsideProject;
+    }
+    if (!checkUsersAuth(req.user as any, previousOutsideProject.student)) {
+      res.status(403);
+      return "Unauthorized";
     }
 
     try {

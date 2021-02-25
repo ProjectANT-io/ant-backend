@@ -30,9 +30,7 @@ const Routes = [
     route: "/users/:user_id",
     controller: UserController,
     action: "getUser",
-    // Should this be here? If a user tries to access another users Profile,
-    // It will crash because the current users JWT token does not match another users JWT
-    // auth: passport.authenticate("jwt", { session: false }),
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",
@@ -55,30 +53,35 @@ const Routes = [
     route: "/projects/accept/:project_id",
     controller: ProjectController,
     action: "acceptUserForProject",
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",
     route: "/projects",
     controller: ProjectController,
     action: "createProject",
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "get",
     route: "/projects/:project_id",
     controller: ProjectController,
     action: "getProject",
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",
     route: "/projects/:project_id",
     controller: ProjectController,
     action: "updateProject",
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "delete",
     route: "/projects/:project_id",
     controller: ProjectController,
     action: "deleteProject",
+    auth: passport.authenticate("jwt", { session: false }),
   },
 
   // Business Routes
@@ -93,6 +96,7 @@ const Routes = [
     route: "/businesses/:business_id",
     controller: BusinessController,
     action: "getBusiness",
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",
@@ -142,6 +146,7 @@ const Routes = [
     route: "/previousoutsideproject/:previous_outside_project_id",
     controller: PreviousOutsideProjectController,
     action: "getPreviousOutsideProject",
+    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",

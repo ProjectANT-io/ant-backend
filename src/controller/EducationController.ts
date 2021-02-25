@@ -1,30 +1,14 @@
 import { getRepository } from "typeorm";
 import { Request, Response } from "express";
-import * as moment from "moment";
 import Education from "../entity/Education";
 import { educationRequiredCols } from "../entity/IEducation";
+
+import { checkUsersAuth } from "../utils/authChecks";
 
 class EducationController {
   private educationRepository = getRepository(Education);
 
-  async authCheck(request: Request, response: Response) {
-    return true; // TODO
-  }
-
-  async permissionsCheck(request: Request, response: Response) {
-    return true; // TODO
-  }
-
   async createEducation(req: Request, res: Response) {
-    if (!(await this.authCheck(req, res))) {
-      res.status(401);
-      return "Unauthorized";
-    }
-    if (!this.permissionsCheck(req, res)) {
-      res.status(403);
-      return "Wrong permissions";
-    }
-
     let missingFields: string = "";
     educationRequiredCols.forEach((expectedField) => {
       if (!(expectedField in req.body)) {
@@ -45,7 +29,10 @@ class EducationController {
       res.status(422);
       return wrongType;
     }
-
+    if (!checkUsersAuth(req.user as any, req.body.student)) {
+      res.status(403);
+      return "Unauthorized";
+    }
     try {
       const newEducationInfo = this.educationRepository.create(req.body);
       const newEducation = await this.educationRepository.save(
@@ -59,15 +46,6 @@ class EducationController {
   }
 
   async getEducation(req: Request, res: Response) {
-    if (!(await this.authCheck(req, res))) {
-      res.status(401);
-      return "Unauthorized";
-    }
-    if (!this.permissionsCheck(req, res)) {
-      res.status(403);
-      return "Wrong permissions";
-    }
-
     // Check for Required Path Parameter
     if (!req.params.education_id) {
       res.status(422);
@@ -104,6 +82,10 @@ class EducationController {
       // calling this.getEducation() returned an error, so return the error
       return education;
     }
+    if (!checkUsersAuth(req.user as any, education.student)) {
+      res.status(403);
+      return "Unauthorized";
+    }
 
     // Update User in DB
     try {
@@ -123,6 +105,10 @@ class EducationController {
     if (res.statusCode !== 200) {
       // calling this.getEducation() returned an error, so return the error
       return education;
+    }
+    if (!checkUsersAuth(req.user as any, education.student)) {
+      res.status(403);
+      return "Unauthorized";
     }
 
     try {

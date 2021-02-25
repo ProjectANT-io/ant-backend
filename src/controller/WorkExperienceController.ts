@@ -4,27 +4,12 @@ import * as moment from "moment";
 import WorkExperience from "../entity/WorkExperience";
 import { workExperienceRequiredCols } from "../entity/IWorkExperience";
 
+import { checkUsersAuth } from "../utils/authChecks";
+
 class WorkExperienceController {
   private workExperienceRepository = getRepository(WorkExperience);
 
-  async authCheck(request: Request, response: Response) {
-    return true; // TODO
-  }
-
-  async permissionsCheck(request: Request, response: Response) {
-    return true; // TODO
-  }
-
   async createWorkExperience(req: Request, res: Response) {
-    if (!(await this.authCheck(req, res))) {
-      res.status(401);
-      return "Unauthorized";
-    }
-    if (!this.permissionsCheck(req, res)) {
-      res.status(403);
-      return "Wrong permissions";
-    }
-
     let missingFields: string = "";
     workExperienceRequiredCols.forEach((expectedField) => {
       if (!(expectedField in req.body)) {
@@ -62,6 +47,10 @@ class WorkExperienceController {
       res.status(422);
       return wrongType;
     }
+    if (!checkUsersAuth(req.user as any, req.body.student)) {
+      res.status(403);
+      return "Unauthorized";
+    }
 
     if (current) req.body.end_date = null;
 
@@ -78,15 +67,6 @@ class WorkExperienceController {
   }
 
   async getWorkExperience(req: Request, res: Response) {
-    if (!(await this.authCheck(req, res))) {
-      res.status(401);
-      return "Unauthorized";
-    }
-    if (!this.permissionsCheck(req, res)) {
-      res.status(403);
-      return "Wrong permissions";
-    }
-
     // Check for Required Path Parameter
     if (!req.params.work_experience_id) {
       res.status(422);
@@ -126,6 +106,11 @@ class WorkExperienceController {
       return workExperience;
     }
 
+    if (!checkUsersAuth(req.user as any, workExperience.student)) {
+      res.status(403);
+      return "Unauthorized";
+    }
+
     // Update User in DB
     try {
       // Update & Return Found User
@@ -144,6 +129,11 @@ class WorkExperienceController {
     if (res.statusCode !== 200) {
       // calling this.getWorkExperience() returned an error, so return the error
       return WorkExperience;
+    }
+
+    if (!checkUsersAuth(req.user as any, workExperience.student)) {
+      res.status(403);
+      return "Unauthorized";
     }
 
     try {

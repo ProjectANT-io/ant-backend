@@ -4,6 +4,9 @@ import User from "../entity/User";
 import Business from "../entity/Business";
 import { userRequiredCols } from "../entity/IUser";
 
+import { checkUsersAuth } from "../utils/authChecks";
+
+// TODO change to ES6 import
 const authUtils = require("../utils/authUtils");
 
 export default class UserController {
@@ -11,24 +14,7 @@ export default class UserController {
 
   private businessRepository = getRepository(Business);
 
-  async authCheck(request: Request, response: Response) {
-    return true; // TODO
-  }
-
-  async permissionsCheck(request: Request, response: Response) {
-    return true; // TODO
-  }
-
   async createUser(req: Request, res: Response) {
-    if (!(await this.authCheck(req, res))) {
-      res.status(401);
-      return "Unauthorized";
-    }
-    if (!this.permissionsCheck(req, res)) {
-      res.status(403);
-      return "Wrong permissions";
-    }
-
     // check for missing required POST body fields
     let missingFields: string = "";
     // Took off resume_url TEMP. Having trouble signing up employee as user when resume its required
@@ -93,15 +79,6 @@ export default class UserController {
   }
 
   async getUser(req: Request, res: Response) {
-    if (!(await this.authCheck(req, res))) {
-      res.status(401);
-      return "Unauthorized";
-    }
-    if (!this.permissionsCheck(req, res)) {
-      res.status(403);
-      return "Wrong permissions";
-    }
-
     // Check for Required Path Parameter
     if (!req.params.user_id) {
       res.status(422);
@@ -148,7 +125,10 @@ export default class UserController {
       // calling this.getUser() returned an error, so return the error
       return user;
     }
-
+    if (!checkUsersAuth(req.user as any, user.id)) {
+      res.status(403);
+      return "Unauthorized";
+    }
     // Update User in DB
     try {
       // Update & Return Found User
@@ -167,6 +147,10 @@ export default class UserController {
     if (res.statusCode !== 200) {
       // calling this.getUser() returned an error, so return the error
       return user;
+    }
+    if (!checkUsersAuth(req.user as any, user.id)) {
+      res.status(403);
+      return "Unauthorized";
     }
 
     try {

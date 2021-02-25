@@ -1,21 +1,23 @@
 // Checks that user id from req.user object which is created by passport from client's bearer token matches user id for whats being accessed
-function checkUsersAuth(
+export function checkUsersAuth(
   userLoggedin: { id: number },
   userIdBeingAccessed: number
 ) {
   if (userLoggedin.id === userIdBeingAccessed) return true;
   return false;
 }
+
 // Checks that business id from req.user object which is created by passport from client's bearer token matches business id for whats being accessed
-function checkUsersAuthForBusiness(
+export function checkUsersAuthForBusiness(
   userLoggedin: { business: { id: number } },
   businessIdBeingAccessed: number
 ) {
   if (userLoggedin.business.id === businessIdBeingAccessed) return true;
   return false;
 }
+
 // Checks that user or bussiness id from req.user object which is created by passport from client's bearer token matches whichever is relevant user or business id curently only used for projects
-function checkUsersAuthForProjects(
+export function checkUsersAuthForProjects(
   userLoggedin: { id: number; type: string; business: any },
   businessId: number,
   student: { id: number }
@@ -31,7 +33,3 @@ function checkUsersAuthForProjects(
   }
   return false;
 }
-
-module.exports.checkUsersAuth = checkUsersAuth;
-module.exports.checkUsersAuthForBusiness = checkUsersAuthForBusiness;
-module.exports.checkUsersAuthForProjects = checkUsersAuthForProjects;

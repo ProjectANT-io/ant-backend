@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import Education from "../entity/Education";
 import { educationRequiredCols } from "../entity/IEducation";
 
-const authChecks = require("../utils/authChecks");
+import { checkUsersAuth } from "../utils/authChecks";
 
 class EducationController {
   private educationRepository = getRepository(Education);
@@ -29,7 +29,7 @@ class EducationController {
       res.status(422);
       return wrongType;
     }
-    if (!authChecks.checkUsersAuth(req.user, req.body.student)) {
+    if (!checkUsersAuth(req.user as any, req.body.student)) {
       res.status(403);
       return "Unauthorized";
     }
@@ -82,7 +82,7 @@ class EducationController {
       // calling this.getEducation() returned an error, so return the error
       return education;
     }
-    if (!authChecks.checkUsersAuth(req.user, education.student)) {
+    if (!checkUsersAuth(req.user as any, education.student)) {
       res.status(403);
       return "Unauthorized";
     }
@@ -106,7 +106,7 @@ class EducationController {
       // calling this.getEducation() returned an error, so return the error
       return education;
     }
-    if (!authChecks.checkUsersAuth(req.user, education.student)) {
+    if (!checkUsersAuth(req.user as any, education.student)) {
       res.status(403);
       return "Unauthorized";
     }

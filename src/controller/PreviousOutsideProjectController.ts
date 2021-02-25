@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import PreviousOutsideProject from "../entity/PreviousOutsideProject";
 import { previousOutsideProjectRequiredCols } from "../entity/IPreviousOutsideProject";
 
-const authChecks = require("../utils/authChecks");
+import { checkUsersAuth } from "../utils/authChecks";
 
 class PreviousOutsideProjectController {
   private previousOutsideProjectRepository = getRepository(
@@ -31,7 +31,7 @@ class PreviousOutsideProjectController {
       res.status(422);
       return wrongType;
     }
-    if (!authChecks.checkUsersAuth(req.user, req.body.student)) {
+    if (!checkUsersAuth(req.user as any, req.body.student)) {
       res.status(403);
       return "Unauthorized";
     }
@@ -92,7 +92,7 @@ class PreviousOutsideProjectController {
       // calling this.getPreviousOutsideProject() returned an error, so return the error
       return previousOutsideProject;
     }
-    if (!authChecks.checkUsersAuth(req.user, previousOutsideProject.student)) {
+    if (!checkUsersAuth(req.user as any, previousOutsideProject.student)) {
       res.status(403);
       return "Unauthorized";
     }
@@ -119,7 +119,7 @@ class PreviousOutsideProjectController {
       // calling this.getPreviousOutsideProject() returned an error, so return the error
       return previousOutsideProject;
     }
-    if (!authChecks.checkUsersAuth(req.user, previousOutsideProject.student)) {
+    if (!checkUsersAuth(req.user as any, previousOutsideProject.student)) {
       res.status(403);
       return "Unauthorized";
     }

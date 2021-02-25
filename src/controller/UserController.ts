@@ -63,11 +63,11 @@ export default class UserController {
     try {
       let business;
       if (req.body.type === "employee") {
-        business = await this.businessRepository.findOne(req.body.business_id);
+        business = await this.businessRepository.findOne(req.body.business);
 
         if (!business) {
           res.status(404);
-          return `Business with ID ${req.body.business_id} not found.`;
+          return `Business with ID ${req.body.business} not found.`;
         }
 
         // await this.businessRepository.save({
@@ -183,7 +183,15 @@ export default class UserController {
   async loginUser(req: Request, res: Response) {
     try {
       // Find User
-      const user = await this.userRepository.findOne({ email: req.body.email });
+      const user = await this.userRepository.findOne({ email: req.body.email }, {
+        relations: [
+          "business",
+          "projects",
+          "previous_outside_projects",
+          "education",
+          "work_experiences",
+        ],
+      });
 
       // If User Does Not Exist
       if (!user) {

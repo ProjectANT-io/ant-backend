@@ -83,7 +83,8 @@ class WorkExperienceController {
     // Get User in DB
     try {
       const workExperience = await this.workExperienceRepository.findOne(
-        workExperienceID
+        workExperienceID,
+        { relations: ["student"] }
       );
 
       if (!workExperience) {
@@ -106,7 +107,7 @@ class WorkExperienceController {
       return workExperience;
     }
 
-    if (!checkUsersAuth(req.user as any, workExperience.student)) {
+    if (!checkUsersAuth(req.user as any, workExperience.student.id)) {
       res.status(403);
       return "Unauthorized";
     }
@@ -131,7 +132,7 @@ class WorkExperienceController {
       return WorkExperience;
     }
 
-    if (!checkUsersAuth(req.user as any, workExperience.student)) {
+    if (!checkUsersAuth(req.user as any, workExperience.student.id)) {
       res.status(403);
       return "Unauthorized";
     }

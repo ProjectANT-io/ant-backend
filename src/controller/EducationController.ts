@@ -61,7 +61,9 @@ class EducationController {
 
     // Get User in DB
     try {
-      const education = await this.educationRepository.findOne(educationID);
+      const education = await this.educationRepository.findOne(educationID, {
+        relations: ["student"],
+      });
 
       if (!education) {
         res.status(404);
@@ -82,7 +84,7 @@ class EducationController {
       // calling this.getEducation() returned an error, so return the error
       return education;
     }
-    if (!checkUsersAuth(req.user as any, education.student)) {
+    if (!checkUsersAuth(req.user as any, education.student.id)) {
       res.status(403);
       return "Unauthorized";
     }
@@ -106,7 +108,7 @@ class EducationController {
       // calling this.getEducation() returned an error, so return the error
       return education;
     }
-    if (!checkUsersAuth(req.user as any, education.student)) {
+    if (!checkUsersAuth(req.user as any, education.student.id)) {
       res.status(403);
       return "Unauthorized";
     }

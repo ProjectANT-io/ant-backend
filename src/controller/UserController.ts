@@ -3,8 +3,8 @@ import { Request, Response } from "express";
 import User from "../entity/User";
 import Business from "../entity/Business";
 import { userRequiredCols } from "../entity/IUser";
-
 import { checkUsersAuth } from "../utils/authChecks";
+import uploadToS3 from "../utils/uploadFileToS3"
 
 // TODO change to ES6 import
 const authUtils = require("../utils/authUtils");
@@ -198,6 +198,37 @@ export default class UserController {
       res.status(500);
       return e;
     }
+  }
+
+  async uploadProfilePic(req: Request, res: Response) {
+    const userID = Number(req.params.user_id);
+    if (Number.isNaN(userID)) {
+      res.status(422);
+      return "user_id should be a number";
+    }
+    if (!checkUsersAuth(req.user as any, userID)) {
+      res.status(403);
+      return "Unauthorized";
+    }
+    try{
+      const name = `${userID}profile_pic.jpg`
+      const { file } = req; 
+      const data = await uploadToS3(file, name)
+      if(!data.Location){
+        res.status(500)
+        return "Error uploading profile picture"
+      }  
+        req.body.profile_picture_url = data.Location
+    
+        return await this.updateUser(req, res)
+    
+      
+      
+    } catch (e){
+      res.status(500);
+      return e
+    }
+      
   }
 
   static async getStripeId(userId: number) {

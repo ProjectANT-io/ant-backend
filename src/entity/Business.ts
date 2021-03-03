@@ -52,6 +52,9 @@ export default class Business implements IBusiness {
   @Column({ nullable: isNullable("external_link_urls") })
   external_link_urls!: string;
 
+  @Column("text", { array: true, default: {} })
+  saved_candidates!: string[];
+
   @Column({ nullable: isNullable("culture") })
   culture!: string;
 

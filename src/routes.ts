@@ -5,6 +5,7 @@ import PreviousOutsideProjectController from "./controller/PreviousOutsideProjec
 import PaymentController from "./controller/PaymentController";
 import WorkExperienceController from "./controller/WorkExperienceController";
 import EducationController from "./controller/EducationController";
+import photoController from "./controller/fileUploader";
 // eslint-disable-next-line import/order
 import passport = require("passport");
 
@@ -29,8 +30,7 @@ const Routes = [
     method: "get",
     route: "/users/:user_id",
     controller: UserController,
-    action: "getUser",
-    auth: passport.authenticate("jwt", { session: false }),
+    action: "getUser"
   },
   {
     method: "post",
@@ -67,7 +67,6 @@ const Routes = [
     route: "/projects/:project_id",
     controller: ProjectController,
     action: "getProject",
-    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",
@@ -96,7 +95,6 @@ const Routes = [
     route: "/businesses/:business_id",
     controller: BusinessController,
     action: "getBusiness",
-    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",
@@ -146,7 +144,6 @@ const Routes = [
     route: "/previousoutsideproject/:previous_outside_project_id",
     controller: PreviousOutsideProjectController,
     action: "getPreviousOutsideProject",
-    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",
@@ -175,7 +172,6 @@ const Routes = [
     route: "/workexperience/:work_experience_id",
     controller: WorkExperienceController,
     action: "getWorkExperience",
-    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",
@@ -205,7 +201,6 @@ const Routes = [
     route: "/education/:education_id",
     controller: EducationController,
     action: "getEducation",
-    auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",
@@ -220,7 +215,8 @@ const Routes = [
     controller: EducationController,
     action: "deleteEducation",
     auth: passport.authenticate("jwt", { session: false }),
-  },
+  }
+
 ];
 
 export default Routes;

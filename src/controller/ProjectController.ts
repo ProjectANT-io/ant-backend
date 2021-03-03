@@ -181,7 +181,7 @@ export default class ProjectController {
       // calling this.getProject() returned an error, so return the error
       return project;
     }
-    if (!checkUsersAuthForBusiness(req.user as any, project.business)) {
+    if (!checkUsersAuthForBusiness(req.user as any, project.business.id)) {
       res.status(403);
       return "Unauthorized";
     }

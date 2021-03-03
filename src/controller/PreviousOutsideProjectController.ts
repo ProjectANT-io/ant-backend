@@ -67,7 +67,8 @@ class PreviousOutsideProjectController {
     // Get User in DB
     try {
       const previousOutsideProject = await this.previousOutsideProjectRepository.findOne(
-        previousOutsideProjectID
+        previousOutsideProjectID,
+        { relations: ["student"] }
       );
 
       if (!previousOutsideProject) {
@@ -92,7 +93,7 @@ class PreviousOutsideProjectController {
       // calling this.getPreviousOutsideProject() returned an error, so return the error
       return previousOutsideProject;
     }
-    if (!checkUsersAuth(req.user as any, previousOutsideProject.student)) {
+    if (!checkUsersAuth(req.user as any, previousOutsideProject.student.id)) {
       res.status(403);
       return "Unauthorized";
     }
@@ -119,7 +120,7 @@ class PreviousOutsideProjectController {
       // calling this.getPreviousOutsideProject() returned an error, so return the error
       return previousOutsideProject;
     }
-    if (!checkUsersAuth(req.user as any, previousOutsideProject.student)) {
+    if (!checkUsersAuth(req.user as any, previousOutsideProject.student.id)) {
       res.status(403);
       return "Unauthorized";
     }

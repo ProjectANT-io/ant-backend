@@ -8,6 +8,7 @@ import {
   checkUsersAuthForBusiness,
   checkUsersAuthForProjects,
 } from "../utils/authChecks";
+import uploadToS3 from "../utils/uploadFileToS3";
 
 export default class ProjectController {
   private projectRepository = getRepository(Project);
@@ -213,6 +214,48 @@ export default class ProjectController {
         ...project,
         ...req.body,
       });
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
+  async uploadProjectPic(req: Request, res: Response) {
+    const project = await this.getProject(req, res);
+    if (res.statusCode !== 200) {
+      // calling this.getProject() returned an error, so return the error
+      return project;
+    }
+    if (
+      !checkUsersAuthForProjects(
+        req.user as any,
+        project.business.id,
+        project.student
+      )
+    ) {
+      res.status(403);
+      return "Unauthorized";
+    }
+    try {
+      // get file extension
+      const fileExt = req.file.originalname.split(".").pop();
+      if (fileExt === req.file.originalname) {
+        res.status(422);
+        return "No file extension";
+      }
+      // set url ending
+      const name = `${project.id}project-picture.${fileExt}`;
+      const { file } = req;
+      // upload project picture to s3
+      const data = await uploadToS3(file, name);
+      if (!data.Location) {
+        res.status(500);
+        return "Error uploading project picture";
+      }
+
+      req.body.image = data.Location;
+      // update project with picture url and return project
+      return await this.updateProject(req, res);
     } catch (e) {
       res.status(500);
       return e;

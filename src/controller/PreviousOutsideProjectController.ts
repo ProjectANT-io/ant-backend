@@ -2,8 +2,8 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import PreviousOutsideProject from "../entity/PreviousOutsideProject";
 import { previousOutsideProjectRequiredCols } from "../entity/IPreviousOutsideProject";
-
 import { checkUsersAuth } from "../utils/authChecks";
+import uploadToS3 from "../utils/uploadFileToS3";
 
 class PreviousOutsideProjectController {
   private previousOutsideProjectRepository = getRepository(
@@ -133,6 +133,50 @@ class PreviousOutsideProjectController {
 
       // Return the Deleted User
       return previousOutsideProject;
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
+  async uploadOutsideProjectPic(req: Request, res: Response) {
+    const previousOutsideProject = await this.getPreviousOutsideProject(
+      req,
+      res
+    );
+    if (res.statusCode !== 200) {
+      // calling this.getPreviousOutsideProject() returned an error, so return the error
+      return previousOutsideProject;
+    }
+    if (!checkUsersAuth(req.user as any, previousOutsideProject.student.id)) {
+      res.status(403);
+      return "Unauthorized";
+    }
+    try {
+      // get file extension
+      const fileExt = req.file.originalname.split(".").pop();
+      if (fileExt === req.file.originalname) {
+        res.status(422);
+        return "No file extension";
+      }
+      // set url ending
+      const name = `${previousOutsideProject.id}outside-project-picture${
+        previousOutsideProject.photos_url.length + 1
+      }.${fileExt}`;
+      const { file } = req;
+      // upload picture to s3
+      const data = await uploadToS3(file, name);
+      if (!data.Location) {
+        res.status(500);
+        return "Error uploading picture";
+      }
+      // add picture url to end of array from previous outside project
+      req.body.photos_url = [
+        ...previousOutsideProject.photos_url,
+        data.Location,
+      ];
+      // update previous outside project with updated array of photo urls and return previous outside project
+      return await this.updatePreviousOutsideProject(req, res);
     } catch (e) {
       res.status(500);
       return e;

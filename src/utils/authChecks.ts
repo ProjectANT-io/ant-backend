@@ -22,6 +22,9 @@ export function checkUsersAuthForProjects(
   businessId: number,
   student: { id: number }
 ) {
+  if (userLoggedin.type === "student" && student === null) {
+    return false;
+  }
   if (userLoggedin.type === "student" && userLoggedin.id === student.id) {
     return true;
   }

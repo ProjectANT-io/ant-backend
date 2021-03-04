@@ -2,8 +2,8 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import Business from "../entity/Business";
 import { businessRequiredCols } from "../entity/IBusiness";
-
 import { checkUsersAuthForBusiness } from "../utils/authChecks";
+import uploadToS3 from "../utils/uploadFileToS3";
 
 export default class BusinessController {
   private businessRepository = getRepository(Business);
@@ -112,6 +112,41 @@ export default class BusinessController {
 
       // Return the Deleted Business
       return business;
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
+  async uploadBusinessPicture(req: Request, res: Response) {
+    const business = await this.getBusiness(req, res);
+    if (res.statusCode !== 200) {
+      // calling this.getbusiness() returned an error, so return the error
+      return business;
+    }
+    if (!checkUsersAuthForBusiness(req.user as any, business.id)) {
+      res.status(403);
+      return "Unauthorized";
+    }
+    try {
+      // get file extension
+      const fileExt = req.file.originalname.split(".").pop();
+      if (fileExt === req.file.originalname) {
+        res.status(422);
+        return "No file extension";
+      }
+      // set url ending
+      const name = `${business.id}business-picture.${fileExt}`;
+      const { file } = req;
+      const data = await uploadToS3(file, name);
+      if (!data.Location) {
+        res.status(500);
+        return "Error uploading picture";
+      }
+
+      req.body.picture = data.Location;
+      // update business with picture and return business
+      return await this.updateBusiness(req, res);
     } catch (e) {
       res.status(500);
       return e;

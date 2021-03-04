@@ -88,6 +88,13 @@ const Routes = [
     action: "deleteProject",
     auth: passport.authenticate("jwt", { session: false }),
   },
+  {
+    method: "post",
+    route: "/projects/uploadPicture/:project_id",
+    controller: ProjectController,
+    action: "uploadProjectPic",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
 
   // Business Routes
   {
@@ -116,7 +123,13 @@ const Routes = [
     action: "deleteBusiness",
     auth: passport.authenticate("jwt", { session: false }),
   },
-
+  {
+    method: "post",
+    route: "/businesses/uploadPicture/:business_id",
+    controller: BusinessController,
+    action: "uploadBusinessPicture",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
   // Payment Routes
   {
     method: "post",
@@ -165,6 +178,13 @@ const Routes = [
     action: "deletePreviousOutsideProject",
     auth: passport.authenticate("jwt", { session: false }),
   },
+  {
+    method: "post",
+    route: "/previousoutsideproject/uploadPicture/:previous_outside_project_id",
+    controller: PreviousOutsideProjectController,
+    action: "uploadOutsideProjectPic",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
   // Work Experience routes
   {
     method: "post",
@@ -193,7 +213,13 @@ const Routes = [
     action: "deleteWorkExperience",
     auth: passport.authenticate("jwt", { session: false }),
   },
-
+  {
+    method: "post",
+    route: "/workexperience/uploadMedia/:work_experience_id",
+    controller: WorkExperienceController,
+    action: "uploadWorkExperienceMedia",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
   // Education Routes
   {
     method: "post",
@@ -220,6 +246,13 @@ const Routes = [
     route: "/education/:education_id",
     controller: EducationController,
     action: "deleteEducation",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "post",
+    route: "/education/uploadMedia/:education_id",
+    controller: EducationController,
+    action: "uploadEducationMedia",
     auth: passport.authenticate("jwt", { session: false }),
   },
 ];

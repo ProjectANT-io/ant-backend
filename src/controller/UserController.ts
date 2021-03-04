@@ -4,7 +4,7 @@ import User from "../entity/User";
 import Business from "../entity/Business";
 import { userRequiredCols } from "../entity/IUser";
 import { checkUsersAuth } from "../utils/authChecks";
-import uploadToS3 from "../utils/uploadFileToS3"
+import uploadToS3 from "../utils/uploadFileToS3";
 
 // TODO change to ES6 import
 const authUtils = require("../utils/authUtils");
@@ -210,25 +210,29 @@ export default class UserController {
       res.status(403);
       return "Unauthorized";
     }
-    try{
-      const name = `${userID}profile_pic.jpg`
-      const { file } = req; 
-      const data = await uploadToS3(file, name)
-      if(!data.Location){
-        res.status(500)
-        return "Error uploading profile picture"
-      }  
-        req.body.profile_picture_url = data.Location
-    
-        return await this.updateUser(req, res)
-    
-      
-      
-    } catch (e){
+    try {
+      // get file extension
+      const fileExt = req.file.originalname.split(".").pop();
+      if (fileExt === req.file.originalname) {
+        res.status(422);
+        return "No file extension";
+      }
+      // set url ending
+      const name = `${userID}profile_pic.${fileExt}`;
+      const { file } = req;
+      // upload profile picture to s3
+      const data = await uploadToS3(file, name);
+      if (!data.Location) {
+        res.status(500);
+        return "Error uploading profile picture";
+      }
+      req.body.profile_picture_url = data.Location;
+      // update user with profile picture url and return user
+      return await this.updateUser(req, res);
+    } catch (e) {
       res.status(500);
-      return e
+      return e;
     }
-      
   }
 
   static async getStripeId(userId: number) {

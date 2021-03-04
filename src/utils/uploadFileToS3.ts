@@ -1,5 +1,5 @@
 const AWS = require("aws-sdk");
-require('dotenv').config();
+require("dotenv").config();
 
 // Enter copied or downloaded access ID and secret key here
 const ID = process.env.S3_ID;
@@ -20,8 +20,7 @@ export default async function uploadToS3(file: any, filename: string) {
     Body: file.buffer,
   };
   // Uploading files to the bucket
-  const data = await s3.upload(params).promise();   
+  const data = await s3.upload(params).promise();
 
-  return data
+  return data;
 }
-

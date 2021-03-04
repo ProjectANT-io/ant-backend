@@ -3,8 +3,8 @@ import { Request, Response } from "express";
 import * as moment from "moment";
 import WorkExperience from "../entity/WorkExperience";
 import { workExperienceRequiredCols } from "../entity/IWorkExperience";
-
 import { checkUsersAuth } from "../utils/authChecks";
+import uploadToS3 from "../utils/uploadFileToS3";
 
 class WorkExperienceController {
   private workExperienceRepository = getRepository(WorkExperience);
@@ -143,6 +143,42 @@ class WorkExperienceController {
 
       // Return the Deleted User
       return workExperience;
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
+  async uploadWorkExperienceMedia(req: Request, res: Response) {
+    const workExperience = await this.getWorkExperience(req, res);
+    if (res.statusCode !== 200) {
+      // calling this.getworkExperience() returned an error, so return the error
+      return workExperience;
+    }
+    if (!checkUsersAuth(req.user as any, workExperience.student.id)) {
+      res.status(403);
+      return "Unauthorized";
+    }
+    try {
+      // get file extension
+      const fileExt = req.file.originalname.split(".").pop();
+      if (fileExt === req.file.originalname) {
+        res.status(422);
+        return "No file extension";
+      }
+      // set url ending
+      const name = `${workExperience.id}work-experience-media.${fileExt}`;
+      const { file } = req;
+      // upload work experience media to s3
+      const data = await uploadToS3(file, name);
+      if (!data.Location) {
+        res.status(500);
+        return "Error uploading media";
+      }
+
+      req.body.media = data.Location;
+      // update work experience with url for media return work experience
+      return await this.updateWorkExperience(req, res);
     } catch (e) {
       res.status(500);
       return e;

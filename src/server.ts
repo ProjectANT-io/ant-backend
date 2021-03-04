@@ -3,15 +3,16 @@ import * as express from "express";
 import { Request, Response } from "express";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
+import * as Multer from "multer";
 import Routes from "./routes";
 import createLogger from "./utils/logger";
 import { TryDBConnect } from "./db_helper/index";
 
-const Multer = require("multer")
-
 const multerMid = Multer({
-  storage: Multer.MemoryStorage,
-  fileSize: 5 * 1024 * 1024
+  storage: Multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+  },
 });
 
 // === Initializing variables ===
@@ -25,7 +26,7 @@ require("./config/passport")(passport);
 app.use(passport.initialize());
 
 // === app.use() ===
-app.use(multerMid.single('file'))
+app.use(multerMid.single("file"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());

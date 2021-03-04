@@ -16,15 +16,19 @@ export default interface IUser {
   status: string;
 
   about_me: string;
+  headline: string;
   profile_picture_url: string;
   resume_url: string;
   location: string;
   role: string;
   external_urls: string;
+  desired_pay: string;
 
   type: string;
   skills: string[];
-
+  preferences: string[];
+  certifications: string[];
+  others: string;
   business: IBusiness;
   projects: IProject[];
   education: IEducation[];

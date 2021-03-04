@@ -46,6 +46,9 @@ export default class User implements IUser {
   @Column({ nullable: isNullable("about_me") })
   about_me!: string;
 
+  @Column({ nullable: isNullable("about_me") })
+  headline!: string;
+
   @Column({ nullable: isNullable("profile_picture_url") })
   profile_picture_url!: string;
 
@@ -64,8 +67,20 @@ export default class User implements IUser {
   @Column("text", { default: "student", nullable: isNullable("type") })
   type!: string;
 
+  @Column("text", { nullable: isNullable("desired_pay") })
+  desired_pay!: string;
+
   @Column("text", { array: true, default: {} })
   skills!: string[];
+
+  @Column("text", { array: true, default: {} })
+  preferences!: string[];
+
+  @Column("json", { default: [] })
+  certifications!: string[];
+  
+  @Column("text", { array: false, nullable: isNullable("others") })
+  others!: string;
 
   @ManyToOne("Business", "employees")
   business!: IBusiness;

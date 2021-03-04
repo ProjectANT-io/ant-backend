@@ -3,8 +3,8 @@ import { Request, Response } from "express";
 import User from "../entity/User";
 import Business from "../entity/Business";
 import { userRequiredCols } from "../entity/IUser";
-
 import { checkUsersAuth } from "../utils/authChecks";
+import uploadToS3 from "../utils/uploadFileToS3";
 
 // TODO change to ES6 import
 const authUtils = require("../utils/authUtils");
@@ -49,11 +49,11 @@ export default class UserController {
     try {
       let business;
       if (req.body.type === "employee") {
-        business = await this.businessRepository.findOne(req.body.business_id);
+        business = await this.businessRepository.findOne(req.body.business);
 
         if (!business) {
           res.status(404);
-          return `Business with ID ${req.body.business_id} not found.`;
+          return `Business with ID ${req.body.business} not found.`;
         }
 
         // await this.businessRepository.save({
@@ -167,7 +167,15 @@ export default class UserController {
   async loginUser(req: Request, res: Response) {
     try {
       // Find User
-      const user = await this.userRepository.findOne({ email: req.body.email });
+      const user = await this.userRepository.findOne({ email: req.body.email }, {
+        relations: [
+          "business",
+          "projects",
+          "previous_outside_projects",
+          "education",
+          "work_experiences",
+        ],
+      });
 
       // If User Does Not Exist
       if (!user) {
@@ -194,6 +202,41 @@ export default class UserController {
         token: tokenObject.token,
         expiresIn: tokenObject.expires,
       };
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
+  async uploadProfilePic(req: Request, res: Response) {
+    const userID = Number(req.params.user_id);
+    if (Number.isNaN(userID)) {
+      res.status(422);
+      return "user_id should be a number";
+    }
+    if (!checkUsersAuth(req.user as any, userID)) {
+      res.status(403);
+      return "Unauthorized";
+    }
+    try {
+      // get file extension
+      const fileExt = req.file.originalname.split(".").pop();
+      if (fileExt === req.file.originalname) {
+        res.status(422);
+        return "No file extension";
+      }
+      // set url ending
+      const name = `${userID}profile_pic.${fileExt}`;
+      const { file } = req;
+      // upload profile picture to s3
+      const data = await uploadToS3(file, name);
+      if (!data.Location) {
+        res.status(500);
+        return "Error uploading profile picture";
+      }
+      req.body.profile_picture_url = data.Location;
+      // update user with profile picture url and return user
+      return await this.updateUser(req, res);
     } catch (e) {
       res.status(500);
       return e;

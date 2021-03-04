@@ -21,6 +21,7 @@ export default interface IProject {
   due_date: string;
   stream: string;
   project_detail: string[];
+  project_length: string;
   hourly_price: number;
   location: string;
   payment_type: string;

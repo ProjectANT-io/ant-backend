@@ -2,8 +2,8 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import Education from "../entity/Education";
 import { educationRequiredCols } from "../entity/IEducation";
-
 import { checkUsersAuth } from "../utils/authChecks";
+import uploadToS3 from "../utils/uploadFileToS3";
 
 class EducationController {
   private educationRepository = getRepository(Education);
@@ -119,6 +119,42 @@ class EducationController {
 
       // Return the Deleted User
       return education;
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
+  async uploadEducationMedia(req: Request, res: Response) {
+    const education = await this.getEducation(req, res);
+    if (res.statusCode !== 200) {
+      // calling this.getEducation() returned an error, so return the error
+      return education;
+    }
+    if (!checkUsersAuth(req.user as any, education.student.id)) {
+      res.status(403);
+      return "Unauthorized";
+    }
+    try {
+      // get file extension
+      const fileExt = req.file.originalname.split(".").pop();
+      if (fileExt === req.file.originalname) {
+        res.status(422);
+        return "No file extension";
+      }
+      // set url ending
+      const name = `${education.id}education-media.${fileExt}`;
+      const { file } = req;
+      // upload media to s3
+      const data = await uploadToS3(file, name);
+      if (!data.Location) {
+        res.status(500);
+        return "Error uploading media";
+      }
+
+      req.body.media = data.Location;
+      // upload education with media and return education
+      return await this.updateEducation(req, res);
     } catch (e) {
       res.status(500);
       return e;

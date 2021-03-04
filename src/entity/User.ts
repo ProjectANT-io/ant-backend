@@ -46,11 +46,14 @@ export default class User implements IUser {
   @Column({ nullable: isNullable("about_me") })
   about_me!: string;
 
-  @Column({ nullable: isNullable("about_me") })
+  @Column({ nullable: isNullable("headline") })
   headline!: string;
 
   @Column({ nullable: isNullable("profile_picture_url") })
   profile_picture_url!: string;
+
+  @Column({ nullable: isNullable("profile_video_url") })
+  profile_video_url!: string;
 
   @Column({ nullable: isNullable("resume_url") })
   resume_url!: string;
@@ -78,7 +81,7 @@ export default class User implements IUser {
 
   @Column("json", { default: [] })
   certifications!: string[];
-  
+
   @Column("text", { array: false, nullable: isNullable("others") })
   others!: string;
 

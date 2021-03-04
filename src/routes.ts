@@ -12,7 +12,7 @@ const Routes = [
   // User Routes
   {
     method: "post",
-    route: "/users",
+    route: "/user",
     controller: UserController,
     action: "createUser",
   },
@@ -20,34 +20,34 @@ const Routes = [
   {
     // Login User
     method: "post",
-    route: "/users/login",
+    route: "/user/login",
     controller: UserController,
     action: "loginUser",
   },
 
   {
     method: "get",
-    route: "/users/:user_id",
+    route: "/user/:user_id",
     controller: UserController,
     action: "getUser",
   },
   {
     method: "post",
-    route: "/users/:user_id",
+    route: "/user/:user_id",
     controller: UserController,
     action: "updateUser",
     auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "delete",
-    route: "/users/:user_id",
+    route: "/user/:user_id",
     controller: UserController,
     action: "deleteUser",
     auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",
-    route: "/users/profilePic/:user_id",
+    route: "/user/:user_id/picture",
     controller: UserController,
     action: "uploadProfilePic",
     auth: passport.authenticate("jwt", { session: false }),
@@ -56,41 +56,41 @@ const Routes = [
   // Project Routes
   {
     method: "post",
-    route: "/projects/accept/:project_id",
-    controller: ProjectController,
-    action: "acceptUserForProject",
-    auth: passport.authenticate("jwt", { session: false }),
-  },
-  {
-    method: "post",
-    route: "/projects",
+    route: "/project",
     controller: ProjectController,
     action: "createProject",
     auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "get",
-    route: "/projects/:project_id",
+    route: "/project/:project_id",
     controller: ProjectController,
     action: "getProject",
   },
   {
     method: "post",
-    route: "/projects/:project_id",
+    route: "/project/:project_id",
     controller: ProjectController,
     action: "updateProject",
     auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "delete",
-    route: "/projects/:project_id",
+    route: "/project/:project_id",
     controller: ProjectController,
     action: "deleteProject",
     auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",
-    route: "/projects/uploadPicture/:project_id",
+    route: "/project/:project_id/accept",
+    controller: ProjectController,
+    action: "acceptUserForProject",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "post",
+    route: "/project/:project_id/picture",
     controller: ProjectController,
     action: "uploadProjectPic",
     auth: passport.authenticate("jwt", { session: false }),
@@ -99,33 +99,33 @@ const Routes = [
   // Business Routes
   {
     method: "post",
-    route: "/businesses",
+    route: "/business",
     controller: BusinessController,
     action: "createBusiness",
   },
   {
     method: "get",
-    route: "/businesses/:business_id",
+    route: "/business/:business_id",
     controller: BusinessController,
     action: "getBusiness",
   },
   {
     method: "post",
-    route: "/businesses/:business_id",
+    route: "/business/:business_id",
     controller: BusinessController,
     action: "updateBusiness",
     auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "delete",
-    route: "/businesses/:business_id",
+    route: "/business/:business_id",
     controller: BusinessController,
     action: "deleteBusiness",
     auth: passport.authenticate("jwt", { session: false }),
   },
   {
     method: "post",
-    route: "/businesses/uploadPicture/:business_id",
+    route: "/business/:business_id/picture",
     controller: BusinessController,
     action: "uploadBusinessPicture",
     auth: passport.authenticate("jwt", { session: false }),
@@ -180,7 +180,7 @@ const Routes = [
   },
   {
     method: "post",
-    route: "/previousoutsideproject/uploadPicture/:previous_outside_project_id",
+    route: "/previousoutsideproject/:previous_outside_project_id/picture",
     controller: PreviousOutsideProjectController,
     action: "uploadOutsideProjectPic",
     auth: passport.authenticate("jwt", { session: false }),
@@ -215,7 +215,7 @@ const Routes = [
   },
   {
     method: "post",
-    route: "/workexperience/uploadMedia/:work_experience_id",
+    route: "/workexperience/:work_experience_id/media",
     controller: WorkExperienceController,
     action: "uploadWorkExperienceMedia",
     auth: passport.authenticate("jwt", { session: false }),
@@ -250,7 +250,7 @@ const Routes = [
   },
   {
     method: "post",
-    route: "/education/uploadMedia/:education_id",
+    route: "/education/:education_id/media",
     controller: EducationController,
     action: "uploadEducationMedia",
     auth: passport.authenticate("jwt", { session: false }),

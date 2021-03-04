@@ -52,6 +52,13 @@ const Routes = [
     action: "uploadProfilePic",
     auth: passport.authenticate("jwt", { session: false }),
   },
+  {
+    method: "post",
+    route: "/users/profileVideo/:user_id",
+    controller: UserController,
+    action: "uploadProfileVideo",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
 
   // Project Routes
   {

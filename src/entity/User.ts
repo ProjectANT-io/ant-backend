@@ -52,6 +52,9 @@ export default class User implements IUser {
   @Column({ nullable: isNullable("profile_picture_url") })
   profile_picture_url!: string;
 
+  @Column({ nullable: isNullable("profile_video_url") })
+  profile_video_url!: string;
+
   @Column({ nullable: isNullable("resume_url") })
   resume_url!: string;
 

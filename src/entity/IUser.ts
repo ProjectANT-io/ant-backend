@@ -18,6 +18,7 @@ export default interface IUser {
   about_me: string;
   headline: string;
   profile_picture_url: string;
+  profile_video_url: string;
   resume_url: string;
   location: string;
   role: string;

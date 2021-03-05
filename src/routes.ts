@@ -54,7 +54,7 @@ const Routes = [
   },
   {
     method: "post",
-    route: "/users/:user_id/video",
+    route: "/user/:user_id/video",
     controller: UserController,
     action: "uploadProfileVideo",
     auth: passport.authenticate("jwt", { session: false }),

@@ -40,7 +40,7 @@ export default class Project implements IProject {
   @ManyToOne("Business", "projects")
   business!: IBusiness;
 
-  @ManyToOne("Business", "user")
+  @ManyToOne("User", "projects")
   employee!: IUser;
 
   @ManyToOne("User", "projects")

@@ -5,6 +5,7 @@ import PreviousOutsideProjectController from "./controller/PreviousOutsideProjec
 import PaymentController from "./controller/PaymentController";
 import WorkExperienceController from "./controller/WorkExperienceController";
 import EducationController from "./controller/EducationController";
+import ReviewController from "./controller/ReviewController";
 // eslint-disable-next-line import/order
 import passport = require("passport");
 
@@ -260,6 +261,35 @@ const Routes = [
     route: "/education/:education_id/media",
     controller: EducationController,
     action: "uploadEducationMedia",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  // Review routes
+
+  {
+    method: "post",
+    route: "/review",
+    controller: ReviewController,
+    action: "createReview",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "get",
+    route: "/review/:review_id",
+    controller: ReviewController,
+    action: "getReview",
+  },
+  {
+    method: "post",
+    route: "/review/:review_id",
+    controller: ReviewController,
+    action: "updateReview",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "delete",
+    route: "/review/:review_id",
+    controller: ReviewController,
+    action: "deleteReview",
     auth: passport.authenticate("jwt", { session: false }),
   },
 ];

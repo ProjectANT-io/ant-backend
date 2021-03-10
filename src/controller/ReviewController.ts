@@ -19,7 +19,6 @@ export default class ReviewController {
       res.status(422);
       return missingFields;
     }
-    console.log(req.body);
     if (!checkUsersAuthForBusiness(req.user as any, req.body.business)) {
       res.status(403);
       return "Unauthorized";

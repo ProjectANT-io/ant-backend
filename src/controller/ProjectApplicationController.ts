@@ -21,7 +21,7 @@ class ProjectApplicationController {
 
     let wrongType = "";
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
-    if (Number.isNaN(Number(req.body.project_id)))
+    if (Number.isNaN(Number(req.body.project)))
       wrongType += `project should be a number\n`;
     if (Number.isNaN(Number(req.body.student)))
       wrongType += `student should be a number\n`;

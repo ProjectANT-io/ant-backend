@@ -114,7 +114,7 @@ export default class ProjectController {
     try {
       // Find Project
       const project = await this.projectRepository.findOne(projectID, {
-        relations: ["business", "employee", "student"], // return business relation
+        relations: ["business", "employee", "student", "applications"], // return business relation
       });
 
       // If Project Does Not Exist

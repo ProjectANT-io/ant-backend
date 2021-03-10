@@ -87,7 +87,7 @@ export default class Project implements IProject {
   @Column("json", { default: [] })
   milestones!: IProjectMilestone[];
 
-  @OneToMany("Application", "project")
+  @OneToMany("ProjectApplication", "project")
   applications!: IApplication[];
 
   @Column({ nullable: isNullable("image") })

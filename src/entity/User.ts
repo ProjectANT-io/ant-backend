@@ -101,7 +101,7 @@ export default class User implements IUser {
   @OneToMany("PreviousOutsideProject", "student")
   previous_outside_projects!: IPreviousOutsideProject[];
 
-  @OneToMany("Application", "student")
+  @OneToMany("ProjectApplication", "student")
   applications!: IApplication[];
 
   @Column({ nullable: isNullable("stripeId") })

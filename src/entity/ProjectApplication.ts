@@ -30,7 +30,7 @@ export default class ProjectApplication implements IProjectApplication {
   @ManyToOne("Project", "applications")
   project!: IProject;
 
-  @ManyToOne("Student", "applications")
+  @ManyToOne("User", "applications")
   student!: IUser;
 
   @Column({ nullable: isNullable("date") })

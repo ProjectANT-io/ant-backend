@@ -10,6 +10,7 @@ import {
 import IBusiness, { businessRequiredCols } from "./IBusiness";
 import IProject from "./IProject";
 import IUser from "./IUser";
+import IReview from "./IReview";
 import isNullGenerator from "../utils/isNullGenerator";
 
 const isNullable = isNullGenerator(businessRequiredCols);
@@ -63,6 +64,9 @@ export default class Business implements IBusiness {
 
   @OneToMany("Project", "business")
   projects!: IProject[];
+
+  @OneToMany("Review", "business")
+  reviews!: IReview[];
 
   @UpdateDateColumn()
   updated!: string;

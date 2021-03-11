@@ -1,3 +1,5 @@
+import passport = require("passport");
+
 import UserController from "./controller/UserController";
 import ProjectController from "./controller/ProjectController";
 import BusinessController from "./controller/BusinessController";
@@ -5,9 +7,8 @@ import PreviousOutsideProjectController from "./controller/PreviousOutsideProjec
 import PaymentController from "./controller/PaymentController";
 import WorkExperienceController from "./controller/WorkExperienceController";
 import EducationController from "./controller/EducationController";
+import ProjectApplicationController from "./controller/ProjectApplicationController";
 import ReviewController from "./controller/ReviewController";
-// eslint-disable-next-line import/order
-import passport = require("passport");
 
 const Routes = [
   // User Routes
@@ -263,8 +264,37 @@ const Routes = [
     action: "uploadEducationMedia",
     auth: passport.authenticate("jwt", { session: false }),
   },
-  // Review routes
 
+  // Project Application Routes
+  {
+    method: "post",
+    route: "/project/:project_id/application",
+    controller: ProjectApplicationController,
+    action: "createProjectApplication",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "get",
+    route: "/project/:project_id/application/:application_id",
+    controller: ProjectApplicationController,
+    action: "getProjectApplication",
+  },
+  {
+    method: "post",
+    route: "/project/:project_id/application/:application_id",
+    controller: ProjectApplicationController,
+    action: "updateProjectApplication",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "delete",
+    route: "/project/:project_id/application/:application_id",
+    controller: ProjectApplicationController,
+    action: "deleteProjectApplication",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  
+  // Review Routes
   {
     method: "post",
     route: "/review",

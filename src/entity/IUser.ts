@@ -1,4 +1,5 @@
 /* eslint-disable camelcase, import/no-cycle */
+import IApplication from "./IProjectApplication";
 import IBusiness from "./IBusiness";
 import IEducation from "./IEducation";
 import IPreviousOutsideProject from "./IPreviousOutsideProject";
@@ -35,6 +36,7 @@ export default interface IUser {
   education: IEducation[];
   work_experiences: IWorkExperience[];
   previous_outside_projects: IPreviousOutsideProject[];
+  applications: IApplication[];
 
   stripeId: string;
 

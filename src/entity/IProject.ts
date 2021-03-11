@@ -1,4 +1,5 @@
 /* eslint-disable camelcase, import/no-cycle */
+import IApplication from "./IProjectApplication";
 import IBusiness from "./IBusiness";
 import IProjectMilestone from "./IProjectMilestone";
 import IUser from "./IUser";
@@ -27,7 +28,7 @@ export default interface IProject {
   payment_type: string;
   remote: boolean;
   milestones: IProjectMilestone[];
-  applications: string;
+  applications: IApplication[];
   image: string;
   introduction: string;
   industry: string;

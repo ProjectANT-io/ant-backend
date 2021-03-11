@@ -102,7 +102,8 @@ export default class UserController {
           "previous_outside_projects",
           "education",
           "work_experiences",
-          "applications"
+          "applications",
+          "reviews",
         ],
       });
 

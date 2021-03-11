@@ -13,6 +13,7 @@ import IProject from "./IProject";
 import IPreviousOutsideProject from "./IPreviousOutsideProject";
 import IEducation from "./IEducation";
 import IWorkExperience from "./IWorkExperience";
+import IReview from "./IReview";
 import isNullGenerator from "../utils/isNullGenerator";
 import IApplication from "./IProjectApplication";
 
@@ -103,6 +104,9 @@ export default class User implements IUser {
 
   @OneToMany("ProjectApplication", "student")
   applications!: IApplication[];
+
+  @OneToMany("Review", "student")
+  reviews!: IReview[];
 
   @Column({ nullable: isNullable("stripeId") })
   stripeId!: string;

@@ -1,5 +1,4 @@
-import passport = require("passport");
-
+import * as passport from "passport";
 import UserController from "./controller/UserController";
 import ProjectController from "./controller/ProjectController";
 import BusinessController from "./controller/BusinessController";
@@ -293,7 +292,7 @@ const Routes = [
     action: "deleteProjectApplication",
     auth: passport.authenticate("jwt", { session: false }),
   },
-  
+
   // Review Routes
   {
     method: "post",

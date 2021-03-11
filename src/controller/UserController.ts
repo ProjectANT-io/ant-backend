@@ -102,6 +102,7 @@ export default class UserController {
           "previous_outside_projects",
           "education",
           "work_experiences",
+          "reviews",
         ],
       });
 
@@ -167,15 +168,18 @@ export default class UserController {
   async loginUser(req: Request, res: Response) {
     try {
       // Find User
-      const user = await this.userRepository.findOne({ email: req.body.email }, {
-        relations: [
-          "business",
-          "projects",
-          "previous_outside_projects",
-          "education",
-          "work_experiences",
-        ],
-      });
+      const user = await this.userRepository.findOne(
+        { email: req.body.email },
+        {
+          relations: [
+            "business",
+            "projects",
+            "previous_outside_projects",
+            "education",
+            "work_experiences",
+          ],
+        }
+      );
 
       // If User Does Not Exist
       if (!user) {

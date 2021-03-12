@@ -246,6 +246,41 @@ export default class UserController {
     }
   }
 
+  async uploadResume(req: Request, res: Response) {
+    const userID = Number(req.params.user_id);
+    if (Number.isNaN(userID)) {
+      res.status(422);
+      return "user_id should be a number";
+    }
+    if (!checkUsersAuth(req.user as any, userID)) {
+      res.status(403);
+      return "Unauthorized";
+    }
+    try {
+      // get file extension
+      const fileExt = req.file.originalname.split(".").pop();
+      if (fileExt === req.file.originalname) {
+        res.status(422);
+        return "No file extension";
+      }
+      // set url ending
+      const name = `${userID}resume.${fileExt}`;
+      const { file } = req;
+      // upload profile picture to s3
+      const data = await uploadToS3(file, name);
+      if (!data.Location) {
+        res.status(500);
+        return "Error uploading resume";
+      }
+      req.body.resume_url = data.Location;
+      // update user with profile picture url and return user
+      return await this.updateUser(req, res);
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
   async uploadProfileVideo(req: Request, res: Response) {
     const userID = Number(req.params.user_id);
     if (Number.isNaN(userID)) {

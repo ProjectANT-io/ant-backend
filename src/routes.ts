@@ -60,6 +60,13 @@ const Routes = [
     action: "uploadProfileVideo",
     auth: passport.authenticate("jwt", { session: false }),
   },
+  {
+    method: "post",
+    route: "/user/:user_id/resume",
+    controller: UserController,
+    action: "uploadResume",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
 
   // Project Routes
   {

@@ -31,7 +31,7 @@ COPY package*.json ./
 RUN npm ci --production
 
 # copy over authentication keys folder
-COPY KEYS/ ../KEYS/
+# COPY KEYS/ ../KEYS/
 
 # copy over built TypeScript files from builder stage
 COPY --from=0 /app/build ./

@@ -144,7 +144,7 @@ export default class BusinessController {
         return "Error uploading picture";
       }
 
-      req.body.picture = data.Location;
+      req.body.photo = data.Location;
       // update business with picture and return business
       return await this.updateBusiness(req, res);
     } catch (e) {

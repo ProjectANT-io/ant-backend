@@ -67,6 +67,12 @@ const Routes = [
     action: "uploadResume",
     auth: passport.authenticate("jwt", { session: false }),
   },
+  {
+    method: "get",
+    route: "/user/:user_id/application",
+    controller: ProjectApplicationController,
+    action: "getProjectApplicationsByUser",
+  },
 
   // Project Routes
   {

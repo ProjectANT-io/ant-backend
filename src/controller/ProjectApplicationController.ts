@@ -62,7 +62,7 @@ class ProjectApplicationController {
       return "application_id should be a number";
     }
 
-    // Get User in DB
+    // Get Project Application in DB
     try {
       const projectApplication = await this.projectApplicationRepository.findOne(
         projectApplicationID,
@@ -71,10 +71,42 @@ class ProjectApplicationController {
 
       if (!projectApplication) {
         res.status(404);
-        return `projectApplication with ID ${projectApplicationID} not found.`;
+        return `Project Application with ID ${projectApplicationID} not found.`;
       }
 
-      // Return Found User
+      // Return Found Project Application
+      return projectApplication;
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
+  async getProjectApplicationsByUser(req: Request, res: Response) {
+    if (!req.params.user_id) {
+      res.status(422);
+      return "Missing user_id as path parameter";
+    }
+
+    // Check for Correct Type of Required Path Parameter
+    const userId = Number(req.params.user_id);
+    if (Number.isNaN(Number(userId))) {
+      res.status(422);
+      return "user_id should be a number";
+    }
+
+    // Get Project Application in DB by user ID
+    try {
+      const projectApplication = await this.projectApplicationRepository.findOne(
+        { where: { student: userId }, relations: ["project", "student"] }
+      );
+
+      if (!projectApplication) {
+        res.status(404);
+        return `Project Application by user ID with user ID ${userId} not found.`;
+      }
+
+      // Return Found Project Application
       return projectApplication;
     } catch (e) {
       res.status(500);
@@ -94,9 +126,9 @@ class ProjectApplicationController {
       return "Unauthorized";
     }
 
-    // Update User in DB
+    // Update Project Application in DB
     try {
-      // Update & Return Found User
+      // Update & Return Found Project Application
       return await this.projectApplicationRepository.save({
         ...projectApplication, // retrieve existing properties
         ...req.body, // override some existing properties
@@ -120,10 +152,10 @@ class ProjectApplicationController {
     }
 
     try {
-      // Delete the User in DB
+      // Delete the Project Application in DB
       await this.projectApplicationRepository.delete(projectApplication.id);
 
-      // Return the Deleted User
+      // Return the Deleted Project Application
       return projectApplication;
     } catch (e) {
       res.status(500);

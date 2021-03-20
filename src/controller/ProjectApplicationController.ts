@@ -97,7 +97,7 @@ class ProjectApplicationController {
 
     // Get Project Application in DB by user ID
     try {
-      const projectApplication = await this.projectApplicationRepository.findOne(
+      const projectApplication = await this.projectApplicationRepository.find(
         { where: { student: userId }, relations: ["project", "student"] }
       );
 

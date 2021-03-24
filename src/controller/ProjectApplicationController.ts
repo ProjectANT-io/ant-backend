@@ -97,9 +97,10 @@ class ProjectApplicationController {
 
     // Get Project Application in DB by user ID
     try {
-      const projectApplication = await this.projectApplicationRepository.find(
-        { where: { student: userId }, relations: ["project", "student"] }
-      );
+      const projectApplication = await this.projectApplicationRepository.find({
+        where: { student: userId },
+        relations: ["project", "student"],
+      });
 
       if (!projectApplication) {
         res.status(404);
@@ -127,11 +128,12 @@ class ProjectApplicationController {
       return "business_id should be a number";
     }
 
-    // Get Project Application in DB by user ID
+    // Get Project Application in DB by business ID
     try {
-      const projectApplication = await this.projectApplicationRepository.find(
-        { where: { business: businessId }, relations: ["project", "student"] }
-      );
+      const projectApplication = await this.projectApplicationRepository.find({
+        where: { business: businessId },
+        relations: ["project", "student"],
+      });
 
       if (!projectApplication) {
         res.status(404);

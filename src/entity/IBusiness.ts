@@ -1,6 +1,7 @@
 /* eslint-disable camelcase, import/no-cycle */
 import IUser from "./IUser";
 import IProject from "./IProject";
+import IProjectApplication from "./IProjectApplication";
 
 export default interface IBusiness {
   id: number;
@@ -14,11 +15,12 @@ export default interface IBusiness {
   stage: string;
   industry: string;
   description: string;
-  external_link_urls: string; // TODO
+  external_link_urls: string;
   saved_candidates: string[];
-  culture: string; // TODO
+  culture: string;
   employees: IUser[];
   projects: IProject[];
+  applications: IProjectApplication[];
 
   updated: string; // auto-generated
 }

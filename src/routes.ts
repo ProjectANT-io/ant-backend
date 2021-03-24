@@ -151,6 +151,12 @@ const Routes = [
     action: "uploadBusinessPicture",
     auth: passport.authenticate("jwt", { session: false }),
   },
+  {
+    method: "get",
+    route: "/business/:business_id/application",
+    controller: ProjectApplicationController,
+    action: "getProjectApplicationsByBusiness",
+  },
   // Payment Routes
   {
     method: "post",

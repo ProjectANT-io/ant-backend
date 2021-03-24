@@ -114,6 +114,38 @@ class ProjectApplicationController {
     }
   }
 
+  async getProjectApplicationsByBusiness(req: Request, res: Response) {
+    if (!req.params.business_id) {
+      res.status(422);
+      return "Missing business_id as path parameter";
+    }
+
+    // Check for Correct Type of Required Path Parameter
+    const businessId = Number(req.params.business_id);
+    if (Number.isNaN(Number(businessId))) {
+      res.status(422);
+      return "business_id should be a number";
+    }
+
+    // Get Project Application in DB by user ID
+    try {
+      const projectApplication = await this.projectApplicationRepository.find(
+        { where: { business: businessId }, relations: ["project", "student"] }
+      );
+
+      if (!projectApplication) {
+        res.status(404);
+        return `Project Application by business ID with business ID ${businessId} not found.`;
+      }
+
+      // Return Found Project Application
+      return projectApplication;
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
   async updateProjectApplication(req: Request, res: Response) {
     const projectApplication = await this.getProjectApplication(req, res);
     if (res.statusCode !== 200) {

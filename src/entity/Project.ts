@@ -36,7 +36,7 @@ export default class Project implements IProject {
   @Column({ default: "available", nullable: isNullable("project_type") })
   project_type!: string;
 
-  @Column({ default: "NEW", nullable: isNullable("status") })
+  @Column({ default: "Unassigned", nullable: isNullable("status") })
   status!: string;
 
   @ManyToOne("Business", "projects")

@@ -1,11 +1,13 @@
 /* eslint-disable camelcase, import/no-cycle */
 import IProject from "./IProject";
 import IUser from "./IUser";
+import IBusiness from "./IBusiness";
 
 export default interface IProjectApplication {
   message: string;
   project: IProject;
   student: IUser;
+  business: IBusiness;
   date: string;
   desired_pay: string;
   headline: string;

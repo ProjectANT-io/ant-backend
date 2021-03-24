@@ -13,6 +13,7 @@ import IProjectApplication, {
 } from "./IProjectApplication";
 import IProject from "./IProject";
 import IUser from "./IUser";
+import IBusiness from "./IBusiness";
 
 const isNullable = isNullGenerator(
   projectApplicationRequiredCols,
@@ -32,6 +33,9 @@ export default class ProjectApplication implements IProjectApplication {
 
   @ManyToOne("User", "applications")
   student!: IUser;
+
+  @ManyToOne("Business", "applications")
+  business!: IBusiness;
 
   @Column({ nullable: isNullable("date") })
   date!: string;

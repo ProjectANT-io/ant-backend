@@ -73,7 +73,7 @@ Routes.forEach((route) => {
 });
 
 // === Server Listening ===
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
   logger.info(`server running http://localhost:${port}`);
   logger.info(`press CTRL+C to stop server`);

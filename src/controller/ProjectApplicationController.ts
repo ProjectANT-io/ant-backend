@@ -2,7 +2,7 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import ProjectApplication from "../entity/ProjectApplication";
 import { projectApplicationRequiredCols } from "../entity/IProjectApplication";
-import { checkUsersAuth } from "../utils/authChecks";
+import { checkUsersAuth, checkUsersAuthForBusiness } from "../utils/authChecks";
 
 class ProjectApplicationController {
   private projectApplicationRepository = getRepository(ProjectApplication);
@@ -155,7 +155,13 @@ class ProjectApplicationController {
       return projectApplication;
     }
 
-    if (!checkUsersAuth(req.user as any, projectApplication.student.id)) {
+    if (
+      !checkUsersAuth(req.user as any, projectApplication.student.id) &&
+      !checkUsersAuthForBusiness(
+        req.user as any,
+        projectApplication.business.id
+      )
+    ) {
       res.status(403);
       return "Unauthorized";
     }
@@ -180,7 +186,13 @@ class ProjectApplicationController {
       return ProjectApplication;
     }
 
-    if (!checkUsersAuth(req.user as any, projectApplication.student.id)) {
+    if (
+      !checkUsersAuth(req.user as any, projectApplication.student.id) &&
+      !checkUsersAuthForBusiness(
+        req.user as any,
+        projectApplication.business.id
+      )
+    ) {
       res.status(403);
       return "Unauthorized";
     }

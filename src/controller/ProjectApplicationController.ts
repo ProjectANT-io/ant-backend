@@ -38,6 +38,7 @@ class ProjectApplicationController {
       const newInfo = this.projectApplicationRepository.create({
         ...req.body,
         project: req.params.project_id,
+        status: 'Applied'
       });
       const newProjectApplication = await this.projectApplicationRepository.save(
         newInfo
@@ -66,7 +67,7 @@ class ProjectApplicationController {
     try {
       const projectApplication = await this.projectApplicationRepository.findOne(
         projectApplicationID,
-        { relations: ["project", "student"] }
+        { relations: ["project", "student", "business"] }
       );
 
       if (!projectApplication) {
@@ -99,7 +100,7 @@ class ProjectApplicationController {
     try {
       const projectApplication = await this.projectApplicationRepository.find({
         where: { student: userId },
-        relations: ["project", "student"],
+        relations: ["project", "student", "business"],
       });
 
       if (!projectApplication) {
@@ -132,7 +133,7 @@ class ProjectApplicationController {
     try {
       const projectApplication = await this.projectApplicationRepository.find({
         where: { business: businessId },
-        relations: ["project", "student"],
+        relations: ["project", "student", "business"],
       });
 
       if (!projectApplication) {
@@ -156,7 +157,7 @@ class ProjectApplicationController {
     }
 
     if (
-      !checkUsersAuth(req.user as any, projectApplication.student.id) &&
+      !checkUsersAuth(req.user as any, projectApplication.student.id) ||
       !checkUsersAuthForBusiness(
         req.user as any,
         projectApplication.business.id

@@ -157,7 +157,7 @@ class ProjectApplicationController {
     }
 
     if (
-      !checkUsersAuth(req.user as any, projectApplication.student.id) ||
+      !checkUsersAuth(req.user as any, projectApplication.student.id) &&
       !checkUsersAuthForBusiness(
         req.user as any,
         projectApplication.business.id

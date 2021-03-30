@@ -5,8 +5,10 @@ import {
     Column,
     UpdateDateColumn,
     ManyToMany,
+    OneToMany,
 
   } from "typeorm";
+import IMessage from "./IMessage";
   import IRoom from "./IRoom";
   import IUser from "./IUser";
   
@@ -16,8 +18,11 @@ import {
     @PrimaryGeneratedColumn()
     id!: number;
   
-    @ManyToMany("User", "room")
+    @ManyToMany("User", "rooms")
     users!: IUser[];
+
+    @OneToMany("Message", "room")
+    messages!: IMessage[];
   
     @Column()
     room_id!: string;

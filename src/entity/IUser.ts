@@ -2,6 +2,8 @@
 import IApplication from "./IProjectApplication";
 import IBusiness from "./IBusiness";
 import IEducation from "./IEducation";
+import IRoom from "./IRoom";
+import IMessage from "./IMessage";
 import IPreviousOutsideProject from "./IPreviousOutsideProject";
 import IProject from "./IProject";
 import IWorkExperience from "./IWorkExperience";
@@ -33,6 +35,8 @@ export default interface IUser {
   others: string;
   business: IBusiness;
   projects: IProject[];
+  rooms: IRoom[];
+  messages: IMessage[];
   education: IEducation[];
   work_experiences: IWorkExperience[];
   previous_outside_projects: IPreviousOutsideProject[];

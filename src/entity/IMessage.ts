@@ -4,14 +4,13 @@ import IRoom from "./IRoom";
 
 export default interface IMessage {
   id: number; // auto-generated
-  room: IRoom,
+  room: IRoom;
   author: IUser;
-  recepient: IUser;
-  text: String;
-  is_file: Boolean;
-  file_url: String;
-  is_read: Boolean;
-  is_soft_deleted: Boolean;
+  text: string;
+  is_file: boolean;
+  file_url: string;
+  is_read: boolean;
+  is_soft_deleted: boolean;
 
   created: string; // auto-generated
   updated: string; // auto-generated

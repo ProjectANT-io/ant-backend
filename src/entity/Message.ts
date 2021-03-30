@@ -18,29 +18,26 @@ import {
     @PrimaryGeneratedColumn()
     id!: number;
   
-    @ManyToOne("Room", "message")
+    @ManyToOne("Room", "messages")
     room!: IRoom;
 
-    @ManyToOne("User", "message")
+    @ManyToOne("User", "messages")
     author!: IUser;
-
-    @ManyToOne("User", "message")
-    recepient!: IUser;
   
     @Column()
     text!: string;
   
     @Column({ default: false })
-    is_file!: Boolean;
+    is_file!: boolean;
 
     @Column()
     file_url!: string;
 
     @Column({ default: false })
-    is_read!: Boolean;
+    is_read!: boolean;
 
     @Column({ default: false })
-    is_soft_deleted!: Boolean;
+    is_soft_deleted!: boolean;
 
     @CreateDateColumn()
     created!: string;

@@ -33,7 +33,7 @@ export default class Room implements IRoom {
   last_message!: string;
 
   @Column({ default: false })
-  is_file!: boolean;
+  last_message_is_file!: boolean;
 
   @UpdateDateColumn()
   updated!: string;

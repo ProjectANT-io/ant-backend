@@ -33,6 +33,7 @@
     "reflect-metadata": "^0.1.13",
     "save": "^2.4.0",
     "stripe": "^8.125.0",
+    "twilio": "^3.59.0",
     "typeorm": "0.2.28",
     "uuid": "^8.3.1",
     "winston": "^3.3.3"

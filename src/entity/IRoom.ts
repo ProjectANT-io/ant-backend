@@ -4,14 +4,12 @@ import IUser from "./IUser";
 
 export default interface IRoom {
   id: number; // auto-generated
-  room_id: String,
+  room_id: string;
   users: IUser[];
-  last_message: string;
-  is_file: Boolean;
   messages: IMessage[];
+  last_message: string;
+  is_file: boolean;
   updated: string; // auto-generated
 }
 
-export const roomRequiredCols = [
-  "room_id",
-];
+export const roomRequiredCols = ["room_id"];

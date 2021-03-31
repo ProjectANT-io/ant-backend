@@ -8,11 +8,10 @@ import Routes from "./routes";
 import createLogger from "./utils/logger";
 import { TryDBConnect } from "./db_helper/index";
 
-const mb = 1048576
 const multerMid = Multer({
   storage: Multer.memoryStorage(),
   limits: {
-    fileSize: 15 * mb,
+    fileSize: 15 * 1048576,
   },
 });
 

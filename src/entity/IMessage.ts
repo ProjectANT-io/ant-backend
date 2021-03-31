@@ -16,6 +16,4 @@ export default interface IMessage {
   updated: string; // auto-generated
 }
 
-export const messageRequiredCols = [
-  "text",
-];
+export const messageRequiredCols = ["text"];

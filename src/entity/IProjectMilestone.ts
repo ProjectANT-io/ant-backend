@@ -6,4 +6,6 @@ export default interface IProjectMilestone {
   status: string;
   hours: number;
   days: number;
+  total_return: number;
+  due_date: string;
 }

@@ -2,9 +2,12 @@
 import IApplication from "./IProjectApplication";
 import IBusiness from "./IBusiness";
 import IEducation from "./IEducation";
+import IRoom from "./IRoom";
+import IMessage from "./IMessage";
 import IPreviousOutsideProject from "./IPreviousOutsideProject";
 import IProject from "./IProject";
 import IWorkExperience from "./IWorkExperience";
+import IReview from "./IReview";
 
 export default interface IUser {
   id: number; // auto-generated
@@ -37,6 +40,9 @@ export default interface IUser {
   work_experiences: IWorkExperience[];
   previous_outside_projects: IPreviousOutsideProject[];
   applications: IApplication[];
+  reviews: IReview[];
+  rooms: IRoom[];
+  messages: IMessage[];
 
   stripeId: string;
 

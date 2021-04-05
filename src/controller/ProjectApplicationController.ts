@@ -38,7 +38,7 @@ class ProjectApplicationController {
       const newInfo = this.projectApplicationRepository.create({
         ...req.body,
         project: req.params.project_id,
-        status: 'Applied'
+        status: "Applied",
       });
       const newProjectApplication = await this.projectApplicationRepository.save(
         newInfo

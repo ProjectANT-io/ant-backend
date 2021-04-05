@@ -67,6 +67,12 @@ const Routes = [
     action: "uploadResume",
     auth: passport.authenticate("jwt", { session: false }),
   },
+  {
+    method: "get",
+    route: "/user/:user_id/application",
+    controller: ProjectApplicationController,
+    action: "getProjectApplicationsByUser",
+  },
 
   // Project Routes
   {
@@ -110,6 +116,18 @@ const Routes = [
     action: "uploadProjectPic",
     auth: passport.authenticate("jwt", { session: false }),
   },
+  {
+    method: "get",
+    route: "/project/:user_id/all",
+    controller: ProjectController,
+    action: "getProjectsByUser",
+  },
+  {
+    method: "get",
+    route: "/project/:business_id/all_business",
+    controller: ProjectController,
+    action: "getProjectsByBusiness",
+  },
 
   // Business Routes
   {
@@ -144,6 +162,12 @@ const Routes = [
     controller: BusinessController,
     action: "uploadBusinessPicture",
     auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "get",
+    route: "/business/:business_id/application",
+    controller: ProjectApplicationController,
+    action: "getProjectApplicationsByBusiness",
   },
   // Payment Routes
   {

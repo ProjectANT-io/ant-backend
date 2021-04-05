@@ -15,6 +15,7 @@ export default interface IProject {
   employee: IUser;
   student: IUser;
 
+  external_links: string[];
   required_skills: string[];
   duration: number; // auto-generated
   stipend: number;

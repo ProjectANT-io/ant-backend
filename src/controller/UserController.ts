@@ -169,16 +169,20 @@ export default class UserController {
   async loginUser(req: Request, res: Response) {
     try {
       // Find User
-      const user = await this.userRepository.findOne({ email: req.body.email }, {
-        relations: [
-          "business",
-          "projects",
-          "previous_outside_projects",
-          "education",
-          "work_experiences",
-          "applications"
-        ],
-      });
+      const user = await this.userRepository.findOne(
+        { email: req.body.email },
+        {
+          relations: [
+            "business",
+            "projects",
+            "previous_outside_projects",
+            "education",
+            "work_experiences",
+            "applications",
+            "reviews",
+          ],
+        }
+      );
 
       // If User Does Not Exist
       if (!user) {

@@ -220,6 +220,72 @@ export default class ProjectController {
     }
   }
 
+  async getProjectsByUser(req: Request, res: Response) {
+    if (!req.params.user_id) {
+      res.status(422);
+      return "Missing user_id as path parameter";
+    }
+
+    // Check for Correct Type of Required Path Parameter
+    const userId = Number(req.params.user_id);
+    if (Number.isNaN(Number(userId))) {
+      res.status(422);
+      return "user_id should be a number";
+    }
+
+    // Get Project Application in DB by business ID
+    try {
+      const projects = await this.projectRepository.find({
+        where: { student: userId },
+        relations: ["student", "business", "applications", "employee"],
+      });
+
+      if (!projects) {
+        res.status(404);
+        return `Project by user ID with user ID ${userId} not found.`;
+      }
+
+      // Return Found Project Application
+      return projects;
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
+  async getProjectsByBusiness(req: Request, res: Response) {
+    if (!req.params.business_id) {
+      res.status(422);
+      return "Missing business_id as path parameter";
+    }
+
+    // Check for Correct Type of Required Path Parameter
+    const businessId = Number(req.params.business_id);
+    if (Number.isNaN(Number(businessId))) {
+      res.status(422);
+      return "business_id should be a number";
+    }
+
+    // Get Project Application in DB by business ID
+    try {
+      const projects = await this.projectRepository.find({
+        where: { business: businessId },
+        relations: ["student", "business", "applications", "employee"],
+      });
+
+      if (!projects) {
+        res.status(404);
+        return `Project by business ID with business ID ${businessId} not found.`;
+      }
+
+      // Return Found Project Application
+      return projects;
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
   async uploadProjectPic(req: Request, res: Response) {
     const project = await this.getProject(req, res);
     if (res.statusCode !== 200) {

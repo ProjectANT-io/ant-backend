@@ -51,7 +51,7 @@ export default class Project implements IProject {
   @Column("text", { array: true, default: {} })
   required_skills!: string[];
 
-  @Column("text", { array: true, default: [] })
+  @Column("text", { array: true, default: {} })
   external_links!: string[];
 
   @Column({ nullable: isNullable("duration") })

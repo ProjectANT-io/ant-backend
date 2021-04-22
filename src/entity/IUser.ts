@@ -45,7 +45,7 @@ export default interface IUser {
   messages: IMessage[];
 
   stripeId: string;
-
+  chatkittyId: number;
   updated: string;
 }
 

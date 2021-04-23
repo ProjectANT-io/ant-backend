@@ -120,7 +120,7 @@ export default class User implements IUser {
   @Column({ nullable: isNullable("stripeId") })
   stripeId!: string;
 
-  @Column({ nullable: isNullable("stripeId") })
+  @Column({ nullable: isNullable("chatkittyId") })
   chatkittyId!: number;
 
   @UpdateDateColumn()

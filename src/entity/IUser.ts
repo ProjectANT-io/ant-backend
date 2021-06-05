@@ -8,6 +8,7 @@ import IPreviousOutsideProject from "./IPreviousOutsideProject";
 import IProject from "./IProject";
 import IWorkExperience from "./IWorkExperience";
 import IReview from "./IReview";
+import IProjectMilestone from "./IProjectMilestone";
 
 export default interface IUser {
   id: number; // auto-generated
@@ -43,6 +44,7 @@ export default interface IUser {
   reviews: IReview[];
   rooms: IRoom[];
   messages: IMessage[];
+  milestones: IProjectMilestone[];
 
   stripeId: string;
   chatkittyId: number;

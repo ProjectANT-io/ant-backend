@@ -2,7 +2,9 @@ import { getRepository } from "typeorm";
 import * as moment from "moment";
 import { Request, Response } from "express";
 import Project from "../entity/Project";
+import ProjectMilestone from "../entity/ProjectMilestone";
 import { projectRequiredCols } from "../entity/IProject";
+import { projectMilestoneRequiredCols } from "../entity/IProjectMilestone";
 
 import {
   checkUsersAuthForBusiness,
@@ -12,6 +14,8 @@ import uploadToS3 from "../utils/uploadFileToS3";
 
 export default class ProjectController {
   private projectRepository = getRepository(Project);
+
+  private projectMilestoneRepository = getRepository(ProjectMilestone);
 
   async createProject(req: Request, res: Response) {
     if (!checkUsersAuthForBusiness(req.user as any, req.body.business)) {
@@ -67,6 +71,18 @@ export default class ProjectController {
 
     // Convert Milestones Field to Postgres Array
     if (req.body.milestones) {
+      // check if all required fields in milestones is available
+      let missingMilestoneFields: string = "";
+      projectMilestoneRequiredCols.forEach((expectedField) => {
+        if (!(expectedField in req.body)) {
+          missingMilestoneFields += `Missing ${expectedField} in POST body\n`;
+        }
+      });
+      if (missingMilestoneFields) {
+        res.status(422);
+        return missingMilestoneFields;
+      }
+
       try {
         req.body.milestones = JSON.parse(req.body.milestones);
 
@@ -114,7 +130,13 @@ export default class ProjectController {
     try {
       // Find Project
       const project = await this.projectRepository.findOne(projectID, {
-        relations: ["business", "employee", "student", "applications"], // return business relation
+        relations: [
+          "business",
+          "employee",
+          "student",
+          "applications",
+          "milestones",
+        ], // return business relation
       });
 
       // If Project Does Not Exist

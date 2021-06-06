@@ -75,8 +75,8 @@ export default class Project implements IProject {
   @Column("text", { nullable: isNullable("project_length") })
   project_length!: string;
 
-  @Column({ type: "integer", nullable: isNullable("hourly_price") })
-  hourly_price!: number;
+  @Column({ type: "integer", nullable: isNullable("fixed_price") })
+  fixed_price!: number;
 
   @Column({ nullable: isNullable("location") })
   location!: string;

@@ -32,7 +32,7 @@ export default class ProjectController {
 
     let wrongFields: string = "";
     // Check for Correct Type of POST Body Fields, return 422 if type is not correct
-    ["business", "stipend", "hourly_price"].forEach((expectedField) => {
+    ["business", "stipend", "fixed_price"].forEach((expectedField) => {
       if (Number.isNaN(Number(req.body[expectedField]))) {
         res.status(422);
         wrongFields += `${expectedField} should be a number\n`;

@@ -24,7 +24,7 @@ export default interface IProject {
   stream: string;
   project_detail: string[];
   project_length: string;
-  hourly_price: number;
+  fixed_price: number;
   location: string;
   payment_type: string;
   remote: boolean;
@@ -48,7 +48,7 @@ export const projectRequiredCols = [
   "due_date",
   "stream",
   "project_detail",
-  "hourly_price",
+  "fixed_price",
   "location",
   "payment_type",
   "remote",

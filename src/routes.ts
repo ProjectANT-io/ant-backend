@@ -8,6 +8,7 @@ import WorkExperienceController from "./controller/WorkExperienceController";
 import EducationController from "./controller/EducationController";
 import ProjectApplicationController from "./controller/ProjectApplicationController";
 import ReviewController from "./controller/ReviewController";
+import RoomController from "./controller/RoomController";
 
 const Routes = [
   // User Routes
@@ -350,6 +351,50 @@ const Routes = [
     route: "/review/:review_id",
     controller: ReviewController,
     action: "deleteReview",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+
+  // Room Routes
+  {
+    method: "post",
+    route: "/room",
+    controller: RoomController,
+    action: "createRoom",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "get",
+    route: "/room",
+    controller: RoomController,
+    action: "getRooms",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "post",
+    route: "/room/token",
+    controller: RoomController,
+    action: "generateToken",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "get",
+    route: "/room/:room_id",
+    controller: RoomController,
+    action: "getRoom",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "put",
+    route: "/room/:room_id",
+    controller: RoomController,
+    action: "updateRoom",
+    auth: passport.authenticate("jwt", { session: false }),
+  },
+  {
+    method: "delete",
+    route: "/room/:room_id",
+    controller: RoomController,
+    action: "deleteRoom",
     auth: passport.authenticate("jwt", { session: false }),
   },
 ];

@@ -8,7 +8,7 @@ export default interface IRoom {
   users: IUser[];
   messages: IMessage[];
   last_message: string;
-  is_file: boolean;
+  last_message_is_file: boolean;
   updated: string; // auto-generated
 }
 

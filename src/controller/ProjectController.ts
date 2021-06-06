@@ -105,6 +105,8 @@ export default class ProjectController {
     try {
       const newProjectInfo = this.projectRepository.create(req.body);
       const newProject = await this.projectRepository.save(newProjectInfo);
+
+      // How to insert multiple milestones with the just created project ID
       return newProject;
     } catch (e) {
       res.status(500);

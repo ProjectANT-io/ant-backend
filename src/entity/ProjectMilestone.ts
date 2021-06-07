@@ -15,38 +15,35 @@ export default class ProjectMilestone implements IProjectMilestone {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ nullable: true })
   name!: string;
 
-  @Column()
+  @Column({ nullable: true })
   task!: string;
 
   @Column({ default: false })
   isCompleted!: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   hours!: number;
 
-  @Column()
+  @Column({ nullable: true })
   price!: number;
 
-  @Column()
+  @Column({ nullable: true })
   instruction!: string;
 
-  @Column()
-  start_date!: string;
+  @Column({ nullable: true })
+  startDate!: string;
 
-  @Column()
-  end_date!: string;
+  @Column({ nullable: true })
+  endDate!: string;
 
   @ManyToOne("Project", "milestones")
   project!: IProject;
 
   @ManyToOne("User", "milestones")
   student!: IUser;
-
-  @UpdateDateColumn()
-  upd!: string;
 
   @UpdateDateColumn()
   updated!: string;

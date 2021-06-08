@@ -2,6 +2,7 @@ import { getRepository } from "typeorm";
 import * as moment from "moment";
 import { Request, Response } from "express";
 import Project from "../entity/Project";
+import ProjectMilestone from "../entity/ProjectMilestone";
 import { projectRequiredCols } from "../entity/IProject";
 
 import {
@@ -13,7 +14,10 @@ import uploadToS3 from "../utils/uploadFileToS3";
 export default class ProjectController {
   private projectRepository = getRepository(Project);
 
+  private projectMilestoneRepository = getRepository(ProjectMilestone);
+
   async createProject(req: Request, res: Response) {
+    let milestones;
     if (!checkUsersAuthForBusiness(req.user as any, req.body.business)) {
       res.status(403);
       return "Unauthorized";
@@ -67,15 +71,11 @@ export default class ProjectController {
 
     // Convert Milestones Field to Postgres Array
     if (req.body.milestones) {
-      try {
-        req.body.milestones = JSON.parse(req.body.milestones);
-
-        // TODO check for required IProjectMilestone fields
-      } catch (e) {
-        res.status(415);
-        return `milestones improperly formatted\n${e}`;
-      }
+      milestones = req.body.milestones;
     }
+
+    // remove req.body.milestones so it won't be saved in Project
+    await delete req.body.milestones;
 
     // Calculate duration in days by end_date - start_date
     // TODO do this in updateProject as well
@@ -89,6 +89,39 @@ export default class ProjectController {
     try {
       const newProjectInfo = this.projectRepository.create(req.body);
       const newProject = await this.projectRepository.save(newProjectInfo);
+
+      // TODO::: How to insert multiple milestones with the just created project ID
+
+      // loop through milestone and create new milestones relating to project ID
+      milestones.forEach(async (element: any) => {
+        const {
+          name,
+          task,
+          isCompleted,
+          hours,
+          price,
+          instruction,
+          startDate,
+          endDate,
+          // eslint-disable-next-line dot-notation
+          // this works [[tested]]
+          project = newProject.id,
+        } = element;
+        const newProjectMilestoneInfo = this.projectMilestoneRepository.create({
+          name,
+          task,
+          isCompleted,
+          hours,
+          price,
+          instruction,
+          startDate,
+          endDate,
+          project,
+        });
+        // eslint-disable-next-line no-unused-vars
+        this.projectMilestoneRepository.save(newProjectMilestoneInfo);
+      });
+
       return newProject;
     } catch (e) {
       res.status(500);
@@ -114,7 +147,13 @@ export default class ProjectController {
     try {
       // Find Project
       const project = await this.projectRepository.findOne(projectID, {
-        relations: ["business", "employee", "student", "applications"], // return business relation
+        relations: [
+          "business",
+          "employee",
+          "student",
+          "applications",
+          "milestones",
+        ], // return business relation
       });
 
       // If Project Does Not Exist
@@ -131,8 +170,47 @@ export default class ProjectController {
     }
   }
 
+  async getProjectMilestone(req: Request, res: Response, milestoneId: number) {
+    // Check for Required Path Parameter
+    if (!milestoneId) {
+      res.status(422);
+      return "Missing milestone_id as path parameter";
+    }
+
+    // Check for Correct Type of Required Path Parameter
+    const milestoneID = Number(milestoneId);
+    if (Number.isNaN(Number(milestoneID))) {
+      res.status(422);
+      return "milestone_id should be a number";
+    }
+
+    // Get Milestone in DB
+    try {
+      // Find Milestone
+      const milestone = await this.projectMilestoneRepository.findOne(
+        milestoneId,
+        {
+          relations: ["student"],
+        }
+      );
+
+      // If Project Does Not Exist
+      if (!milestone) {
+        res.status(404);
+        return `Milestone with ID ${milestoneId} not found.`;
+      }
+
+      // Return Found Project
+      return milestone;
+    } catch (e) {
+      res.status(500);
+      return e;
+    }
+  }
+
   async updateProject(req: Request, res: Response) {
     const project = await this.getProject(req, res);
+    let milestones;
     if (res.statusCode !== 200) {
       // calling this.getProject() returned an error, so return the error
       return project;
@@ -151,25 +229,39 @@ export default class ProjectController {
 
     // TODO validate all POST Body fields
 
-    // Convert Milestones Field to Postgres Array
     if (req.body.milestones) {
-      try {
-        // TODO TEMP - this was throwing errors - SyntaxError: Unexpected token o in JSON at position 1
-        // req.body.milestones = JSON.parse(req.body.milestones);
-        // TODO check for required IProjectMilestone fields
-      } catch (e) {
-        res.status(415);
-        return `milestones improperly formatted\n${e}`;
-      }
+      milestones = req.body.milestones;
     }
+
+    // remove req.body.milestones so it won't be saved in Project
+    await delete req.body.milestones;
 
     // Update Project in DB
     try {
       // Update & Return Found Project
-      return await this.projectRepository.save({
+      const updatedProject = await this.projectRepository.save({
         ...project, // retrieve existing properties
         ...req.body, // override some existing properties
       });
+
+      // TODO::: How to update multiple milestones with the just created project ID
+
+      // loop through milestone and create new milestones relating to project ID
+      milestones.forEach(async (element: any) => {
+        const milestone = await this.getProjectMilestone(
+          req,
+          res,
+          // this works [[tested]]
+          updatedProject.id
+        );
+
+        this.projectMilestoneRepository.save({
+          ...milestone, // retrieve existing properties
+          ...element, // override some existing properties
+        });
+      });
+
+      return updatedProject;
     } catch (e) {
       res.status(500);
       return e;

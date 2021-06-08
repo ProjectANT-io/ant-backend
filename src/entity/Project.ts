@@ -87,7 +87,7 @@ export default class Project implements IProject {
   @Column({ nullable: isNullable("remote") })
   remote!: boolean;
 
-  @Column("json", { default: [] })
+  @OneToMany("ProjectMilestone", "project")
   milestones!: IProjectMilestone[];
 
   @OneToMany("ProjectApplication", "project")

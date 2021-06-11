@@ -247,12 +247,16 @@ export default class ProjectController {
       // TODO::: How to update multiple milestones with the just created project ID
 
       // loop through milestone and create new milestones relating to project ID
+      // eslint-disable-next-line consistent-return
       milestones.forEach(async (element: any) => {
+        if (!element.id) {
+          return "milestone ID expected in milestone array";
+        }
         const milestone = await this.getProjectMilestone(
           req,
           res,
           // this works [[tested]]
-          updatedProject.id
+          element.id
         );
 
         this.projectMilestoneRepository.save({

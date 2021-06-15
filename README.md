@@ -8,7 +8,7 @@ EB project starter code is a "Hello World" to start building the actual code. Th
 
    `$ git clone <project.git>`
 
-**project.git** replace this with the respoistory git url.
+**project.git** replace this with the respository git url.
 
 2. Install the require packages using:
 

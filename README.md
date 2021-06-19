@@ -53,7 +53,7 @@ EB project starter code is a "Hello World" to start building the actual code. Th
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- server.ts => main ts file that routes the incoming requests to appropriate endpoints\
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- migrations/\
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- userMigration.ts => user migration data\
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- companiesMigration.ts => companies' migration data\
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- companiesMigration.ts => companies migration data\
 |\- .eslintrc.json => ESLint configurations\
 |\- .prettierrc => prettier configurations\
 |\- .npmrc => npm configurations\

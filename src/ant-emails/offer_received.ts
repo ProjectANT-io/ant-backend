@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+const offerReceivedHtml = () => {
+  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -81,9 +82,8 @@
                         <table width="100%">
                           <tr>
                             <td style="text-align: center">
-                              <div style="color: #4d57d4; font-size: 18px">
-                                You have received a message from Ben Parker for
-                                the “Branding for New Launch” project:
+                              <div style="color: #4d57d4; font-size: 19px">
+                                CONGRATULATIONS!
                               </div>
                             </td>
                           </tr>
@@ -95,8 +95,10 @@
                         <table width="100%">
                           <tr>
                             <td style="text-align: center">
-                              <div style="color: #4d57d4; font-size: 15px">
-                                "Hi,
+                              <div style="color: #4d57d4; font-size: 18px">
+                                We are very pleased to announce that you have
+                                received an offer to work with XYZ Company, and
+                                they are awaiting your response.
                               </div>
                             </td>
                           </tr>
@@ -109,70 +111,14 @@
                         <table width="100%">
                           <tr>
                             <td style="text-align: center">
-                              <div style="color: #4d57d4; font-size: 15px">
-                                I have been working on the ‘Branding for New
-                                Launch’ project and would like to dispute ANT’s
-                                decision to not approve my submission for the
-                                ‘Stylescapes for New Brand’ milestone. Please
-                                let me know the earliest convenient time for you
-                                to discuss about more details.
+                              <div style="color: #4d57d4; font-size: 18px">
+                                Please submit your response and we hope you have
+                                a great experience contributing to the amazing
+                                work at XYZ Company!
                               </div>
                             </td>
                           </tr>
                         </table>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td height="50px">
-                        <table width="100%">
-                          <tr>
-                            <td style="text-align: center">
-                              <div style="color: #4d57d4; font-size: 15px">
-                                Regards,
-                              </div>
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td height="20px">
-                        <table width="100%">
-                          <tr>
-                            <td style="text-align: center">
-                              <div style="color: #4d57d4; font-size: 15px">
-                                Ben Parker”
-                              </div>
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr height="90px">
-                <td>
-                  <table width="100%">
-                    <tr>
-                      <td style="text-align: center">
-                        <a
-                          href=""
-                          style="
-                            color: #ffffff;
-                            text-decoration: none;
-                            text-align: center;
-                            width: 300px;
-                            height: 60px;
-                            padding: 15px 25px;
-                            background: #404bdb;
-                            border-radius: 5px;
-                            border: none;
-                            font-size: 14px;
-                          "
-                        >
-                          Submit Response Here
-                        </a>
                       </td>
                     </tr>
                   </table>
@@ -191,7 +137,7 @@
                             max-width: 300px;
                             height: 320px;
                             margin: 0 auto;
-                            background: url(https://i.postimg.cc/4yXwg7f3/Image-2.png);
+                            background: url(https://i.postimg.cc/8PmQMMJZ/Image-1.png);
                             background-repeat: no-repeat;
                             background-position: center;
                             background-size: contain;
@@ -309,3 +255,7 @@
     </center>
   </body>
 </html>
+`;
+};
+
+export default offerReceivedHtml;

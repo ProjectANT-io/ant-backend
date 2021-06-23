@@ -1,4 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+/* eslint-disable import/no-cycle */
+import IEmail from "../config/email";
+
+const firstTimeUsingMatchmakerHtml = (
+  data: IEmail["firstTimeUsingMatchmaker"]
+) => {
+  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -75,45 +81,29 @@
               </tr>
               <tr>
                 <td height="100px">
-                  <table style="margin: 0 auto" width="85%">
+                  <table width="100%">
                     <tr>
-                      <td height="50px">
-                        <table width="100%">
-                          <tr>
-                            <td style="text-align: center">
-                              <div style="color: #4d57d4; font-size: 19px">
-                                CONGRATULATIONS!
-                              </div>
-                            </td>
-                          </tr>
-                        </table>
+                      <td height="70px" style="text-align: center">
+                        <h1
+                          style="
+                            color: #4d57d4;
+                            margin-top: 65px;
+                            font-size: 23px;
+                            margin: 0;
+                          "
+                        >
+                          Congratulations on taking the first step in your
+                          journey with Project ANT!
+                        </h1>
                       </td>
                     </tr>
                     <tr>
-                      <td height="50px">
+                      <td height="20px">
                         <table width="100%">
                           <tr>
                             <td style="text-align: center">
-                              <div style="color: #4d57d4; font-size: 18px">
-                                We are very pleased to announce that you have
-                                received an offer to work with XYZ Company, and
-                                they are awaiting your response.
-                              </div>
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td height="50px">
-                        <table width="100%">
-                          <tr>
-                            <td style="text-align: center">
-                              <div style="color: #4d57d4; font-size: 18px">
-                                Please submit your response and we hope you have
-                                a great experience contributing to the amazing
-                                work at XYZ Company!
+                              <div style="color: #4d57d4; font-size: 17px">
+                                Let’s start finding project matches.
                               </div>
                             </td>
                           </tr>
@@ -123,8 +113,36 @@
                   </table>
                 </td>
               </tr>
+
+              <tr height="50px">
+                <td>
+                  <table width="100%">
+                    <tr>
+                      <td style="text-align: center">
+                        <a
+                          href='${data.link}'
+                          style="
+                            color: #ffffff;
+                            text-decoration: none;
+                            text-align: center;
+                            width: 300px;
+                            height: 60px;
+                            padding: 15px 25px;
+                            background: #404bdb;
+                            border-radius: 5px;
+                            border: none;
+                            font-size: 14px;
+                          "
+                        >
+                          Verify Your Work Email
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
             </table>
-            <table width="100%">
+            <table style="margin-top: 50px" width="100%">
               <tr>
                 <td>
                   <table width="100%">
@@ -136,7 +154,7 @@
                             max-width: 300px;
                             height: 320px;
                             margin: 0 auto;
-                            background: url(https://i.postimg.cc/8PmQMMJZ/Image-1.png);
+                            background: url(https://www.linkpicture.com/q/Image_13.png);
                             background-repeat: no-repeat;
                             background-position: center;
                             background-size: contain;
@@ -148,7 +166,7 @@
                 </td>
               </tr>
             </table>
-            <table style="margin-top: 10px" width="100%">
+            <table style="margin-top: 50px" width="100%">
               <tr>
                 <td>
                   <table style="margin: 0 auto" width="50%">
@@ -254,3 +272,7 @@
     </center>
   </body>
 </html>
+`;
+};
+
+export default firstTimeUsingMatchmakerHtml;

@@ -1,4 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+/* eslint-disable import/no-cycle */
+import IEmail from "../config/email";
+
+const activationEmail = (data: IEmail["activation"]) => {
+  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -86,8 +90,7 @@
                             margin: 0;
                           "
                         >
-                          Congratulations on taking the first step in your
-                          journey with Project ANT!
+                          You’re One Step Away From New Opportunities!
                         </h1>
                       </td>
                     </tr>
@@ -97,7 +100,7 @@
                           <tr>
                             <td style="text-align: center">
                               <div style="color: #4d57d4; font-size: 17px">
-                                Let’s start finding project matches.
+                                Activate your ANT account to get started.
                               </div>
                             </td>
                           </tr>
@@ -114,7 +117,7 @@
                     <tr>
                       <td style="text-align: center">
                         <a
-                          href=""
+                          href='${data.link}'
                           style="
                             color: #ffffff;
                             text-decoration: none;
@@ -128,7 +131,7 @@
                             font-size: 14px;
                           "
                         >
-                          Verify Your Work Email
+                          Activate Your Account
                         </a>
                       </td>
                     </tr>
@@ -136,7 +139,7 @@
                 </td>
               </tr>
             </table>
-            <table style="margin-top: 50px" width="100%">
+            <table width="100%">
               <tr>
                 <td>
                   <table width="100%">
@@ -148,7 +151,7 @@
                             max-width: 300px;
                             height: 320px;
                             margin: 0 auto;
-                            background: url(https://www.linkpicture.com/q/Image_13.png);
+                            background: url(https://www.linkpicture.com/q/Image_14.png);
                             background-repeat: no-repeat;
                             background-position: center;
                             background-size: contain;
@@ -160,7 +163,7 @@
                 </td>
               </tr>
             </table>
-            <table style="margin-top: 50px" width="100%">
+            <table style="margin-top: 10px" width="100%">
               <tr>
                 <td>
                   <table style="margin: 0 auto" width="50%">
@@ -266,3 +269,7 @@
     </center>
   </body>
 </html>
+`;
+};
+
+export default activationEmail;

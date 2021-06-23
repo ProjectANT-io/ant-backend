@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+const userSentInterestToCompanyHtml = () => {
+  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -75,60 +76,49 @@
               </tr>
               <tr>
                 <td height="100px">
-                  <table width="100%">
+                  <table style="margin: 0 auto" width="85%">
                     <tr>
-                      <td height="70px" style="text-align: center">
-                        <h1
-                          style="
-                            color: #4d57d4;
-                            margin-top: 65px;
-                            font-size: 23px;
-                            margin: 0;
-                          "
-                        >
-                          You’re One Step Away From New Opportunities!
-                        </h1>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td height="20px">
+                      <td height="50px">
                         <table width="100%">
                           <tr>
                             <td style="text-align: center">
-                              <div style="color: #4d57d4; font-size: 17px">
-                                Activate your ANT account to get started.
+                              <div style="color: #4d57d4; font-size: 18px">
+                                Your application is on its way, hang tight and
+                                you will hear from us within 3-5 days.
                               </div>
                             </td>
                           </tr>
                         </table>
                       </td>
                     </tr>
-                  </table>
-                </td>
-              </tr>
-
-              <tr height="50px">
-                <td>
-                  <table width="100%">
                     <tr>
-                      <td style="text-align: center">
-                        <a
-                          href=""
-                          style="
-                            color: #ffffff;
-                            text-decoration: none;
-                            text-align: center;
-                            width: 300px;
-                            height: 60px;
-                            padding: 15px 25px;
-                            background: #404bdb;
-                            border-radius: 5px;
-                            border: none;
-                            font-size: 14px;
-                          "
-                        >
-                          Activate Your Account
-                        </a>
+                      <td height="50px">
+                        <table width="100%">
+                          <tr>
+                            <td style="text-align: center">
+                              <div style="color: #4d57d4; font-size: 18px">
+                                Best of luck with your application and
+                                meanwhile, keep learning and developing your
+                                skills, and applying for other interesting
+                                projects.
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td height="50px">
+                        <table width="100%">
+                          <tr>
+                            <td style="text-align: center">
+                              <div style="color: #4d57d4; font-size: 18px">
+                                This is just the beginning!
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
                       </td>
                     </tr>
                   </table>
@@ -147,7 +137,7 @@
                             max-width: 300px;
                             height: 320px;
                             margin: 0 auto;
-                            background: url(https://www.linkpicture.com/q/Image_14.png);
+                            background: url(https://i.postimg.cc/kGkrsvNH/Image.png);
                             background-repeat: no-repeat;
                             background-position: center;
                             background-size: contain;
@@ -265,3 +255,7 @@
     </center>
   </body>
 </html>
+`;
+};
+
+export default userSentInterestToCompanyHtml;

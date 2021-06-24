@@ -1,6 +1,6 @@
 ### EB Starter Code
 
-EB project starter code is a "Hello World" to start building the actual code. This repository consist of all the basic packages to be installed along with industry standard ESLint configurations preconfigured. Furthermore, this starter code is readily deployable on the Elastic Beanstalk.
+EB project starter code is a "Hello World" to start building the actual code. This repository consists of all the basic packages to be installed along with industry standard ESLint configurations preconfigured. Furthermore, this starter code is readily deployable on the Elastic Beanstalk.
 
 ### How to use?
 
@@ -8,7 +8,7 @@ EB project starter code is a "Hello World" to start building the actual code. Th
 
    `$ git clone <project.git>`
 
-**project.git** replace this with the respoistory git url.
+**project.git** replace this with the respository git url.
 
 2. Install the require packages using:
 
@@ -38,7 +38,7 @@ EB project starter code is a "Hello World" to start building the actual code. Th
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- config/\
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- config.ts => AWS and other configuration file\
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- utils/\
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- logger.ts => Exports fucniton that returns a custom logger\
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- logger.ts => Exports function that returns a custom logger\
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- controllers/v0\
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- users/\
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- models/\
@@ -53,7 +53,7 @@ EB project starter code is a "Hello World" to start building the actual code. Th
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- server.ts => main ts file that routes the incoming requests to appropriate endpoints\
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- migrations/\
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- userMigration.ts => user migration data\
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- companiesMigration.ts => compaines migration data\
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|\- companiesMigration.ts => companies migration data\
 |\- .eslintrc.json => ESLint configurations\
 |\- .prettierrc => prettier configurations\
 |\- .npmrc => npm configurations\

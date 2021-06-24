@@ -5,6 +5,7 @@ import Business from "../entity/Business";
 import { userRequiredCols } from "../entity/IUser";
 import { checkUsersAuth } from "../utils/authChecks";
 import uploadToS3 from "../utils/uploadFileToS3";
+import { completeProfile } from "../config/email";
 
 // TODO change to ES6 import
 const authUtils = require("../utils/authUtils");
@@ -65,6 +66,11 @@ export default class UserController {
       const newUserInfo = this.userRepository.create(req.body);
       const newUser = await this.userRepository.save(newUserInfo);
       const jwt = authUtils.issueJWT(newUser, "user");
+
+      completeProfile({
+        link: "projectant.io",
+        toEmail: "eziefulejustice@gmail.com",
+      }); // we can only email to verified emails for now
 
       return {
         success: true,

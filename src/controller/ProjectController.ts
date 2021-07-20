@@ -366,7 +366,13 @@ export default class ProjectController {
     try {
       const projects = await this.projectRepository.find({
         where: { business: businessId },
-        relations: ["student", "business", "applications", "employee"],
+        relations: [
+          "student",
+          "business",
+          "applications",
+          "employee",
+          "milestones",
+        ],
       });
 
       if (!projects) {

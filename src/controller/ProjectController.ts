@@ -90,8 +90,6 @@ export default class ProjectController {
       const newProjectInfo = this.projectRepository.create(req.body);
       const newProject = await this.projectRepository.save(newProjectInfo);
 
-      // TODO::: How to insert multiple milestones with the just created project ID
-
       // loop through milestone and create new milestones relating to project ID
       milestones.forEach(async (element: any) => {
         const {
@@ -103,9 +101,7 @@ export default class ProjectController {
           instruction,
           startDate,
           endDate,
-          // eslint-disable-next-line dot-notation
-          // this works [[tested]]
-          project = newProject.id,
+          project = newProject,
         } = element;
         const newProjectMilestoneInfo = this.projectMilestoneRepository.create({
           name,
@@ -122,7 +118,7 @@ export default class ProjectController {
         this.projectMilestoneRepository.save(newProjectMilestoneInfo);
       });
 
-      return newProject;
+      return { ...newProject, milestones };
     } catch (e) {
       res.status(500);
       return e;

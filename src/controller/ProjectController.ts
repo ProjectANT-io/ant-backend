@@ -103,9 +103,7 @@ export default class ProjectController {
           instruction,
           startDate,
           endDate,
-          // eslint-disable-next-line dot-notation
-          // this works [[tested]]
-          project = newProject.id,
+          id: project,
         } = element;
         const newProjectMilestoneInfo = this.projectMilestoneRepository.create({
           name,

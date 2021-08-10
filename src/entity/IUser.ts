@@ -21,6 +21,7 @@ export default interface IUser {
   status: string;
 
   about_me: string;
+  gender: string;
   headline: string;
   profile_picture_url: string;
   profile_video_url: string;

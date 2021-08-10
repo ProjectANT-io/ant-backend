@@ -49,6 +49,9 @@ export default class User implements IUser {
   @Column({ nullable: isNullable("status") })
   status!: string;
 
+  @Column({ nullable: isNullable("gender") })
+  gender!: string;
+
   @Column({ nullable: isNullable("about_me") })
   about_me!: string;
 

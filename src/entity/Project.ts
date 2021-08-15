@@ -52,6 +52,9 @@ export default class Project implements IProject {
   required_skills!: string[];
 
   @Column("text", { array: true, default: {} })
+  skills!: string[];
+
+  @Column("text", { array: true, default: {} })
   external_links!: string[];
 
   @Column({ nullable: isNullable("duration") })
@@ -77,6 +80,9 @@ export default class Project implements IProject {
 
   @Column({ type: "integer", nullable: isNullable("fixed_price") })
   fixed_price!: number;
+
+  @Column({ type: "decimal", nullable: isNullable("hourly_price") })
+  hourly_price!: number;
 
   @Column({ nullable: isNullable("location") })
   location!: string;

@@ -17,6 +17,7 @@ export default interface IProject {
 
   external_links: string[];
   required_skills: string[];
+  skills: string[];
   duration: number; // auto-generated
   stipend: number;
   start_date: string;
@@ -25,6 +26,7 @@ export default interface IProject {
   project_detail: string[];
   project_length: string;
   fixed_price: number;
+  hourly_price: number;
   location: string;
   payment_type: string;
   remote: boolean;

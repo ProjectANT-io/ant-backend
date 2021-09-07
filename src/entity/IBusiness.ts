@@ -18,6 +18,7 @@ export default interface IBusiness {
   external_link_urls: string;
   saved_candidates: string[];
   culture: string;
+  culture_photos: string[];
   employees: IUser[];
   projects: IProject[];
   applications: IProjectApplication[];

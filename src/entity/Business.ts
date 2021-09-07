@@ -59,6 +59,9 @@ export default class Business implements IBusiness {
   @Column({ nullable: isNullable("culture") })
   culture!: string;
 
+  @Column("text", { array: true, default: {} })
+  culture_photos!: string[];
+
   @OneToMany("User", "business")
   employees!: IUser[];
 

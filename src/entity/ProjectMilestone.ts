@@ -28,12 +28,6 @@ export default class ProjectMilestone implements IProjectMilestone {
   hours!: number;
 
   @Column({ nullable: true })
-  price!: number;
-
-  @Column({ nullable: true })
-  instruction!: string;
-
-  @Column({ nullable: true })
   startDate!: string;
 
   @Column({ nullable: true })

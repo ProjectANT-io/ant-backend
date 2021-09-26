@@ -9,8 +9,6 @@ export default interface IProjectMilestone {
   task: string;
   isCompleted: boolean;
   hours: number;
-  price: number;
-  instruction: string;
   startDate: string;
   endDate: string;
   project: IProject;
@@ -22,9 +20,7 @@ export default interface IProjectMilestone {
 export const projectMilestoneRequiredCols = [
   "name",
   "task",
-  "instruction",
   "hours",
-  "price",
   "startDate",
   "endDate",
 ];
